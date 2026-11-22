@@ -2231,3 +2231,392 @@ window.renderGameLobby50 = function() {
 window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => { if (window.renderGameLobby50) window.renderGameLobby50(); }, 200);
 });
+
+
+// ==================== V15.0 PATCH: 100% CLOUD DB (FIRESTORE) + FIX iOS MOBILE + ZERO DEFAULT CLASS ====================
+window.isNetworkFailure = function(err) {
+  const m = String(err?.message || err || '').toLowerCase();
+  return m.includes('offline') || m.includes('failed to fetch') || m.includes('load failed') || m.includes('networkerror') || m.includes('network request failed') || m.includes('aborted');
+};
+
+window.LocalClassDB = {
+  KEY: 'vcode_local_classrooms_v15_clean',
+  load() {
+    try { const d = JSON.parse(localStorage.getItem(this.KEY) || 'null'); if (d && Array.isArray(d.classes)) return d; } catch {}
+    const init = { classes: [] };
+    this.save(init);
+    return init;
+  },
+  save(data) { localStorage.setItem(this.KEY, JSON.stringify(data)); }
+};
+
+window.handleRegisterSubmit = async function(e) {
+  e.preventDefault();
+  const full_name = document.getElementById('reg-fullname').value.trim();
+  const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  const password = document.getElementById('reg-password').value;
+  if (password.length < 6) { alert('Mật khẩu phải có ít nhất 6 ký tự.'); return; }
+
+  if (window.VCodeCloudDB && window.VCodeCloudDB.isReady()) {
+    try {
+      const existing = await window.VCodeCloudDB.getUser(email);
+      if (existing) { alert('Email này đã được đăng ký! Vui lòng chuyển sang Đăng nhập.'); return; }
+      const passHash = await window.VCodeCloudDB.hashPass(password);
+      const newUser = {
+        username: email.split('@')[0].replace(/[^a-z0-9_]/g, '') + '_' + Math.floor(10 + Math.random() * 89),
+        email, full_name, password_hash: passHash,
+        role: 'none', auth_provider: 'local', school_name: '', class_name: '', xp: 100
+      };
+      await window.VCodeCloudDB.saveUser(newUser);
+      saveLoggedInUser(newUser);
+      closeModal('auth-modal');
+      showToast(`🎉 Tạo tài khoản thành công cho <b>${full_name}</b>!`);
+      return;
+    } catch {}
+  }
+
+  try {
+    const data = await apiRequest('/api/auth/register', { method: 'POST', body: JSON.stringify({ full_name, email, password }) });
+    saveLoggedInUser(data.user);
+    closeModal('auth-modal');
+    showToast(`🎉 Tạo tài khoản thành công cho <b>${data.user.full_name}</b>!`);
+  } catch (err) {
+    if (window.isNetworkFailure(err)) {
+      const db = window.VCodeOfflineDB.load();
+      db.users = db.users || [];
+      if (db.users.some((u) => u.email === email)) { alert('Email này đã được đăng ký trên thiết bị này. Vui lòng Đăng nhập!'); return; }
+      const localUser = { username: email.split('@')[0], email, full_name, password, role: 'none', auth_provider: 'local', school_name: '', class_name: '', xp: 100 };
+      db.users.push(localUser);
+      window.VCodeOfflineDB.save(db);
+      saveLoggedInUser(localUser);
+      closeModal('auth-modal');
+      showToast(`🎉 Đã tạo tài khoản cho <b>${full_name}</b>!`);
+    } else { alert(err.message); }
+  }
+};
+
+window.handleLoginSubmit = async function(e) {
+  e.preventDefault();
+  const ident = document.getElementById('login-identifier').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+
+  if (window.VCodeCloudDB && window.VCodeCloudDB.isReady()) {
+    try {
+      const cloudUser = await window.VCodeCloudDB.getUser(ident);
+      if (cloudUser) {
+        const passHash = await window.VCodeCloudDB.hashPass(password);
+        if (cloudUser.password_hash && cloudUser.password_hash !== passHash) { alert('Mật khẩu không chính xác.'); return; }
+        saveLoggedInUser(cloudUser);
+        closeModal('auth-modal');
+        showToast(`👋 Xin chào <b>${cloudUser.full_name}</b>!`);
+        return;
+      }
+    } catch {}
+  }
+
+  try {
+    const data = await apiRequest('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: ident, password }) });
+    saveLoggedInUser(data.user);
+    closeModal('auth-modal');
+    showToast(`👋 Xin chào <b>${data.user.full_name}</b>!`);
+  } catch (err) {
+    if (window.isNetworkFailure(err)) {
+      const db = window.VCodeOfflineDB.load();
+      const found = (db.users || []).find((u) => (u.email === ident || u.username === ident) && (!u.password || u.password === password));
+      if (found) {
+        saveLoggedInUser(found);
+        closeModal('auth-modal');
+        showToast(`👋 Đăng nhập thành công: <b>${found.full_name}</b>!`);
+      } else { alert('Sai email/mật khẩu hoặc tài khoản chưa được đăng ký.'); }
+    } else { alert(err.message); }
+  }
+};
+
+window.handleRealSocialLogin = async function(provider) {
+  if (!window.VCodeOAuth || !window.VCodeOAuth.isConfigured()) {
+    document.getElementById('oauth-config-modal').classList.add('open');
+    return;
+  }
+  try {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!firebase.apps.length) firebase.initializeApp(window.VCODE_FIREBASE_CONFIG);
+    let authProv = provider === 'google' ? new firebase.auth.GoogleAuthProvider()
+      : (provider === 'facebook' ? new firebase.auth.FacebookAuthProvider() : new firebase.auth.GithubAuthProvider());
+    if (isMobile) { await firebase.auth().signInWithRedirect(authProv); return; }
+    const result = await firebase.auth().signInWithPopup(authProv);
+    await window.finalizeSocialFirebaseUser(result.user, provider);
+  } catch (err) { alert(`Không thể đăng nhập bằng ${provider.toUpperCase()}: ${err.message}`); }
+};
+
+window.finalizeSocialFirebaseUser = async function(fbUser, provider = 'google') {
+  if (!fbUser) return;
+  const email = (fbUser.email || `${fbUser.uid}@${provider}.vcode.edu`).toLowerCase();
+  let userObj = window.VCodeCloudDB?.isReady() ? await window.VCodeCloudDB.getUser(email) : null;
+  if (!userObj) {
+    userObj = {
+      username: email.split('@')[0].replace(/[^a-z0-9_]/g, '') + '_' + Math.floor(10 + Math.random() * 89),
+      email, full_name: fbUser.displayName || email.split('@')[0], avatar_url: fbUser.photoURL || '',
+      role: 'none', auth_provider: provider, school_name: '', class_name: '', xp: 150
+    };
+    if (window.VCodeCloudDB?.isReady()) await window.VCodeCloudDB.saveUser(userObj);
+  }
+  saveLoggedInUser(userObj);
+  closeModal('auth-modal');
+  showToast(`✅ Đã đăng nhập: <b>${userObj.full_name}</b>!`);
+};
+
+window.lockRoleOnceAction = async function(role) {
+  const label = role === 'teacher' ? 'GIÁO VIÊN' : 'HỌC SINH';
+  if (!confirm(`Xác nhận đăng ký vai trò ${label}? Vai trò này chỉ được chọn 1 lần duy nhất.`)) return;
+  const u = window.AppState.user;
+  u.role = role;
+  if (window.VCodeCloudDB?.isReady()) { try { await window.VCodeCloudDB.saveUser(u); } catch {} }
+  else { try { await apiRequest('/api/auth/set-role', { method: 'POST', body: JSON.stringify({ email: u.email, role, school_name: '', class_name: '' }) }); } catch {} }
+  const db = window.VCodeOfflineDB.load();
+  db.users = (db.users || []).map((x) => x.email === u.email ? { ...x, role } : x);
+  window.VCodeOfflineDB.save(db);
+  saveLoggedInUser(u);
+  showToast(`🔒 Đã kích hoạt vai trò <b>${label}</b>!`);
+  initClassroomPortalData();
+};
+
+window.initClassroomPortalData = async function() {
+  const u = window.AppState.user;
+  const loginBox = document.getElementById('classroom-login-required');
+  const roleBox = document.getElementById('classroom-role-once-picker');
+  const ws = document.getElementById('olm-main-workspace');
+  if (!loginBox || !roleBox || !ws) return;
+
+  loginBox.style.display = 'none'; roleBox.style.display = 'none'; ws.style.display = 'none';
+  if (!u) { loginBox.style.display = 'block'; return; }
+  if (!u.role || u.role === 'none') { roleBox.style.display = 'block'; return; }
+
+  ws.style.display = 'grid';
+  const isTeacher = u.role === 'teacher' || u.role === 'admin';
+  let classes = [];
+
+  if (window.VCodeCloudDB?.isReady()) {
+    try { classes = isTeacher ? await window.VCodeCloudDB.listTeacherClasses(u.email) : await window.VCodeCloudDB.listStudentClasses(u.email); } catch {}
+  } else {
+    try {
+      const endpoint = isTeacher ? `/api/classes/teacher/${encodeURIComponent(u.email)}` : `/api/classes/student/${encodeURIComponent(u.email)}`;
+      const res = await apiRequest(endpoint);
+      classes = res.classes || [];
+    } catch {
+      const ldb = window.LocalClassDB.load();
+      classes = isTeacher ? ldb.classes.filter((c) => c.teacher_email === u.email) : ldb.classes.filter((c) => (c.students || []).some((s) => s.email === u.email));
+    }
+  }
+
+  window.AppState.olmClasses = classes || [];
+  const actBox = document.getElementById('olm-role-actions');
+  if (isTeacher) {
+    actBox.innerHTML = `
+      <button class="btn btn-primary btn-sm" onclick="document.getElementById('create-class-modal').classList.add('open')">+ Tạo lớp mới</button>
+      <button class="btn btn-blue btn-sm" onclick="openCreateAssignmentModal()">📝 Giao bài tập</button>
+      <button class="btn btn-sm" onclick="openClassManagerModal()">⚙️ Quản lý DS Lớp (${classes.length})</button>`;
+  } else {
+    actBox.innerHTML = `
+      <input id="student-join-code-input" class="input-field mono" style="width:170px;padding:6px 10px;text-transform:uppercase;font-weight:700" placeholder="Nhập ID mã lớp..." />
+      <button class="olm-hw-btn" style="padding:7px 14px;font-size:12.5px" onclick="joinClassByCodeAction()">+ Vào lớp</button>`;
+  }
+
+  const pills = document.getElementById('olm-class-pills');
+  const infoCard = document.querySelector('#olm-main-workspace .olm-white-card');
+  const tabsCard = document.querySelectorAll('#olm-main-workspace .olm-white-card')[1];
+
+  if (!classes || classes.length === 0) {
+    pills.innerHTML = `<span style="font-size:14px;font-weight:700;color:var(--text-secondary)">📂 Bạn chưa có lớp học nào</span>`;
+    if (infoCard) infoCard.style.display = 'none';
+    if (tabsCard) {
+      tabsCard.style.display = 'block';
+      document.getElementById('olm-hw-list').innerHTML = `
+        <div style="text-align:center;padding:36px 16px">
+          <div style="font-size:44px;margin-bottom:10px">${isTeacher ? '👨‍🏫' : '🎓'}</div>
+          <h3 style="margin-bottom:6px">Bạn chưa có lớp học nào</h3>
+          <p style="font-size:13.5px;color:#64748B;margin-bottom:18px">${isTeacher ? 'Hãy bấm "+ Tạo lớp mới" để tạo lớp học đầu tiên và nhận mã ID chia sẻ cho học sinh.' : 'Hãy nhập ID mã lớp mà thầy/cô đã gửi vào ô phía trên để tham gia lớp học.'}</p>
+          ${isTeacher ? `<button class="btn btn-primary" onclick="document.getElementById('create-class-modal').classList.add('open')">+ Tạo lớp học đầu tiên</button>` : ''}
+        </div>`;
+    }
+    return;
+  }
+
+  if (infoCard) infoCard.style.display = 'block';
+  if (!window.AppState.activeClassroomCode || !classes.some((c) => c.code === window.AppState.activeClassroomCode)) {
+    window.AppState.activeClassroomCode = classes[0].code;
+  }
+
+  pills.innerHTML = `
+    <div class="vcode-class-manager-bar">
+      <select class="vcode-class-select" onchange="selectOlmClass(this.value)">
+        ${classes.map((c) => `<option value="${c.code}" ${c.code === window.AppState.activeClassroomCode ? 'selected' : ''}>🏫 ${c.name} (${c.code})</option>`).join('')}
+      </select>
+    </div>`;
+
+  await selectOlmClass(window.AppState.activeClassroomCode);
+};
+
+window.handleCreateClassSubmit = async function(e) {
+  e.preventDefault();
+  const u = window.AppState.user;
+  const customCode = (document.getElementById('new-class-code').value || '').trim().toUpperCase();
+  const code = customCode || ('VC' + Math.floor(1000 + Math.random() * 9000));
+  const clsObj = {
+    code, name: document.getElementById('new-class-name').value.trim(),
+    grade_subject: document.getElementById('new-class-subject').value.trim() || 'Tin học • Python',
+    description: document.getElementById('new-class-desc').value.trim(),
+    teacher_email: u.email.toLowerCase(), teacher_name: u.full_name,
+    student_emails: [], students: [], assignments: [], submissions: []
+  };
+
+  if (window.VCodeCloudDB?.isReady()) { await window.VCodeCloudDB.createClass(clsObj); }
+  else {
+    try { const res = await apiRequest('/api/classes/create', { method: 'POST', body: JSON.stringify(clsObj) }); clsObj.code = res.classroom.code; }
+    catch { const ldb = window.LocalClassDB.load(); ldb.classes.unshift(clsObj); window.LocalClassDB.save(ldb); }
+  }
+  closeModal('create-class-modal');
+  e.target.reset();
+  window.AppState.activeClassroomCode = clsObj.code;
+  showToast(`🎉 Đã tạo lớp <b>${clsObj.name}</b> — Mã lớp: <b>${clsObj.code}</b>`);
+  initClassroomPortalData();
+};
+
+window.joinClassByCodeAction = async function(explicitCode) {
+  const inp = document.getElementById('student-join-code-input');
+  const code = (explicitCode || inp?.value || '').trim().toUpperCase();
+  if (!code) { alert('Vui lòng nhập ID mã lớp học!'); return; }
+  const u = window.AppState.user;
+
+  if (window.VCodeCloudDB?.isReady()) {
+    try {
+      const joined = await window.VCodeCloudDB.joinClass(code, u);
+      if (inp) inp.value = '';
+      window.AppState.activeClassroomCode = joined.code;
+      showToast(`🎉 Đã vào lớp <b>${joined.name}</b> (GV: ${joined.teacher_name})!`);
+      initClassroomPortalData();
+      return;
+    } catch (err) { alert(err.message); return; }
+  }
+
+  try {
+    const res = await apiRequest('/api/classes/join', { method: 'POST', body: JSON.stringify({ code, student_email: u.email }) });
+    if (inp) inp.value = '';
+    window.AppState.activeClassroomCode = res.classroom.code;
+    showToast(`🎉 Đã vào lớp <b>${res.classroom.name}</b>!`);
+    initClassroomPortalData();
+  } catch {
+    const ldb = window.LocalClassDB.load();
+    const cls = ldb.classes.find((c) => c.code === code);
+    if (!cls) { alert(`Không tìm thấy lớp với mã '${code}'. Để nhiều thiết bị vào chung lớp qua mạng, hãy dán cấu hình Firebase Firestore vào file js/firebase-auth.js!`); return; }
+    cls.students = cls.students || [];
+    if (!cls.students.some((s) => s.email === u.email)) {
+      cls.students.push({ username: u.username, full_name: u.full_name, email: u.email, xp: u.xp || 100 });
+      window.LocalClassDB.save(ldb);
+    }
+    if (inp) inp.value = '';
+    window.AppState.activeClassroomCode = cls.code;
+    showToast(`🎉 Đã tham gia lớp <b>${cls.name}</b>!`);
+    initClassroomPortalData();
+  }
+};
+
+window.selectOlmClass = async function(code) {
+  window.AppState.activeClassroomCode = code;
+  let detail = null;
+  if (window.VCodeCloudDB?.isReady()) {
+    const cls = await window.VCodeCloudDB.getClass(code);
+    if (cls) {
+      detail = {
+        classroom: cls,
+        roster: (cls.students || []).map((st) => {
+          const sub = (cls.submissions || []).find((x) => x.username === st.username);
+          return {
+            username: st.username, full_name: st.full_name, email: st.email, xp: st.xp || 100,
+            status: sub ? 'completed' : 'not_started', problem: sub ? sub.assignment_code : 'Chưa làm bài',
+            progress: sub ? 100 : 0, score: sub ? sub.score : null, code: sub ? sub.source_code : '', updated: sub ? sub.submitted_at : 'Chưa làm'
+          };
+        }),
+        assignments: cls.assignments || [], submissions: cls.submissions || []
+      };
+    }
+  } else {
+    try { detail = await apiRequest(`/api/classes/${encodeURIComponent(code)}/detail`); }
+    catch {
+      const ldb = window.LocalClassDB.load();
+      const cls = ldb.classes.find((c) => c.code === code);
+      if (cls) {
+        detail = {
+          classroom: cls,
+          roster: (cls.students || []).map((st) => ({ username: st.username, full_name: st.full_name, email: st.email, xp: st.xp || 100, status: 'not_started', problem: 'Chưa mở bài tập', progress: 0, score: null, code: '', updated: 'Chưa làm' })),
+          assignments: cls.assignments || [], submissions: cls.submissions || []
+        };
+      }
+    }
+  }
+  window.AppState.olmActiveDetail = detail;
+  window.AppState.currentRoster = detail?.roster || [];
+  window.__classAssignmentsCache = detail?.assignments || [];
+  renderOlmActiveClass();
+};
+
+window.openClassManagerModal = function() {
+  const list = window.AppState.olmClasses || [];
+  const box = document.getElementById('class-manager-list');
+  if (box) {
+    box.innerHTML = list.length ? list.map((c) => `
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-radius:10px;background:var(--bg-elevated);margin-bottom:8px;flex-wrap:wrap">
+        <div><strong>${c.name}</strong> <span class="olm-code-chip" style="font-size:11px;padding:2px 6px">${c.code}</span><div style="font-size:12px;color:var(--text-secondary)">${(c.students || []).length || c.students_count || 0} học sinh</div></div>
+        <div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="renameClassAction('${c.code}', '${c.name.replace(/'/g, '')}')">✏️ Đổi tên</button><button class="btn btn-sm" style="border-color:#E11D48;color:#E11D48" onclick="deleteClassAction('${c.code}')">🗑️ Xóa</button></div>
+      </div>`).join('') : '<p style="color:var(--text-secondary)">Bạn chưa có lớp học nào.</p>';
+  }
+  document.getElementById('class-manager-modal')?.classList.add('open');
+};
+
+window.renameClassAction = async function(code, oldName) {
+  const newName = prompt('Nhập tên lớp học mới:', oldName);
+  if (!newName || !newName.trim()) return;
+  if (window.VCodeCloudDB?.isReady()) { await window.VCodeCloudDB.updateClass(code, { name: newName.trim() }); }
+  else {
+    try { await apiRequest(`/api/classes/${code}`, { method: 'PUT', body: JSON.stringify({ name: newName.trim() }) }); }
+    catch { const ldb = window.LocalClassDB.load(); const cls = ldb.classes.find((c) => c.code === code); if (cls) { cls.name = newName.trim(); window.LocalClassDB.save(ldb); } }
+  }
+  closeModal('class-manager-modal');
+  showToast(`✅ Đã đổi tên lớp ${code}!`);
+  initClassroomPortalData();
+};
+
+window.deleteClassAction = async function(code) {
+  if (!confirm(`Bạn chắc chắn muốn XÓA vĩnh viễn lớp ${code}?`)) return;
+  if (window.VCodeCloudDB?.isReady()) { await window.VCodeCloudDB.deleteClass(code); }
+  else {
+    try { await apiRequest(`/api/classes/${code}`, { method: 'DELETE' }); }
+    catch { const ldb = window.LocalClassDB.load(); ldb.classes = ldb.classes.filter((c) => c.code !== code); window.LocalClassDB.save(ldb); }
+  }
+  if (window.AppState.activeClassroomCode === code) window.AppState.activeClassroomCode = '';
+  closeModal('class-manager-modal');
+  showToast(`🗑️ Đã xóa lớp ${code}!`);
+  initClassroomPortalData();
+};
+
+window.sendRobotAIChat = async function() {
+  const inp = document.getElementById('robot-chat-input');
+  const q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  const feed = document.getElementById('robot-chat-feed');
+  feed.innerHTML += `<div class="chat-msg user">${q.replace(/</g, '&lt;')}</div>`;
+  const code = document.getElementById('code-editor')?.value || '';
+  const res = await window.VCodeAI.askHybrid(q, code);
+  feed.innerHTML += `<div class="chat-msg ai">${window.VCodeAI.formatMarkdown(res.text)}</div>`;
+  feed.scrollTop = feed.scrollHeight;
+};
+
+window.addEventListener('DOMContentLoaded', async () => {
+  if (window.VCodeOAuth?.isConfigured() && typeof firebase !== 'undefined') {
+    try {
+      if (!firebase.apps.length) firebase.initializeApp(window.VCODE_FIREBASE_CONFIG);
+      const red = await firebase.auth().getRedirectResult();
+      if (red && red.user) await window.finalizeSocialFirebaseUser(red.user, 'google');
+    } catch {}
+  }
+});

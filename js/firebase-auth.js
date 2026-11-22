@@ -1,8 +1,8 @@
 // V-CODE EDU — OAUTH THẬT (GOOGLE / FACEBOOK / GITHUB) QUA FIREBASE AUTHENTICATION
-window.VCODE_FIREBASE_CONFIG = JSON.parse(localStorage.getItem('vcode_firebase_config') || 'null') || {
-  apiKey: "",
-  authDomain: "",
-  projectId: ""
+window.VCODE_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBJcl1zkrtRReiteKkErge12oh0FDi2LmA",
+  authDomain: "v-code-edu.firebaseapp.com",
+  projectId: "v-code-edu"
 };
 
 window.VCodeOAuth = {

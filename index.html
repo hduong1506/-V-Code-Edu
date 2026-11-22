@@ -10,6 +10,7 @@
   <!-- Firebase Auth SDK cho Đăng nhập thật Google / Facebook / GitHub -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" defer></script>
 </head>
 <body>
 
@@ -45,7 +46,7 @@
   <header class="topbar">
     <div class="topbar-left">
       <button id="hamburger-btn" class="hamburger-btn" onclick="toggleLeftDrawer()" aria-label="Mở menu"><span></span><span></span><span></span></button>
-      <div class="brand" onclick="switchView('home')"><img src="assets/logo.jpg" class="brand-logo-img" alt="V-Code Edu" onerror="this.outerHTML='<div class=brand-mark>V</div>'" /><span>V-Code Edu</span><span class="badge badge-easy">v14.0</span></div>
+      <div class="brand" onclick="switchView('home')"><img src="assets/logo.jpg" class="brand-logo-img" alt="V-Code Edu" onerror="this.outerHTML='<div class=brand-mark>V</div>'" /><span>V-Code Edu</span><span class="badge badge-easy">v15.0</span></div>
     </div>
 
     <nav class="nav-segmented">
@@ -122,7 +123,7 @@
             </div>
             <div class="hero-float-chip c1">🧩 Scratch Live</div>
             <div class="hero-float-chip c2">🤖 AI Sư phạm</div>
-            <div class="hero-float-chip c3">🏫 Lớp học OLM</div>
+            <div class="hero-float-chip c3">🏫 Lớp học V-Code</div>
             <div class="hero-float-chip c4">🎮 50 Chặng Game</div>
           </div>
 
@@ -216,20 +217,15 @@
           </div>
         </div>
 
-        <div class="home-3d-card" style="text-align:center">
-          <span class="bento-tag">Mô hình 3D • V-Code Core</span>
-          <div class="center-cube-scene" aria-hidden="true">
-            <div class="center-cube">
-              <div class="cf cf1">Python</div>
-              <div class="cf cf2">Scratch</div>
-              <div class="cf cf3">C++</div>
-              <div class="cf cf4">HTML5</div>
-              <div class="cf cf5">AI</div>
-              <div class="cf cf6">OLM</div>
-            </div>
-          </div>
-          <div style="font-size:12.5px;color:var(--text-secondary)">6 trụ cột công nghệ đồng bộ trong 1 nền tảng</div>
-        </div>
+        <div class="home-3d-card">
+          <span class="bento-tag">Thực thi Thời gian thực</span>
+          <h3 style="font-size:17px;margin-bottom:6px">Trình Biên dịch Đa Đầu Vào</h3>
+          <div class="home-terminal-card">
+            <div style="color:#64748B"># Nhập x, y tự do nhiều dòng</div>
+            <div><span style="color:#38BDF8">x, y</span> = <span style="color:#10B981">map</span>(int, input().split())</div>
+            <div><span style="color:#10B981">print</span>(<span style="color:#FBBF24">"Tổng ="</span>, x + y)</div>
+            <div style="margin-top:8px;padding-top:6px;border-top:1px dashed #334155;color:#34D399">&gt;&gt;&gt; Tổng = 25 (0.01s • 100% PASS)</div>
+          </div></div>
 
         <div class="home-3d-card">
           <span class="bento-tag">Hiệu quả Thực tế</span>
@@ -425,7 +421,7 @@
         <div id="snippet-bar" class="snippet-bar"></div>
         <div class="editor-wrapper"><div id="line-numbers" class="line-numbers">1</div><textarea id="code-editor" class="code-textarea" spellcheck="false" oninput="syncLiveEditorOutputs()"></textarea></div>
         <div class="ide-footer-bar" style="padding:9px 14px;background:var(--bg-surface);border-top:1px solid var(--border-subtle);display:flex;align-items:center;gap:10px">
-          <span class="mono" style="font-size:12px;color:var(--text-secondary)">Dữ liệu đầu vào (stdin):</span><input id="custom-stdin" class="input-field mono" style="width:140px;padding:4px 8px" value="6" />
+          <span class="mono" style="font-size:12px;color:var(--text-secondary)">Dữ liệu đầu vào (stdin):</span><textarea id="custom-stdin" class="vcode-stdin-area" rows="2" placeholder="Nhập nhiều dữ liệu (VD: mỗi số 1 dòng hoặc cách dấu cách)...">6</textarea>
         </div>
       </section>
       <aside class="pane">
@@ -445,7 +441,7 @@
     </div>
   </section>
 
-  <!-- ==================== VIEW 4: HỆ THỐNG LỚP HỌC CHUẨN OLM.VN HOÀN HẢO ==================== -->
+  <!-- ==================== VIEW 4: HỆ THỐNG LỚP HỌC CHUẨN V-Code HOÀN HẢO ==================== -->
   <section id="view-classroom" class="view-section">
     <div class="olm-shell">
       <div id="classroom-login-required" class="olm-white-card" style="display:none;max-width:540px;margin:40px auto;text-align:center">
@@ -572,7 +568,7 @@
         </div>
         <div class="editor-wrapper"><div id="exam-line-numbers" class="line-numbers">1</div><textarea id="exam-editor" class="code-textarea" spellcheck="false" oninput="syncExamEditor()"></textarea></div>
         <div class="ide-footer-bar" style="padding:9px 14px;background:var(--bg-surface);border-top:1px solid var(--border-subtle);display:flex;align-items:center;gap:10px">
-          <span class="mono" style="font-size:12px">Dữ liệu thử (stdin):</span><input id="exam-stdin" class="input-field mono" style="width:130px;padding:4px 8px" value="6" />
+          <span class="mono" style="font-size:12px">Dữ liệu thử (stdin):</span><textarea id="exam-stdin" class="vcode-stdin-area" rows="2" placeholder="Nhập x, y (mỗi giá trị 1 dòng hoặc cách dấu cách)...">6</textarea>
         </div>
       </section>
       <aside class="pane">
@@ -826,15 +822,25 @@
   <div id="peek-modal" class="modal-overlay"><div class="modal-box" style="max-width:560px"><button class="modal-close" onclick="closeModal('peek-modal')">✕</button><span class="bento-tag">Chấm bài &amp; Đánh giá Học sinh</span><h3 id="peek-student-name"></h3><p id="peek-student-problem" style="font-size:12.5px;color:var(--text-secondary);margin-bottom:10px"></p><pre id="peek-code-preview" class="console-box" style="max-height:230px"></pre><div class="grid-2col" style="gap:10px;margin-bottom:10px"><div><label style="font-size:12px;font-weight:700">Điểm số giáo viên chấm (0 - 100):</label><input id="grade-score-input" type="number" min="0" max="100" value="100" class="input-field mono" style="margin-top:4px" /></div><div><label style="font-size:12px;font-weight:700">Lời nhận xét gửi về học sinh:</label><input id="teacher-hint-input" class="input-field" placeholder="VD: Làm tốt, code sạch sẽ!" style="margin-top:4px" /></div></div><button class="btn btn-primary" style="width:100%" onclick="submitTeacherGradeAction()">✓ Lưu Điểm &amp; Gửi Đánh Giá Về Học Sinh</button></div></div>
   <div id="ai-config-modal" class="modal-overlay"><div class="modal-box"><button class="modal-close" onclick="closeModal('ai-config-modal')">✕</button><span class="bento-tag">Hỗ trợ OpenAI (ChatGPT) &amp; Google Gemini</span><h3 style="margin-bottom:10px">Cấu hình AI &amp; Backend</h3><div class="auth-field"><label>Backend URL (FastAPI)</label><input id="cfg-backend-url" class="input-field mono" value="http://localhost:8000" /></div><div class="auth-field"><label>OpenAI API Key (ChatGPT — bắt đầu bằng sk-...)</label><input id="cfg-openai-key" type="password" class="input-field mono" placeholder="sk-proj-..." /></div><div class="auth-field"><label>Google Gemini API Key (Miễn phí — bắt đầu bằng AIza...)</label><input id="cfg-gemini-key" type="password" class="input-field mono" placeholder="AIzaSy..." /></div><div style="font-size:12px;color:var(--text-secondary);background:var(--bg-elevated);padding:10px 12px;border-radius:9px;margin-bottom:12px;line-height:1.6"><strong>📖 Hướng dẫn lấy API Key trong 30 giây:</strong><br/>• <b>Google Gemini (Miễn phí):</b> Truy cập <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent-emerald)">aistudio.google.com/apikey</a> → Bấm <i>Create API key</i> → Copy dán vào ô trên.<br/>• <b>OpenAI (ChatGPT):</b> Truy cập <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--accent-blue)">platform.openai.com/api-keys</a> → Bấm <i>Create new secret key</i> → Copy dán vào ô OpenAI.</div><button class="btn btn-primary" style="width:100%" onclick="saveAIConfig()">💾 Lưu Cấu Hình AI</button></div></div>
 
+  
+  <div id="class-manager-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width:520px">
+      <button class="modal-close" onclick="closeModal('class-manager-modal')">✕</button>
+      <span class="bento-tag">Quản trị Lớp học</span>
+      <h3 style="margin-bottom:12px">Danh sách Lớp học của bạn</h3>
+      <div id="class-manager-list" style="max-height:360px;overflow-y:auto"></div>
+    </div>
+  </div>
+
   <div id="toast-banner" class="toast-banner"></div>
 
   
   <!-- ==================== ROBOT AI NỔI KÉO-THẢ KHẮP MÀN HÌNH ==================== -->
-  <div id="robot-ai-fab" class="robot-ai-fab" title="Kéo di chuyển hoặc bấm mở Trợ lý AI">🤖</div>
+  <div id="robot-ai-fab" class="robot-ai-fab" title="Trợ lý AI V-Code Edu"><svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="28" height="22" rx="8" fill="#10B981" fill-opacity="0.18" stroke="#10B981" stroke-width="2.2"/><circle cx="13" cy="18" r="2.6" fill="#38BDF8"/><circle cx="23" cy="18" r="2.6" fill="#38BDF8"/><path d="M13 24.5H23" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/><path d="M18 3V8" stroke="#38BDF8" stroke-width="2.2" stroke-linecap="round"/><circle cx="18" cy="3" r="2" fill="#38BDF8"/></svg></div>
   <div id="robot-ai-popup" class="robot-ai-popup">
     <div class="robot-ai-head">
       <div>
-        <strong style="font-size:14px">🤖 Trợ lý AI V-Code Edu</strong>
+        <strong style="font-size:14px">Trợ lý AI V-Code Edu</strong>
         <div id="robot-ai-mode-badge" style="font-size:11px;opacity:0.92">🟠 Offline Chatbox</div>
       </div>
       <button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#FFF;border:none" onclick="toggleRobotPopup(false)">✕</button>
@@ -894,6 +900,7 @@
   <script src="js/lessons-data.js"></script>
   <script src="js/offline-db.js"></script>
   <script src="js/firebase-auth.js"></script>
+  <script src="js/cloud-db.js"></script>
   <script src="js/three-hero.js"></script>
   <script src="js/scratch-bridge.js"></script>
   <script src="js/ide-engine.js"></script>

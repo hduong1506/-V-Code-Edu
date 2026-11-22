@@ -136,3 +136,29 @@ def get_classroom_detail(code: str, db: Session = Depends(get_db)):
             for sub in submissions[:50]
         ]
     }
+
+@router.delete("/{code}")
+def delete_classroom(code: str, db: Session = Depends(get_db)):
+    c_code = code.strip().upper()
+    cls = db.query(Classroom).filter(Classroom.code == c_code).first()
+    if not cls:
+        raise HTTPException(status_code=404, detail="Không tìm thấy lớp học để xóa.")
+    db.query(ClassroomMember).filter(ClassroomMember.classroom_id == cls.id).delete()
+    db.query(Assignment).filter(Assignment.classroom_code == c_code).delete()
+    db.query(Submission).filter(Submission.classroom_code == c_code).delete()
+    db.query(StudentLiveSession).filter(StudentLiveSession.class_code == c_code).delete()
+    db.delete(cls)
+    db.commit()
+    return {"status": "deleted", "code": c_code}
+
+@router.put("/{code}")
+def rename_classroom(code: str, payload: dict, db: Session = Depends(get_db)):
+    c_code = code.strip().upper()
+    cls = db.query(Classroom).filter(Classroom.code == c_code).first()
+    if not cls:
+        raise HTTPException(status_code=404, detail="Không tìm thấy lớp học.")
+    new_name = (payload.get("name") or "").strip()
+    if new_name:
+        cls.name = new_name
+    db.commit()
+    return {"status": "ok", "classroom": format_classroom(cls, db)}
