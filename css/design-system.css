@@ -3320,3 +3320,38 @@ textarea#code-editor.v20-editor-light,
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+/* ==================== V25.0: CUSTOM 24H TIME PICKER (00:00 - 23:59) ==================== */
+.v25-time24-wrap { position: relative; display: flex; align-items: center; }
+.v25-time24-input { padding-right: 38px !important; letter-spacing: 0.05em; font-weight: 600; }
+.v25-time24-btn {
+  position: absolute; right: 6px; width: 28px; height: 28px;
+  display: grid; place-items: center; border-radius: 6px;
+  background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; cursor: pointer;
+}
+.v25-time24-btn:hover { background: #DBEAFE; }
+
+.v25-time24-pop {
+  display: none; position: absolute; top: calc(100% + 6px); right: 0; z-index: 120;
+  width: 196px; background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.22); overflow: hidden;
+}
+.v25-time24-pop.open { display: block; }
+.v25-t-head {
+  display: grid; grid-template-columns: 1fr 1fr; text-align: center;
+  padding: 7px 6px; font-size: 11px; font-weight: 700; color: #475569;
+  background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
+}
+.v25-t-cols { display: grid; grid-template-columns: 1fr 1fr; height: 210px; }
+.v25-t-col {
+  overflow-y: auto; padding: 4px; display: flex; flex-direction: column; gap: 2px;
+  scrollbar-width: thin;
+}
+.v25-col-h { border-right: 1px solid #E2E8F0; }
+.v25-t-opt {
+  border: none; background: transparent; color: #0F172A;
+  padding: 6px 0; border-radius: 7px; font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.v25-t-opt:hover { background: #EFF6FF; color: #1D4ED8; }
+.v25-t-opt.active { background: #2563EB; color: #FFFFFF; font-weight: 800; }
