@@ -264,7 +264,7 @@
           const totalStu = students.length;
           const doneCount = students.length ? students.filter((s) => subEmails.has((s.email || s.username || '').toLowerCase())).length : asgSubs.length;
           const pendingCount = Math.max(0, totalStu - doneCount);
-          const avgScore = asgSubs.length ? Math.round(asgSubs.reduce((acc, s) => acc + Number(s.teacher_score ?? s.score ?? 0), 0) / asgSubs.length) : 0;
+          const avgScore = asgSubs.length ? Number((asgSubs.reduce((acc, s) => acc + Number(s.teacher_score ?? s.score ?? 0), 0) / asgSubs.length).toFixed(1)) : 0;
           const mySub = asgSubs.find((s) => (s.email || '').toLowerCase() === (u.email || '').toLowerCase() || s.username === u.username);
 
           return `
@@ -286,7 +286,7 @@
                     <button type="button" class="btn btn-sm" style="color:#F43F5E;border-color:rgba(244,63,94,0.35)" onclick="deleteV18Assignment('${esc(a.id || a.code)}')">Xóa</button>
                   ` : (
                     mySub
-                      ? `<button type="button" class="btn btn-sm" onclick="openV18StudentSolve('${esc(a.id || a.code)}', true)">Đã nộp • Điểm: ${mySub.teacher_score ?? mySub.score ?? 0}/100</button>`
+                      ? `<button type="button" class="btn btn-sm" onclick="openV18StudentSolve('${esc(a.id || a.code)}', true)">Đã nộp • Điểm: ${mySub.teacher_score ?? mySub.score ?? 0}/10</button>`
                       : (st.expired
                           ? `<button type="button" class="btn btn-sm" disabled style="opacity:0.55;cursor:not-allowed">Quá hạn • Đã khóa</button>`
                           : `<button type="button" class="btn btn-primary btn-sm" onclick="openV18StudentSolve('${esc(a.id || a.code)}', false)">Làm bài ngay</button>`)
@@ -297,7 +297,7 @@
                 <span>Sĩ số: <strong>${totalStu}</strong></span>
                 <span style="color:#10B981">Đã nộp: <strong>${doneCount}</strong></span>
                 <span style="color:${st.expired ? '#F43F5E' : '#F59E0B'}">${st.expired ? 'Quá hạn chưa nộp' : 'Chưa làm'}: <strong>${pendingCount}</strong></span>
-                <span>Điểm TB: <strong>${asgSubs.length ? avgScore + '/100' : '—'}</strong></span>
+                <span>Điểm TB: <strong>${asgSubs.length ? avgScore + '/10' : '—'}</strong></span>
               </div>
             </div>`;
         }).join('');
@@ -411,7 +411,7 @@
           <td style="color:var(--text-secondary)">${esc(stu.email || '—')}</td>
           <td>${badge}</td>
           <td style="color:var(--text-secondary)">${sub?.submitted_at ? formatDateTimeVN(sub.submitted_at) : '—'}</td>
-          <td>${sub ? `<strong>${sub.teacher_score ?? sub.score ?? 0}/100</strong>` : '—'}</td>
+          <td>${sub ? `<strong>${sub.teacher_score ?? sub.score ?? 0}/10</strong>` : '—'}</td>
           <td>${sub ? `<button type="button" class="btn btn-primary btn-sm" onclick="openV18GradeModal('${esc(asg.id || asg.code)}','${esc(stu.email || stu.username)}')">Xem bài &amp; Chấm</button>` : `<span style="color:var(--text-secondary);font-size:12px">Chưa nộp</span>`}</td>
         </tr>`;
     }).join('');
@@ -457,13 +457,13 @@
     if (!modal) return;
     document.getElementById('v18-grade-body').innerHTML = `
       <h3 style="margin:0 0 6px">Chấm bài: ${esc(sub.full_name || sub.username)}</h3>
-      <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 12px">Bài tập: <strong>${esc(asg.title)}</strong> • Điểm tự động: <strong>${sub.score ?? 0}/100</strong></p>
+      <p style="font-size:12.5px;color:var(--text-secondary);margin:0 0 12px">Bài tập: <strong>${esc(asg.title)}</strong> • Điểm tự động: <strong>${sub.score ?? 0}/10</strong></p>
       <pre class="v18-code-preview">${esc(sub.code || '# Không có mã nguồn')}</pre>
       <form id="v18-grade-form" style="margin-top:14px">
         <div style="display:grid;grid-template-columns:160px 1fr;gap:12px">
           <div>
-            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px">Điểm giáo viên (0-100)</label>
-            <input type="number" id="v18-grade-score" class="input-field" min="0" max="100" value="${sub.teacher_score ?? sub.score ?? 0}" required />
+            <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px">Điểm giáo viên (0-10)</label>
+            <input type="number" id="v18-grade-score" class="input-field" min="0" max="10" step="0.25" value="${sub.teacher_score ?? sub.score ?? 0}" required />
           </div>
           <div>
             <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px">Nhận xét giáo viên</label>
@@ -520,7 +520,7 @@
         </div>
         <button type="button" class="btn btn-sm" onclick="document.getElementById('v18-solve-modal').classList.remove('open')">Đóng</button>
       </div>
-      ${oldSub ? `<div class="v18-rt-note" style="margin-bottom:10px">Điểm của bạn: <strong>${oldSub.teacher_score ?? oldSub.score ?? 0}/100</strong>${oldSub.teacher_note ? ' • Nhận xét GV: <strong>' + esc(oldSub.teacher_note) + '</strong>' : ''}</div>` : ''}
+      ${oldSub ? `<div class="v18-rt-note" style="margin-bottom:10px">Điểm của bạn: <strong>${oldSub.teacher_score ?? oldSub.score ?? 0}/10</strong>${oldSub.teacher_note ? ' • Nhận xét GV: <strong>' + esc(oldSub.teacher_note) + '</strong>' : ''}</div>` : ''}
       <textarea id="v18-solve-editor" class="input-field mono" rows="12" ${locked ? 'readonly' : ''} style="width:100%;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.6">${esc(oldSub?.code || asg.starter_code || '# Viết lời giải tại đây\n')}</textarea>
       <div id="v18-solve-out" style="margin-top:10px;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,0.3);font-family:'JetBrains Mono',monospace;font-size:12.5px;min-height:42px;color:#94A3B8">Bấm "Chạy thử" hoặc "Nộp bài" để chấm điểm tự động.</div>
       <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px">
@@ -558,7 +558,7 @@
         };
         if (window.VCodeCloudDB?.isReady()) await window.VCodeCloudDB.saveSubmission(code, subObj);
         modal.classList.remove('open');
-        if (typeof showToast === 'function') showToast(`Đã nộp bài thành công! Điểm tự động: ${graded.score}/100`);
+        if (typeof showToast === 'function') showToast(`Đã nộp bài thành công! Điểm tự động: ${graded.score}/10`);
         await window.renderV18ClassroomState();
       };
     }

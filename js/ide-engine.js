@@ -347,6 +347,6 @@ window.VCodeIDE = {
       return { index: idx + 1, input: tc.input, expected: tc.expected, actual, passed: ok };
     });
     const total = Math.max(1, testCases.length);
-    return { passed, total, score: Math.round((passed / total) * 100), details };
+    return { passed, total, score: Math.round((passed / total) * 100) / 10 / 10, details };
   }
 };

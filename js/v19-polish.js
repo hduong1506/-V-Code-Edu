@@ -316,7 +316,7 @@
         const totalStu = students.length;
         const doneCount = students.length ? students.filter((s) => subEmails.has((s.email || s.username || '').toLowerCase())).length : asgSubs.length;
         const pendingCount = Math.max(0, totalStu - doneCount);
-        const avgScore = asgSubs.length ? Math.round(asgSubs.reduce((acc, s) => acc + Number(s.teacher_score ?? s.score ?? 0), 0) / asgSubs.length) : 0;
+        const avgScore = asgSubs.length ? Number((asgSubs.reduce((acc, s) => acc + Number(s.teacher_score ?? s.score ?? 0), 0) / asgSubs.length).toFixed(1)) : 0;
         const mySub = asgSubs.find((s) => (s.email || '').toLowerCase() === (u.email || '').toLowerCase() || s.username === u.username);
 
         return `
@@ -332,7 +332,7 @@
                 <span>Sĩ số: <strong>${totalStu}</strong></span>
                 <span class="c-green">Đã nộp: <strong>${doneCount}</strong></span>
                 <span class="${st.expired ? 'c-red' : 'c-amber'}">${st.expired ? 'Quá hạn chưa nộp' : 'Chưa làm'}: <strong>${pendingCount}</strong></span>
-                <span>Điểm TB: <strong>${asgSubs.length ? avgScore + '/100' : '—'}</strong></span>
+                <span>Điểm TB: <strong>${asgSubs.length ? avgScore + '/10' : '—'}</strong></span>
               </div>
             </div>
             <div class="v19-asg-btns">
@@ -341,7 +341,7 @@
                 <button type="button" class="v19-btn-danger-outline" onclick="deleteV19Assignment('${esc(a.id || a.code)}')">Xóa</button>
               ` : (
                 mySub
-                  ? `<button type="button" class="v19-btn-outline" onclick="openV18StudentSolve('${esc(a.id || a.code)}', true)">Đã nộp • ${mySub.teacher_score ?? mySub.score ?? 0}/100</button>`
+                  ? `<button type="button" class="v19-btn-outline" onclick="openV18StudentSolve('${esc(a.id || a.code)}', true)">Đã nộp • ${mySub.teacher_score ?? mySub.score ?? 0}/10</button>`
                   : (st.expired
                       ? `<button type="button" class="v19-btn-disabled" disabled>Quá hạn • Đã khóa</button>`
                       : `<button type="button" class="v19-btn-primary" onclick="openV18StudentSolve('${esc(a.id || a.code)}', false)">Làm bài ngay</button>`)
