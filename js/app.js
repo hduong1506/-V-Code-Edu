@@ -10,14 +10,14 @@ const SNIPPETS = [
 
 const CHALLENGE_STAGES = [
   {
-    id: 'ch-01', stage: 1, icon: '🚀', title: 'Chặng 1: Khởi động Phi thuyền',
+    id: 'ch-01', stage: 1, icon: '', title: 'Chặng 1: Khởi động Phi thuyền',
     badge: 'Tân binh', xp: 100,
     desc: 'Nhập số năng lượng N (số nguyên). Nhân đôi N và in ra để kích hoạt động cơ phi thuyền.',
     starter: 'n = int(input())\nprint(n * 2)',
     testCases: [{ input: '5', expected: '10' }, { input: '12', expected: '24' }]
   },
   {
-    id: 'ch-02', stage: 2, icon: '🔐', title: 'Chặng 2: Giải mã Cánh cổng',
+    id: 'ch-02', stage: 2, icon: '', title: 'Chặng 2: Giải mã Cánh cổng',
     badge: 'Thám hiểm', xp: 150,
     desc: 'Nhập mật mã nguyên N. Nếu N chẵn in "MO CUA", nếu N lẻ in "KHOA".',
     starter: 'n = int(input())\nif n % 2 == 0:\n    print("MO CUA")\nelse:\n    print("KHOA")',
@@ -38,7 +38,7 @@ const CHALLENGE_STAGES = [
     testCases: [{ input: '9', expected: '3' }, { input: '15', expected: '5' }]
   },
   {
-    id: 'ch-05', stage: 5, icon: '👑', title: 'Chặng 5: Chinh phục Đỉnh cao',
+    id: 'ch-05', stage: 5, icon: '', title: 'Chặng 5: Chinh phục Đỉnh cao',
     badge: 'Bậc thầy Python', xp: 350,
     desc: 'Nhập số nguyên dương N. Tính giai thừa N! = 1 * 2 * ... * N để mở kho báu cuối cùng.',
     starter: 'n = int(input())\ngt = 1\nfor i in range(1, n + 1):\n    gt = gt * i\nprint(gt)',
@@ -129,7 +129,7 @@ function switchAuthTab(tab) {
   document.getElementById('auth-register-form').style.display = isLogin ? 'none' : 'block';
   document.getElementById('auth-heading').textContent = isLogin ? 'Đăng nhập V-Code Edu' : 'Tạo tài khoản mới';
   document.getElementById('auth-subheading').textContent = isLogin
-    ? 'Đăng nhập bằng Google, Facebook, GitHub hoặc Email của bạn'
+    ? 'Đăng nhập bằng tài khoản Google hoặc Email của bạn'
     : 'Chỉ cần Họ tên, Email và Mật khẩu — hoàn toàn miễn phí';
 }
 
@@ -146,7 +146,7 @@ function logoutAction() {
   localStorage.removeItem('vcode_current_user');
   updateUserHeaderUI();
   switchView('home');
-  showToast('👋 Bạn đã đăng xuất an toàn khỏi V-Code Edu.');
+  showToast('Bạn đã đăng xuất an toàn khỏi V-Code Edu.');
 }
 
 async function handleLoginSubmit(e) {
@@ -157,7 +157,7 @@ async function handleLoginSubmit(e) {
     const data = await apiRequest('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
     saveLoggedInUser(data.user);
     closeModal('auth-modal');
-    showToast(`👋 Đăng nhập thành công! Xin chào <b>${data.user.full_name}</b>.`);
+    showToast(`Đăng nhập thành công! Xin chào <b>${data.user.full_name}</b>.`);
   } catch (err) {
     const isNetErr = err.message === 'OFFLINE' || err.message.includes('Failed to fetch');
     if (isNetErr) {
@@ -166,7 +166,7 @@ async function handleLoginSubmit(e) {
       if (found) {
         saveLoggedInUser(found);
         closeModal('auth-modal');
-        showToast(`🟠 Đăng nhập cục bộ thành công! (Bật Backend cổng 8000 để đồng bộ Database)`);
+        showToast(`Đăng nhập cục bộ thành công! (Bật Backend cổng 8000 để đồng bộ Database)`);
       } else {
         alert('Sai email/mật khẩu hoặc tài khoản chưa được đăng ký trên máy này.');
       }
@@ -183,7 +183,7 @@ async function handleRegisterSubmit(e) {
     const data = await apiRequest('/api/auth/register', { method: 'POST', body: JSON.stringify({ full_name, email, password }) });
     saveLoggedInUser(data.user);
     closeModal('auth-modal');
-    showToast(`🎉 Tạo tài khoản thành công cho <b>${data.user.full_name}</b>!`);
+    showToast(`Tạo tài khoản thành công cho <b>${data.user.full_name}</b>!`);
   } catch (err) {
     const isNetErr = err.message === 'OFFLINE' || err.message.includes('Failed to fetch');
     if (isNetErr) {
@@ -194,7 +194,7 @@ async function handleRegisterSubmit(e) {
       window.VCodeOfflineDB.save(db);
       saveLoggedInUser(localUser);
       closeModal('auth-modal');
-      showToast(`🎉 Đã tạo tài khoản <b>${full_name}</b> (Chế độ cục bộ — bật Backend cổng 8000 để lưu DB thật)!`);
+      showToast(`Đã tạo tài khoản <b>${full_name}</b> (Chế độ cục bộ — bật Backend cổng 8000 để lưu DB thật)!`);
     } else { alert(err.message); }
   }
 }
@@ -215,7 +215,7 @@ async function handleRealSocialLogin(provider) {
     });
     saveLoggedInUser(data.user);
     closeModal('auth-modal');
-    showToast(`✅ Đã đăng nhập thật bằng <b>${provider.toUpperCase()}</b> — Xin chào <b>${data.user.full_name}</b>!`);
+    showToast(`Đã đăng nhập thật bằng <b>${provider.toUpperCase()}</b> — Xin chào <b>${data.user.full_name}</b>!`);
   } catch (err) {
     alert(`Lỗi đăng nhập ${provider.toUpperCase()}: ${err.message}`);
   }
@@ -230,7 +230,7 @@ function saveOAuthConfig() {
   localStorage.setItem('vcode_firebase_config', JSON.stringify(cfg));
   window.VCODE_FIREBASE_CONFIG = cfg;
   closeModal('oauth-config-modal');
-  showToast('🔐 Đã lưu cấu hình Firebase OAuth thật! Bấm lại nút Google/Facebook/GitHub để đăng nhập.');
+  showToast('Đã lưu cấu hình Firebase OAuth thật! Bấm lại nút Google/Facebook/GitHub để đăng nhập.');
 }
 
 function updateUserHeaderUI() {
@@ -296,10 +296,10 @@ async function saveAccountProfileAction(e) {
   try {
     const res = await apiRequest('/api/auth/update-profile', { method: 'POST', body: JSON.stringify(payload) });
     saveLoggedInUser(res.user);
-    showToast('✅ Đã lưu thông tin hồ sơ & ảnh đại diện vào Database!');
+    showToast('Đã lưu thông tin hồ sơ & ảnh đại diện vào Database!');
   } catch (err) {
     saveLoggedInUser({ ...u, ...payload });
-    showToast('🟠 Đã cập nhật hồ sơ cục bộ.');
+    showToast('Đã cập nhật hồ sơ cục bộ.');
   }
 }
 
@@ -315,7 +315,7 @@ async function handleChangePasswordSubmit(e) {
       body: JSON.stringify({ email: window.AppState.user.email, old_password, new_password })
     });
     e.target.reset();
-    showToast(`🔐 ${res.message}`);
+    showToast(`${res.message}`);
   } catch (err) {
     alert(err.message);
   }
@@ -378,7 +378,7 @@ async function lockRoleOnceAction(role) {
       body: JSON.stringify({ email: u.email, role, school_name: u.school_name || 'THCS & THPT Hòa Phú', class_name: u.class_name || '' })
     });
     saveLoggedInUser(res.user);
-    showToast(`🔒 Đã kích hoạt cố định vai trò <b>${label}</b>!`);
+    showToast(`Đã kích hoạt cố định vai trò <b>${label}</b>!`);
     initClassroomPortalData();
   } catch (err) {
     alert(err.message);
@@ -504,7 +504,7 @@ async function handleCreateClassSubmit(e) {
     closeModal('create-class-modal');
     e.target.reset();
     window.AppState.activeClassroomCode = res.classroom.code;
-    showToast(`🎉 Đã tạo lớp <b>${res.classroom.name}</b> — Mã lớp ID: <b>${res.classroom.code}</b>`);
+    showToast(`Đã tạo lớp <b>${res.classroom.name}</b> — Mã lớp ID: <b>${res.classroom.code}</b>`);
     initClassroomPortalData();
   } catch (err) { alert(err.message); }
 }
@@ -530,7 +530,7 @@ async function handleCreateAssignmentSubmit(e) {
     await apiRequest('/api/assessment/create', { method: 'POST', body: JSON.stringify(payload) });
     closeModal('create-assignment-modal');
     e.target.reset();
-    showToast(`📝 Đã giao bài tập <b>${payload.title}</b>!`);
+    showToast(`Đã giao bài tập <b>${payload.title}</b>!`);
     selectTeacherClassroom(payload.classroom_code);
     switchTeacherSubpanel('assignments');
   } catch (err) { alert(err.message); }
@@ -561,7 +561,7 @@ async function joinClassByCodeAction(explicitCode) {
       method: 'POST', body: JSON.stringify({ code, student_email: window.AppState.user.email })
     });
     if (inp) inp.value = '';
-    showToast(`🎉 Đã tham gia lớp <b>${res.classroom.name}</b>!`);
+    showToast(`Đã tham gia lớp <b>${res.classroom.name}</b>!`);
     await initClassroomPortalData();
     openStudentClassDetail(res.classroom.code);
   } catch (err) { alert(err.message); }
@@ -612,7 +612,7 @@ async function openStudentClassDetail(code) {
                 </div>
                 <div style="font-size:12.5px;color:var(--text-secondary)">${a.description} • Hạn nộp: ${a.due_date}</div>
               </div>
-              <button class="btn btn-primary btn-sm" onclick="openDedicatedAssignmentIDE(${idx}, '${code}')">📝 Vào làm bài (Tự làm) →</button>
+              <button class="btn btn-primary btn-sm" onclick="openDedicatedAssignmentIDE(${idx}, '${code}')">Vào làm bài (Tự làm) →</button>
             </div>`;
         }).join('')
       : `<p style="color:var(--text-secondary)">Giáo viên chưa giao bài tập nào cho lớp này.</p>`;
@@ -689,7 +689,7 @@ async function submitExamCodeAction() {
     });
     if (saved.new_xp) { window.AppState.user.xp = saved.new_xp; updateUserHeaderUI(); }
     window.VCodeMonitor.emitStudentActivity({ ...window.AppState.user, class_name: a.classroom_code }, a.title, code, 'completed', 100, 0);
-    showToast(`✅ Đã nộp bài thành công! Điểm số: <b>${report.score}/100</b>.`);
+    showToast(`Đã nộp bài thành công! Điểm số: <b>${report.score}/100</b>.`);
   } catch (err) {
     alert('Không gửi được bài nộp lên máy chủ: ' + err.message);
   }
@@ -715,7 +715,7 @@ function renderChallengeStages() {
         <div style="font-size:11px;color:var(--accent-emerald);font-weight:700;margin-bottom:4px">HUY HIỆU: ${c.badge.toUpperCase()}</div>
         <h3 style="font-size:16.5px;margin-bottom:8px">${c.title}</h3>
         <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px">${c.desc}</p>
-        <button class="btn btn-sm ${done ? '' : 'btn-primary'}" style="width:100%" onclick="openChallengeInIDE('${c.id}')">${done ? 'Chơi lại chặng này' : '⚡ Chinh phục ngay →'}</button>
+        <button class="btn btn-sm ${done ? '' : 'btn-primary'}" style="width:100%" onclick="openChallengeInIDE('${c.id}')">${done ? 'Chơi lại chặng này' : 'Chinh phục ngay →'}</button>
       </div>`;
   }).join('');
 }
@@ -790,13 +790,13 @@ function submitAutoGradeAction() {
     if (lesson.isChallenge && !window.AppState.completedChallenges.includes(lesson.id)) {
       window.AppState.completedChallenges.push(lesson.id);
       localStorage.setItem('vcode_completed_challenges', JSON.stringify(window.AppState.completedChallenges));
-      showToast('🏆 Tuyệt vời! Em đã vượt qua chặng thử thách và mở khóa huy hiệu mới!');
+      showToast('Tuyệt vời! Em đã vượt qua chặng thử thách và mở khóa huy hiệu mới!');
     } else if (!window.AppState.completedLessons.includes(lesson.id)) {
       window.AppState.completedLessons.push(lesson.id);
       const db = window.VCodeOfflineDB.load();
       db.completedLessons = window.AppState.completedLessons;
       window.VCodeOfflineDB.save(db);
-      showToast('🎉 Đạt 100/100 điểm bài thực hành!');
+      showToast('Đạt 100/100 điểm bài thực hành!');
     }
   }
 }
@@ -818,7 +818,7 @@ async function sendAIChatAction() {
   input.value = '';
   appendAIChat('user', q);
   const res = await window.VCodeAI.askHybrid(q, document.getElementById('code-editor').value);
-  appendAIChat('ai', res.text, res.mode === 'offline' ? '🟠 AI Socratic Offline' : '🟢 AI Online API');
+  appendAIChat('ai', res.text, res.mode === 'offline' ? 'AI Socratic Offline' : 'AI Online API');
 }
 
 function openShareModal() {
@@ -832,9 +832,9 @@ function openShareModal() {
   document.getElementById('share-modal').classList.add('open');
 }
 
-function copyShareLink() { const inp = document.getElementById('share-link-input'); inp.select(); navigator.clipboard?.writeText(inp.value); showToast('🔗 Đã sao chép đường link!'); }
+function copyShareLink() { const inp = document.getElementById('share-link-input'); inp.select(); navigator.clipboard?.writeText(inp.value); showToast('Đã sao chép đường link!'); }
 function downloadPythonFile() { const blob = new Blob([document.getElementById('code-editor').value], { type: 'text/x-python;charset=utf-8' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'vcode_edu.py'; a.click(); }
-function saveAIConfig() { localStorage.setItem('vcode_backend_url', document.getElementById('cfg-backend-url').value.trim() || 'http://localhost:8000'); localStorage.setItem('vcode_gemini_key', document.getElementById('cfg-gemini-key').value.trim()); localStorage.setItem('vcode_openai_key', (document.getElementById('cfg-openai-key')?.value || '').trim()); closeModal('ai-config-modal'); showToast('⚙️ Đã lưu cấu hình AI (OpenAI / Gemini) & Backend!'); }
+function saveAIConfig() { localStorage.setItem('vcode_backend_url', document.getElementById('cfg-backend-url').value.trim() || 'http://localhost:8000'); localStorage.setItem('vcode_gemini_key', document.getElementById('cfg-gemini-key').value.trim()); localStorage.setItem('vcode_openai_key', (document.getElementById('cfg-openai-key')?.value || '').trim()); closeModal('ai-config-modal'); showToast('Đã lưu cấu hình AI (OpenAI / Gemini) & Backend!'); }
 
 function renderLearningPath() {
   const grid = document.getElementById('learning-lessons-grid');
@@ -845,7 +845,7 @@ function renderLearningPath() {
   document.getElementById('learning-progress-bar').style.width = `${pct}%`;
   grid.innerHTML = window.VCODE_LESSONS.map((l) => {
     const done = window.AppState.completedLessons.includes(l.id);
-    return `<div class="bento-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="badge ${done ? 'badge-easy' : 'badge-blue'}">${done ? '✓ Đã hoàn thành' : l.level}</span><span class="mono" style="font-size:11.5px;color:var(--text-muted)">⏱ ${l.duration}</span></div><h3>${l.title}</h3><p style="margin-bottom:10px">${l.summary}</p><div style="font-size:12.5px;color:var(--text-secondary);background:var(--bg-elevated);padding:10px;border-radius:8px;margin-bottom:14px">${l.theory}</div><button class="btn btn-sm btn-primary" onclick="openLessonInIDE('${l.id}')">💻 Thực hành &amp; Xem Scratch Live →</button></div>`;
+    return `<div class="bento-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="badge ${done ? 'badge-easy' : 'badge-blue'}">${done ? '✓ Đã hoàn thành' : l.level}</span><span class="mono" style="font-size:11.5px;color:var(--text-muted)">⏱ ${l.duration}</span></div><h3>${l.title}</h3><p style="margin-bottom:10px">${l.summary}</p><div style="font-size:12.5px;color:var(--text-secondary);background:var(--bg-elevated);padding:10px;border-radius:8px;margin-bottom:14px">${l.theory}</div><button class="btn btn-sm btn-primary" onclick="openLessonInIDE('${l.id}')">Thực hành &amp; Xem Scratch Live →</button></div>`;
   }).join('');
 }
 
@@ -861,7 +861,7 @@ function toggleTheme() {
   html.setAttribute('data-theme', next);
   localStorage.setItem('vcode_theme', next);
   const btn = document.getElementById('top-theme-btn');
-  if (btn) btn.textContent = next === 'light' ? '🌙' : '☀️';
+  if (btn) btn.textContent = next === 'light' ? '' : '';
 }
 
 window.insertSnippet = (idx) => { const ed = document.getElementById('code-editor'); ed.value += (ed.value.endsWith('\n') ? '' : '\n') + SNIPPETS[idx].code; syncLiveEditorOutputs(); };
@@ -870,13 +870,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('vcode_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', savedTheme);
   const tBtn = document.getElementById('top-theme-btn');
-  if (tBtn) tBtn.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+  if (tBtn) tBtn.textContent = savedTheme === 'light' ? '' : '';
 
   document.getElementById('snippet-bar').innerHTML = SNIPPETS.map((s, i) => `<button class="snippet-chip" onclick="insertSnippet(${i})">${s.label}</button>`).join('');
 
   window.VCodeMonitor.init(
     () => { if (window.AppState.currentView === 'classroom' && window.AppState.activeClassroomCode) selectTeacherClassroom(window.AppState.activeClassroomCode); },
-    (hint) => showToast(`👨‍🏫 <b>Nhận xét từ Giáo viên:</b> ${hint.hintText}`)
+    (hint) => showToast(`👨‍<b>Nhận xét từ Giáo viên:</b> ${hint.hintText}`)
   );
 
   const pill = document.getElementById('network-status');
@@ -923,7 +923,7 @@ window.lockRoleOnceAction = async function(role) {
     window.VCodeOfflineDB.save(db);
     saveLoggedInUser(u);
   }
-  showToast(`🔒 Đã kích hoạt cố định vai trò <b>${label}</b>!`);
+  showToast(`Đã kích hoạt cố định vai trò <b>${label}</b>!`);
   initClassroomPortalData();
 };
 
@@ -961,10 +961,10 @@ window.renderCoursesCatalog = function() {
           </div>
           <h3 style="margin-bottom:6px">${c.title}</h3>
           <p style="font-size:13px;margin-bottom:12px">${c.desc}</p>
-          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px">📚 ${c.lessons.length} bài học • Đã hoàn thành ${doneCount}/${c.lessons.length}</div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:14px">${c.lessons.length} bài học • Đã hoàn thành ${doneCount}/${c.lessons.length}</div>
         </div>
         ${isOwned
-          ? `<button class="btn btn-primary" style="width:100%" onclick="openCourseIDE('${c.id}', 0)">💻 Vào học ngay (IDE riêng) →</button>`
+          ? `<button class="btn btn-primary" style="width:100%" onclick="openCourseIDE('${c.id}', 0)">Vào học ngay (IDE riêng) →</button>`
           : (c.price > 0
               ? `<button class="btn btn-amber" style="width:100%" onclick="openPaidCourseModal('${c.id}')">🔓 Đăng ký khóa học (20.000đ)</button>`
               : `<button class="btn btn-blue" style="width:100%" onclick="enrollFreeCourse('${c.id}')">+ Đăng ký Miễn phí</button>`)
@@ -978,7 +978,7 @@ window.enrollFreeCourse = function(courseId) {
     window.AppState.enrolledCourses.push(courseId);
     localStorage.setItem('vcode_enrolled_courses', JSON.stringify(window.AppState.enrolledCourses));
   }
-  showToast('🎉 Đăng ký khóa học thành công! Đã thêm vào mục Khóa học của tôi.');
+  showToast('Đăng ký khóa học thành công! Đã thêm vào mục Khóa học của tôi.');
   openCourseIDE(courseId, 0);
 };
 
@@ -999,7 +999,7 @@ window.confirmEnrollPaidCourse = function() {
     localStorage.setItem('vcode_enrolled_courses', JSON.stringify(window.AppState.enrolledCourses));
   }
   closeModal('course-pay-modal');
-  showToast('🎉 Kích hoạt khóa học PRO 20K thành công!');
+  showToast('Kích hoạt khóa học PRO 20K thành công!');
   openCourseIDE(id, 0);
 };
 
@@ -1061,7 +1061,7 @@ function markCourseLessonDone(lessonId) {
     window.AppState.completedCourseLessons.push(lessonId);
     localStorage.setItem('vcode_done_course_lessons', JSON.stringify(window.AppState.completedCourseLessons));
   }
-  showToast('🎉 Chúc mừng! Bạn đã hoàn thành bài học này!');
+  showToast('Chúc mừng! Bạn đã hoàn thành bài học này!');
 }
 
 // 3. THỬ THÁCH CHẶNG GIAO DIỆN GAME & IDE RIÊNG CỦA THỬ THÁCH
@@ -1079,7 +1079,7 @@ window.renderChallengeStages = function() {
       <div class="game-stage-card ${done ? 'cleared' : ''}">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <span style="font-size:32px">${c.icon}</span>
-          <span class="badge" style="background:${done ? 'rgba(16,185,129,0.25)' : 'rgba(245,158,11,0.22)'};color:${done ? '#34D399' : '#FBBF24'}">${done ? '⭐ ĐÃ VƯỢT QUA' : `🏆 +${c.xp} XP`}</span>
+          <span class="badge" style="background:${done ? 'rgba(16,185,129,0.25)' : 'rgba(245,158,11,0.22)'};color:${done ? '#34D399' : '#FBBF24'}">${done ? '⭐ ĐÃ VƯỢT QUA' : `+${c.xp} XP`}</span>
         </div>
         <div style="font-size:11px;color:#38BDF8;font-weight:800;margin-bottom:4px">HUY HIỆU: ${c.badge.toUpperCase()}</div>
         <h3 style="font-size:17px;color:#FFF;margin-bottom:8px">${c.title}</h3>
@@ -1094,11 +1094,11 @@ window.openDedicatedChallengeIDE = function(chId) {
   if (!ch) return;
   window.AppState.activeChallengeObj = ch;
   document.getElementById('ch-ide-title').textContent = `${ch.icon} ${ch.title}`;
-  document.getElementById('ch-ide-reward').textContent = `🏆 +${ch.xp} XP`;
+  document.getElementById('ch-ide-reward').textContent = `+${ch.xp} XP`;
   document.getElementById('ch-ide-heading').textContent = ch.title;
   document.getElementById('ch-ide-desc').textContent = ch.desc;
   document.getElementById('ch-code-editor').value = ch.starter;
-  document.getElementById('ch-test-output').textContent = 'Viết code Python và bấm "⚡ Hoàn thành Chặng" để mở khóa huy hiệu!';
+  document.getElementById('ch-test-output').textContent = 'Viết code Python và bấm "Hoàn thành Chặng" để mở khóa huy hiệu!';
   switchView('challenge-ide');
 };
 
@@ -1112,7 +1112,7 @@ window.runChallengeIDE = function(isSubmit) {
       window.AppState.completedChallenges.push(ch.id);
       localStorage.setItem('vcode_completed_challenges', JSON.stringify(window.AppState.completedChallenges));
     }
-    showToast(`🏆 CHÚC MỪNG! Bạn đã vượt qua <b>${ch.title}</b> và nhận huy hiệu ${ch.badge}!`);
+    showToast(`CHÚC MỪNG! Bạn đã vượt qua <b>${ch.title}</b> và nhận huy hiệu ${ch.badge}!`);
   }
 };
 
@@ -1129,11 +1129,11 @@ window.refreshRobotKeyUI = function() {
     if (guide) guide.style.display = 'none';
     if (activeBox) activeBox.style.display = 'flex';
     if (masked) masked.textContent = `${activeKey.slice(0, 6)}...${activeKey.slice(-4)}`;
-    if (badge) badge.textContent = cfg.openaiKey ? '🟢 API Chatbox (OpenAI)' : '🟢 API Chatbox (Gemini)';
+    if (badge) badge.textContent = cfg.openaiKey ? 'API Chatbox (OpenAI)' : 'API Chatbox (Gemini)';
   } else {
     if (guide) guide.style.display = 'block';
     if (activeBox) activeBox.style.display = 'none';
-    if (badge) badge.textContent = '🟠 Offline Chatbox';
+    if (badge) badge.textContent = 'Offline Chatbox';
   }
 };
 
@@ -1144,7 +1144,7 @@ window.saveQuickRobotKey = function() {
   else { localStorage.setItem('vcode_gemini_key', k); localStorage.removeItem('vcode_openai_key'); }
   document.getElementById('robot-quick-key-input').value = '';
   refreshRobotKeyUI();
-  showToast('🤖 Đã kích hoạt API Chatbox thông minh!');
+  showToast('Đã kích hoạt API Chatbox thông minh!');
 };
 
 window.clearQuickRobotKey = function() {
@@ -1170,7 +1170,7 @@ window.sendRobotAIChat = async function() {
   feed.innerHTML += `<div class="chat-msg user">${q}</div>`;
   const code = document.getElementById('code-editor')?.value || '';
   const res = await window.VCodeAI.askHybrid(q, code);
-  const tag = res.mode === 'offline' ? '🟠 Offline Chatbox' : '🟢 API Chatbox';
+  const tag = res.mode === 'offline' ? 'Offline Chatbox' : 'API Chatbox';
   feed.innerHTML += `<div class="chat-msg ai"><div style="font-size:10.5px;color:var(--accent-emerald);font-weight:700;margin-bottom:2px">${tag}</div>${res.text.replace(/\n/g, '<br/>')}</div>`;
   feed.scrollTop = feed.scrollHeight;
 };
@@ -1246,11 +1246,11 @@ window.renderGameLobby50 = function() {
   const wBar = document.getElementById('world-filter-bar');
   if (wBar) {
     const wNames = [
-      { id: 1, label: '🚀 Thế giới 1: Python Cơ bản (1-10)' },
-      { id: 2, label: '🔐 Thế giới 2: Logic & If (11-20)' },
+      { id: 1, label: 'Thế giới 1: Python Cơ bản (1-10)' },
+      { id: 2, label: 'Thế giới 2: Logic & If (11-20)' },
       { id: 3, label: '🌀 Thế giới 3: Vòng lặp (21-30)' },
       { id: 4, label: '🛡️ Thế giới 4: Ngôn ngữ C (31-40)' },
-      { id: 5, label: '👑 Thế giới 5: C++ HSG (41-50)' }
+      { id: 5, label: 'Thế giới 5: C++ HSG (41-50)' }
     ];
     wBar.innerHTML = wNames.map((w) => `<button class="world-btn ${window.AppState.selectedWorld === w.id ? 'active' : ''}" onclick="selectGameWorld(${w.id})">${w.label}</button>`).join('');
   }
@@ -1264,7 +1264,7 @@ window.renderGameLobby50 = function() {
       <div class="game-stage-card ${done ? 'cleared' : ''}" style="border-color:${done ? '#10B981' : c.color}">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <span style="font-size:30px">${c.icon}</span>
-          <span class="badge" style="background:rgba(245,158,11,0.22);color:#FBBF24">${done ? '⭐ ĐÃ PHÁ ĐẢO' : `🏆 +${c.xp} XP`}</span>
+          <span class="badge" style="background:rgba(245,158,11,0.22);color:#FBBF24">${done ? '⭐ ĐÃ PHÁ ĐẢO' : `+${c.xp} XP`}</span>
         </div>
         <div style="font-size:11px;color:#38BDF8;font-weight:800;margin-bottom:4px">NGÔN NGỮ: ${c.lang.toUpperCase()}</div>
         <h3 style="font-size:16px;color:#FFF;margin-bottom:8px">${c.title}</h3>
@@ -1279,11 +1279,11 @@ window.open50StageIDE = function(stageId) {
   if (!ch) return;
   window.AppState.activeChallengeObj = ch;
   document.getElementById('ch-ide-title').textContent = `${ch.icon} ${ch.title} [${ch.lang.toUpperCase()}]`;
-  document.getElementById('ch-ide-reward').textContent = `🏆 +${ch.xp} XP`;
+  document.getElementById('ch-ide-reward').textContent = `+${ch.xp} XP`;
   document.getElementById('ch-ide-heading').textContent = ch.title;
   document.getElementById('ch-ide-desc').textContent = ch.desc;
   document.getElementById('ch-code-editor').value = ch.starter;
-  document.getElementById('ch-test-output').textContent = 'Viết code và bấm "⚡ Hoàn thành Chặng" để mở khóa huy hiệu!';
+  document.getElementById('ch-test-output').textContent = 'Viết code và bấm "Hoàn thành Chặng" để mở khóa huy hiệu!';
   switchView('challenge-ide');
 };
 
@@ -1305,7 +1305,7 @@ window.runChallengeIDE = function(isSubmit) {
       window.AppState.completedChallenges.push(ch.id);
       localStorage.setItem('vcode_completed_challenges', JSON.stringify(window.AppState.completedChallenges));
     }
-    showToast(`🏆 CHÚC MỪNG! Bạn đã phá đảo <b>${ch.title}</b>!`);
+    showToast(`CHÚC MỪNG! Bạn đã phá đảo <b>${ch.title}</b>!`);
   }
 };
 
@@ -1323,7 +1323,7 @@ window.submitTeacherGradeAction = async function() {
     });
     if (feedback) window.VCodeMonitor.sendHintToStudent(username, `[Điểm: ${score}/100] ${feedback}`);
     closeModal('peek-modal');
-    showToast(`✅ Đã chấm <b>${score}/100đ</b> và gửi nhận xét về tài khoản học sinh!`);
+    showToast(`Đã chấm <b>${score}/100đ</b> và gửi nhận xét về tài khoản học sinh!`);
     selectTeacherClassroom(classCode);
   } catch (err) {
     alert('Lỗi lưu điểm: ' + err.message);
@@ -1399,7 +1399,7 @@ window.renderCoursesCatalog = function() {
     return `
       <div class="cl-course-card" onclick="${actionClick}">
         <div class="cl-card-banner" style="background:${c.gradient}">
-          <span class="cl-fire-badge">🔥</span>
+          <span class="cl-fire-badge"></span>
           <h3>${c.bannerTitle}</h3>
           <p>${c.bannerSub}</p>
           <span class="cl-banner-icon">${c.icon}</span>
@@ -1447,7 +1447,7 @@ window.openCourseIDE = function(courseId, lessonIdx = 0) {
   pillsBox.innerHTML = `
     <button class="cl-pill" onclick="openCourseIDE('${c.id}', ${window.AppState.activeCourseLessonIdx - 1})">◀</button>
     <select class="select-field" style="width:230px;padding:4px 8px;background:#0F172A;color:#F8FAFC;border-color:#475569;font-size:12px" onchange="openCourseIDE('${c.id}', Number(this.value))">${optionsHtml}</select>
-    <button class="cl-pill" onclick="openCourseIDE('${c.id}', ${window.AppState.activeCourseLessonIdx + 1})">▶</button>
+    <button class="cl-pill" onclick="openCourseIDE('${c.id}', ${window.AppState.activeCourseLessonIdx + 1})"></button>
   `;
   switchView('course-ide');
 };
@@ -1481,7 +1481,7 @@ window.handleCreateClassSubmit = async function(e) {
   closeModal('create-class-modal');
   e.target.reset();
   window.AppState.activeClassroomCode = created.code;
-  showToast(`🎉 Đã tạo lớp <b>${created.name}</b> — ID Mã lớp: <b>${created.code}</b>`);
+  showToast(`Đã tạo lớp <b>${created.name}</b> — ID Mã lớp: <b>${created.code}</b>`);
   initClassroomPortalData();
 };
 
@@ -1510,7 +1510,7 @@ window.handleCreateAssignmentSubmit = async function(e) {
   }
   closeModal('create-assignment-modal');
   e.target.reset();
-  showToast(`📝 Đã giao bài tập <b>${payload.title}</b> cho lớp ${payload.classroom_code}!`);
+  showToast(`Đã giao bài tập <b>${payload.title}</b> cho lớp ${payload.classroom_code}!`);
   selectTeacherClassroom(payload.classroom_code);
   switchTeacherSubpanel('assignments');
 };
@@ -1536,7 +1536,7 @@ window.joinClassByCodeAction = async function(explicitCode) {
     joinedCls = cls;
   }
   if (inp) inp.value = '';
-  showToast(`🎉 Đã tham gia lớp <b>${joinedCls.name}</b> thành công!`);
+  showToast(`Đã tham gia lớp <b>${joinedCls.name}</b> thành công!`);
   await initClassroomPortalData();
   openStudentClassDetail(joinedCls.code);
 };
@@ -1603,7 +1603,7 @@ window.sendRobotAIChat = async function() {
   feed.innerHTML += `<div class="chat-msg user">${q.replace(/</g, '&lt;')}</div>`;
   const code = document.getElementById('code-editor')?.value || '';
   const res = await window.VCodeAI.askHybrid(q, code);
-  const tag = res.mode === 'offline' ? '🟠 AI Cục bộ (Không cần Key)' : (res.mode === 'online-openai' ? '🟢 API Chatbox (OpenAI)' : '🟢 API Chatbox (Gemini)');
+  const tag = res.mode === 'offline' ? 'AI Cục bộ (Không cần Key)' : (res.mode === 'online-openai' ? 'API Chatbox (OpenAI)' : 'API Chatbox (Gemini)');
   feed.innerHTML += `<div class="chat-msg ai"><div style="font-size:10.5px;color:var(--accent-emerald);font-weight:700;margin-bottom:4px">${tag}</div>${window.VCodeAI.formatMarkdown(res.text)}</div>`;
   feed.scrollTop = feed.scrollHeight;
 };
@@ -1620,11 +1620,11 @@ window.refreshRobotKeyUI = function() {
     if (guide) guide.style.display = 'none';
     if (activeBox) activeBox.style.display = 'flex';
     if (masked) masked.textContent = `${validKey.slice(0, 6)}...${validKey.slice(-4)}`;
-    if (badge) badge.textContent = validKey.startsWith('sk-') ? '🟢 API Chatbox (OpenAI)' : '🟢 API Chatbox (Gemini)';
+    if (badge) badge.textContent = validKey.startsWith('sk-') ? 'API Chatbox (OpenAI)' : 'API Chatbox (Gemini)';
   } else {
     if (guide) guide.style.display = 'block';
     if (activeBox) activeBox.style.display = 'none';
-    if (badge) badge.textContent = '🟠 AI Cục bộ (Sẵn sàng không cần Key)';
+    if (badge) badge.textContent = 'AI Cục bộ (Sẵn sàng không cần Key)';
   }
 };
 
@@ -1639,7 +1639,7 @@ window.saveQuickRobotKey = function() {
   else { localStorage.setItem('vcode_gemini_key', k); localStorage.removeItem('vcode_openai_key'); }
   document.getElementById('robot-quick-key-input').value = '';
   refreshRobotKeyUI();
-  showToast('🤖 Đã kích hoạt API Chatbox thông minh thành công!');
+  showToast('Đã kích hoạt API Chatbox thông minh thành công!');
 };
 
 window.switchOlmTab = function(tabName) {
@@ -1691,7 +1691,7 @@ window.initClassroomPortalData = async function() {
   if (isTeacher) {
     actBox.innerHTML = `
       <button class="btn btn-primary btn-sm" onclick="document.getElementById('create-class-modal').classList.add('open')">+ Tạo lớp mới</button>
-      <button class="btn btn-blue btn-sm" onclick="openCreateAssignmentModal()">📝 Giao bài tập</button>`;
+      <button class="btn btn-blue btn-sm" onclick="openCreateAssignmentModal()">Giao bài tập</button>`;
   } else {
     actBox.innerHTML = `
       <input id="student-join-code-input" class="input-field mono" style="width:165px;padding:6px 10px;text-transform:uppercase;font-weight:700" placeholder="Nhập ID mã lớp..." />
@@ -1911,7 +1911,7 @@ window.toggleIDETheme = function() {
   const shell = document.querySelector('#view-workspace .workspace-shell');
   if (shell) shell.setAttribute('data-ide-theme', next);
   const btn = document.getElementById('ide-theme-toggle-btn');
-  if (btn) btn.textContent = next === 'dark' ? '☀️ Sáng IDE' : '🌙 Tối IDE';
+  if (btn) btn.textContent = next === 'dark' ? 'Sáng IDE' : 'Tối IDE';
 };
 
 window.switchIDELanguage = function(lang) {
@@ -2028,8 +2028,8 @@ window.renderGameLobby50 = function() {
         </div>
         <div class="moba-card-bottom">
           <div class="moba-card-rewards">
-            <span>⚡ +${c.xp} XP</span>
-            <span>${done ? '⭐ XONG' : '💎 +10'}</span>
+            <span>+${c.xp} XP</span>
+            <span>${done ? '⭐ XONG' : '+10'}</span>
           </div>
           <div class="moba-card-name" title="${c.title}">
             <span class="moba-dot"></span>
@@ -2044,7 +2044,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const shell = document.querySelector('#view-workspace .workspace-shell');
   if (shell) shell.setAttribute('data-ide-theme', window.AppState.ideTheme);
   const btn = document.getElementById('ide-theme-toggle-btn');
-  if (btn) btn.textContent = window.AppState.ideTheme === 'dark' ? '☀️ Sáng IDE' : '🌙 Tối IDE';
+  if (btn) btn.textContent = window.AppState.ideTheme === 'dark' ? 'Sáng IDE' : 'Tối IDE';
   setTimeout(() => { if (window.renderGameLobby50) window.renderGameLobby50(); }, 180);
 });
 
@@ -2062,11 +2062,11 @@ window.refreshRobotKeyUI = function() {
     if (guide) guide.style.display = 'none';
     if (activeBox) activeBox.style.display = 'flex';
     if (masked) masked.textContent = `${activeKey.slice(0, 6)}...${activeKey.slice(-4)}`;
-    if (badge) badge.textContent = activeKey.startsWith('sk-') ? '🟢 API Chatbox (OpenAI)' : '🟢 API Chatbox (Gemini)';
+    if (badge) badge.textContent = activeKey.startsWith('sk-') ? 'API Chatbox (OpenAI)' : 'API Chatbox (Gemini)';
   } else {
     if (guide) guide.style.display = 'block';
     if (activeBox) activeBox.style.display = 'none';
-    if (badge) badge.textContent = '🟠 AI Cục bộ (Sẵn sàng không cần Key)';
+    if (badge) badge.textContent = 'AI Cục bộ (Sẵn sàng không cần Key)';
   }
 };
 
@@ -2085,7 +2085,7 @@ window.saveQuickRobotKey = function() {
   }
   document.getElementById('robot-quick-key-input').value = '';
   refreshRobotKeyUI();
-  showToast('🤖 Đã lưu API Key thành công! Hãy nhắn tin cho Robot AI ngay.');
+  showToast('Đã lưu API Key thành công! Hãy nhắn tin cho Robot AI ngay.');
 };
 
 
@@ -2270,7 +2270,7 @@ window.handleRegisterSubmit = async function(e) {
       await window.VCodeCloudDB.saveUser(newUser);
       saveLoggedInUser(newUser);
       closeModal('auth-modal');
-      showToast(`🎉 Tạo tài khoản thành công cho <b>${full_name}</b>!`);
+      showToast(`Tạo tài khoản thành công cho <b>${full_name}</b>!`);
       return;
     } catch {}
   }
@@ -2279,7 +2279,7 @@ window.handleRegisterSubmit = async function(e) {
     const data = await apiRequest('/api/auth/register', { method: 'POST', body: JSON.stringify({ full_name, email, password }) });
     saveLoggedInUser(data.user);
     closeModal('auth-modal');
-    showToast(`🎉 Tạo tài khoản thành công cho <b>${data.user.full_name}</b>!`);
+    showToast(`Tạo tài khoản thành công cho <b>${data.user.full_name}</b>!`);
   } catch (err) {
     if (window.isNetworkFailure(err)) {
       const db = window.VCodeOfflineDB.load();
@@ -2290,7 +2290,7 @@ window.handleRegisterSubmit = async function(e) {
       window.VCodeOfflineDB.save(db);
       saveLoggedInUser(localUser);
       closeModal('auth-modal');
-      showToast(`🎉 Đã tạo tài khoản cho <b>${full_name}</b>!`);
+      showToast(`Đã tạo tài khoản cho <b>${full_name}</b>!`);
     } else { alert(err.message); }
   }
 };
@@ -2308,7 +2308,7 @@ window.handleLoginSubmit = async function(e) {
         if (cloudUser.password_hash && cloudUser.password_hash !== passHash) { alert('Mật khẩu không chính xác.'); return; }
         saveLoggedInUser(cloudUser);
         closeModal('auth-modal');
-        showToast(`👋 Xin chào <b>${cloudUser.full_name}</b>!`);
+        showToast(`Xin chào <b>${cloudUser.full_name}</b>!`);
         return;
       }
     } catch {}
@@ -2318,7 +2318,7 @@ window.handleLoginSubmit = async function(e) {
     const data = await apiRequest('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: ident, password }) });
     saveLoggedInUser(data.user);
     closeModal('auth-modal');
-    showToast(`👋 Xin chào <b>${data.user.full_name}</b>!`);
+    showToast(`Xin chào <b>${data.user.full_name}</b>!`);
   } catch (err) {
     if (window.isNetworkFailure(err)) {
       const db = window.VCodeOfflineDB.load();
@@ -2326,7 +2326,7 @@ window.handleLoginSubmit = async function(e) {
       if (found) {
         saveLoggedInUser(found);
         closeModal('auth-modal');
-        showToast(`👋 Đăng nhập thành công: <b>${found.full_name}</b>!`);
+        showToast(`Đăng nhập thành công: <b>${found.full_name}</b>!`);
       } else { alert('Sai email/mật khẩu hoặc tài khoản chưa được đăng ký.'); }
     } else { alert(err.message); }
   }
@@ -2362,7 +2362,7 @@ window.finalizeSocialFirebaseUser = async function(fbUser, provider = 'google') 
   }
   saveLoggedInUser(userObj);
   closeModal('auth-modal');
-  showToast(`✅ Đã đăng nhập: <b>${userObj.full_name}</b>!`);
+  showToast(`Đã đăng nhập: <b>${userObj.full_name}</b>!`);
 };
 
 window.lockRoleOnceAction = async function(role) {
@@ -2376,7 +2376,7 @@ window.lockRoleOnceAction = async function(role) {
   db.users = (db.users || []).map((x) => x.email === u.email ? { ...x, role } : x);
   window.VCodeOfflineDB.save(db);
   saveLoggedInUser(u);
-  showToast(`🔒 Đã kích hoạt vai trò <b>${label}</b>!`);
+  showToast(`Đã kích hoạt vai trò <b>${label}</b>!`);
   initClassroomPortalData();
 };
 
@@ -2413,8 +2413,8 @@ window.initClassroomPortalData = async function() {
   if (isTeacher) {
     actBox.innerHTML = `
       <button class="btn btn-primary btn-sm" onclick="document.getElementById('create-class-modal').classList.add('open')">+ Tạo lớp mới</button>
-      <button class="btn btn-blue btn-sm" onclick="openCreateAssignmentModal()">📝 Giao bài tập</button>
-      <button class="btn btn-sm" onclick="openClassManagerModal()">⚙️ Quản lý DS Lớp (${classes.length})</button>`;
+      <button class="btn btn-blue btn-sm" onclick="openCreateAssignmentModal()">Giao bài tập</button>
+      <button class="btn btn-sm" onclick="openClassManagerModal()">Quản lý DS Lớp (${classes.length})</button>`;
   } else {
     actBox.innerHTML = `
       <input id="student-join-code-input" class="input-field mono" style="width:170px;padding:6px 10px;text-transform:uppercase;font-weight:700" placeholder="Nhập ID mã lớp..." />
@@ -2426,13 +2426,13 @@ window.initClassroomPortalData = async function() {
   const tabsCard = document.querySelectorAll('#olm-main-workspace .olm-white-card')[1];
 
   if (!classes || classes.length === 0) {
-    pills.innerHTML = `<span style="font-size:14px;font-weight:700;color:var(--text-secondary)">📂 Bạn chưa có lớp học nào</span>`;
+    pills.innerHTML = `<span style="font-size:14px;font-weight:700;color:var(--text-secondary)">Bạn chưa có lớp học nào</span>`;
     if (infoCard) infoCard.style.display = 'none';
     if (tabsCard) {
       tabsCard.style.display = 'block';
       document.getElementById('olm-hw-list').innerHTML = `
         <div style="text-align:center;padding:36px 16px">
-          <div style="font-size:44px;margin-bottom:10px">${isTeacher ? '👨‍🏫' : '🎓'}</div>
+          <div style="font-size:44px;margin-bottom:10px">${isTeacher ? '👨‍' : ''}</div>
           <h3 style="margin-bottom:6px">Bạn chưa có lớp học nào</h3>
           <p style="font-size:13.5px;color:#64748B;margin-bottom:18px">${isTeacher ? 'Hãy bấm "+ Tạo lớp mới" để tạo lớp học đầu tiên và nhận mã ID chia sẻ cho học sinh.' : 'Hãy nhập ID mã lớp mà thầy/cô đã gửi vào ô phía trên để tham gia lớp học.'}</p>
           ${isTeacher ? `<button class="btn btn-primary" onclick="document.getElementById('create-class-modal').classList.add('open')">+ Tạo lớp học đầu tiên</button>` : ''}
@@ -2449,7 +2449,7 @@ window.initClassroomPortalData = async function() {
   pills.innerHTML = `
     <div class="vcode-class-manager-bar">
       <select class="vcode-class-select" onchange="selectOlmClass(this.value)">
-        ${classes.map((c) => `<option value="${c.code}" ${c.code === window.AppState.activeClassroomCode ? 'selected' : ''}>🏫 ${c.name} (${c.code})</option>`).join('')}
+        ${classes.map((c) => `<option value="${c.code}" ${c.code === window.AppState.activeClassroomCode ? 'selected' : ''}>${c.name} (${c.code})</option>`).join('')}
       </select>
     </div>`;
 
@@ -2477,7 +2477,7 @@ window.handleCreateClassSubmit = async function(e) {
   closeModal('create-class-modal');
   e.target.reset();
   window.AppState.activeClassroomCode = clsObj.code;
-  showToast(`🎉 Đã tạo lớp <b>${clsObj.name}</b> — Mã lớp: <b>${clsObj.code}</b>`);
+  showToast(`Đã tạo lớp <b>${clsObj.name}</b> — Mã lớp: <b>${clsObj.code}</b>`);
   initClassroomPortalData();
 };
 
@@ -2492,7 +2492,7 @@ window.joinClassByCodeAction = async function(explicitCode) {
       const joined = await window.VCodeCloudDB.joinClass(code, u);
       if (inp) inp.value = '';
       window.AppState.activeClassroomCode = joined.code;
-      showToast(`🎉 Đã vào lớp <b>${joined.name}</b> (GV: ${joined.teacher_name})!`);
+      showToast(`Đã vào lớp <b>${joined.name}</b> (GV: ${joined.teacher_name})!`);
       initClassroomPortalData();
       return;
     } catch (err) { alert(err.message); return; }
@@ -2502,7 +2502,7 @@ window.joinClassByCodeAction = async function(explicitCode) {
     const res = await apiRequest('/api/classes/join', { method: 'POST', body: JSON.stringify({ code, student_email: u.email }) });
     if (inp) inp.value = '';
     window.AppState.activeClassroomCode = res.classroom.code;
-    showToast(`🎉 Đã vào lớp <b>${res.classroom.name}</b>!`);
+    showToast(`Đã vào lớp <b>${res.classroom.name}</b>!`);
     initClassroomPortalData();
   } catch {
     const ldb = window.LocalClassDB.load();
@@ -2515,7 +2515,7 @@ window.joinClassByCodeAction = async function(explicitCode) {
     }
     if (inp) inp.value = '';
     window.AppState.activeClassroomCode = cls.code;
-    showToast(`🎉 Đã tham gia lớp <b>${cls.name}</b>!`);
+    showToast(`Đã tham gia lớp <b>${cls.name}</b>!`);
     initClassroomPortalData();
   }
 };
@@ -2566,7 +2566,7 @@ window.openClassManagerModal = function() {
     box.innerHTML = list.length ? list.map((c) => `
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-radius:10px;background:var(--bg-elevated);margin-bottom:8px;flex-wrap:wrap">
         <div><strong>${c.name}</strong> <span class="olm-code-chip" style="font-size:11px;padding:2px 6px">${c.code}</span><div style="font-size:12px;color:var(--text-secondary)">${(c.students || []).length || c.students_count || 0} học sinh</div></div>
-        <div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="renameClassAction('${c.code}', '${c.name.replace(/'/g, '')}')">✏️ Đổi tên</button><button class="btn btn-sm" style="border-color:#E11D48;color:#E11D48" onclick="deleteClassAction('${c.code}')">🗑️ Xóa</button></div>
+        <div style="display:flex;gap:6px"><button class="btn btn-sm" onclick="renameClassAction('${c.code}', '${c.name.replace(/'/g, '')}')">Đổi tên</button><button class="btn btn-sm" style="border-color:#E11D48;color:#E11D48" onclick="deleteClassAction('${c.code}')">Xóa</button></div>
       </div>`).join('') : '<p style="color:var(--text-secondary)">Bạn chưa có lớp học nào.</p>';
   }
   document.getElementById('class-manager-modal')?.classList.add('open');
@@ -2581,7 +2581,7 @@ window.renameClassAction = async function(code, oldName) {
     catch { const ldb = window.LocalClassDB.load(); const cls = ldb.classes.find((c) => c.code === code); if (cls) { cls.name = newName.trim(); window.LocalClassDB.save(ldb); } }
   }
   closeModal('class-manager-modal');
-  showToast(`✅ Đã đổi tên lớp ${code}!`);
+  showToast(`Đã đổi tên lớp ${code}!`);
   initClassroomPortalData();
 };
 
@@ -2594,7 +2594,7 @@ window.deleteClassAction = async function(code) {
   }
   if (window.AppState.activeClassroomCode === code) window.AppState.activeClassroomCode = '';
   closeModal('class-manager-modal');
-  showToast(`🗑️ Đã xóa lớp ${code}!`);
+  showToast(`Đã xóa lớp ${code}!`);
   initClassroomPortalData();
 };
 
