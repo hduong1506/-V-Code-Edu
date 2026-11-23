@@ -1,20 +1,149 @@
 # -*- coding: utf-8 -*-
 """
-V-CODE EDU — CHUYỂN Ô CHỌN GIỜ HẾT HẠN SANG HỆ 24 GIỜ (00:00 - 23:59)
+V-CODE EDU — FIX Ô CHỌN GIỜ 24H GỌN GÀNG TRONG 1 Ô + POPUP ĐỒNG HỒ NỔI (CHỐNG VỠ CACHE CSS)
 """
 import os
+import re
 
-V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
+V25_TIME24_JS = r"""// V-CODE EDU — CLEAN 24-HOUR TIME PICKER (SELF-STYLED, FIXED POPOVER)
 (function () {
   function pad(n) { return String(n).padStart(2, '0'); }
 
+  function injectStyles() {
+    if (document.getElementById('v25-time24-inline-style')) return;
+    const style = document.createElement('style');
+    style.id = 'v25-time24-inline-style';
+    style.textContent = `
+      .v25-time24-wrap {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+      }
+      .v25-time24-input {
+        width: 100% !important;
+        padding-right: 40px !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.05em !important;
+        box-sizing: border-box !important;
+      }
+      .v25-time24-btn {
+        position: absolute !important;
+        right: 6px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 30px !important;
+        height: 30px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: grid !important;
+        place-items: center !important;
+        border-radius: 7px !important;
+        background: #EFF6FF !important;
+        color: #2563EB !important;
+        border: 1px solid #BFDBFE !important;
+        cursor: pointer !important;
+        transition: background 0.15s ease !important;
+      }
+      .v25-time24-btn:hover { background: #DBEAFE !important; }
+      .v25-time24-pop {
+        display: none !important;
+        position: fixed !important;
+        z-index: 99999 !important;
+        width: 216px !important;
+        background: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.24) !important;
+        overflow: hidden !important;
+        flex-direction: column !important;
+      }
+      .v25-time24-pop.open { display: flex !important; }
+      .v25-t-head {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        text-align: center !important;
+        padding: 8px 6px !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        color: #334155 !important;
+        background: #F8FAFC !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+      }
+      .v25-t-cols {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        height: 210px !important;
+        background: #FFFFFF !important;
+      }
+      .v25-t-col {
+        overflow-y: auto !important;
+        padding: 6px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3px !important;
+        scrollbar-width: thin !important;
+      }
+      .v25-col-h { border-right: 1px solid #E2E8F0 !important; }
+      .v25-t-opt {
+        width: 100% !important;
+        border: none !important;
+        background: transparent !important;
+        color: #0F172A !important;
+        padding: 6px 0 !important;
+        border-radius: 7px !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        text-align: center !important;
+        flex-shrink: 0 !important;
+      }
+      .v25-t-opt:hover { background: #EFF6FF !important; color: #1D4ED8 !important; }
+      .v25-t-opt.active { background: #2563EB !important; color: #FFFFFF !important; font-weight: 800 !important; }
+      .v25-t-foot {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 7px 10px !important;
+        background: #F8FAFC !important;
+        border-top: 1px solid #E2E8F0 !important;
+      }
+      .v25-t-now {
+        border: none !important;
+        background: transparent !important;
+        color: #2563EB !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        padding: 3px 6px !important;
+      }
+      .v25-t-done {
+        border: none !important;
+        background: #2563EB !important;
+        color: #FFFFFF !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        padding: 4px 12px !important;
+        border-radius: 6px !important;
+        cursor: pointer !important;
+      }
+      .v25-t-done:hover { background: #1D4ED8 !important; }
+    `;
+    document.head.appendChild(style);
+  }
+
   function upgradeTo24hPicker() {
+    injectStyles();
     const oldInp = document.getElementById('assign-time-vn');
-    if (!oldInp || oldInp.dataset.v25Time24 === '1') return;
+    if (!oldInp || oldInp.dataset.v25Clean === '1') return;
 
     const currentVal = /^\d{2}:\d{2}$/.test(oldInp.value) ? oldInp.value : '23:59';
-    const parent = oldInp.parentElement;
-    if (!parent) return;
+    const oldWrap = oldInp.closest('.v25-time24-wrap');
+
+    document.querySelectorAll('.v25-time24-pop').forEach((el) => el.remove());
 
     const wrap = document.createElement('div');
     wrap.className = 'v25-time24-wrap';
@@ -28,7 +157,7 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
     inp.maxLength = 5;
     inp.required = true;
     inp.autocomplete = 'off';
-    inp.dataset.v25Time24 = '1';
+    inp.dataset.v25Clean = '1';
 
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -52,18 +181,35 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
         <div class="v25-t-col v25-col-h">${hoursHTML}</div>
         <div class="v25-t-col v25-col-m">${minsHTML}</div>
       </div>
+      <div class="v25-t-foot">
+        <button type="button" class="v25-t-now">23:59</button>
+        <button type="button" class="v25-t-done">Xong</button>
+      </div>
     `;
 
     wrap.appendChild(inp);
     wrap.appendChild(btn);
-    wrap.appendChild(pop);
-    oldInp.replaceWith(wrap);
+    if (oldWrap) oldWrap.replaceWith(wrap);
+    else oldInp.replaceWith(wrap);
+    document.body.appendChild(pop);
 
     const parseHM = () => {
       const m = inp.value.match(/^(\d{1,2}):(\d{1,2})$/);
-      let h = m ? Math.min(23, Math.max(0, parseInt(m[1], 10) || 0)) : 23;
-      let mi = m ? Math.min(59, Math.max(0, parseInt(m[2], 10) || 0)) : 59;
+      const h = m ? Math.min(23, Math.max(0, parseInt(m[1], 10) || 0)) : 23;
+      const mi = m ? Math.min(59, Math.max(0, parseInt(m[2], 10) || 0)) : 59;
       return { h: pad(h), m: pad(mi) };
+    };
+
+    const positionPopup = () => {
+      const r = wrap.getBoundingClientRect();
+      const popW = 216, popH = 290;
+      let left = Math.max(10, Math.min(r.right - popW, window.innerWidth - popW - 10));
+      let top = r.bottom + 6;
+      if (top + popH > window.innerHeight - 10) {
+        top = Math.max(10, r.top - popH - 6);
+      }
+      pop.style.left = `${Math.round(left)}px`;
+      pop.style.top = `${Math.round(top)}px`;
     };
 
     const syncHighlight = () => {
@@ -83,16 +229,18 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
     const togglePop = (open) => {
       const willOpen = open !== undefined ? open : !pop.classList.contains('open');
       pop.classList.toggle('open', willOpen);
-      if (willOpen) setTimeout(syncHighlight, 10);
+      if (willOpen) {
+        positionPopup();
+        setTimeout(syncHighlight, 10);
+      }
     };
 
-    btn.onclick = (e) => { e.stopPropagation(); togglePop(); };
+    btn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); togglePop(); };
     inp.addEventListener('click', (e) => { e.stopPropagation(); togglePop(true); });
 
     inp.addEventListener('input', () => {
       const digits = inp.value.replace(/\D/g, '').slice(0, 4);
-      if (digits.length <= 2) inp.value = digits;
-      else inp.value = `${digits.slice(0, 2)}:${digits.slice(2)}`;
+      inp.value = digits.length <= 2 ? digits : `${digits.slice(0, 2)}:${digits.slice(2)}`;
     });
 
     inp.addEventListener('blur', () => {
@@ -102,6 +250,12 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
 
     pop.addEventListener('click', (e) => {
       e.stopPropagation();
+      if (e.target.closest('.v25-t-done')) { togglePop(false); return; }
+      if (e.target.closest('.v25-t-now')) {
+        inp.value = '23:59';
+        syncHighlight();
+        return;
+      }
       const b = e.target.closest('.v25-t-opt');
       if (!b) return;
       const cur = parseHM();
@@ -109,15 +263,16 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
       const nm = b.dataset.m ?? cur.m;
       inp.value = `${nh}:${nm}`;
       syncHighlight();
-      if (b.dataset.m !== undefined) togglePop(false);
     });
 
     document.addEventListener('click', (e) => {
-      if (!wrap.contains(e.target)) togglePop(false);
+      if (!wrap.contains(e.target) && !pop.contains(e.target)) togglePop(false);
     });
+    window.addEventListener('resize', () => { if (pop.classList.contains('open')) positionPopup(); }, { passive: true });
   }
 
   window.addEventListener('DOMContentLoaded', () => {
+    injectStyles();
     setTimeout(upgradeTo24hPicker, 250);
     setTimeout(upgradeTo24hPicker, 700);
     const origOpen = window.openCreateAssignmentModal;
@@ -131,69 +286,20 @@ V25_TIME24_JS = r"""// V-CODE EDU — CUSTOM 24-HOUR TIME PICKER (00:00 - 23:59)
 })();
 """
 
-V25_CSS = """
-/* ==================== V25.0: CUSTOM 24H TIME PICKER (00:00 - 23:59) ==================== */
-.v25-time24-wrap { position: relative; display: flex; align-items: center; }
-.v25-time24-input { padding-right: 38px !important; letter-spacing: 0.05em; font-weight: 600; }
-.v25-time24-btn {
-  position: absolute; right: 6px; width: 28px; height: 28px;
-  display: grid; place-items: center; border-radius: 6px;
-  background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; cursor: pointer;
-}
-.v25-time24-btn:hover { background: #DBEAFE; }
-
-.v25-time24-pop {
-  display: none; position: absolute; top: calc(100% + 6px); right: 0; z-index: 120;
-  width: 196px; background: #FFFFFF; border: 1px solid #CBD5E1; border-radius: 12px;
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.22); overflow: hidden;
-}
-.v25-time24-pop.open { display: block; }
-.v25-t-head {
-  display: grid; grid-template-columns: 1fr 1fr; text-align: center;
-  padding: 7px 6px; font-size: 11px; font-weight: 700; color: #475569;
-  background: #F8FAFC; border-bottom: 1px solid #E2E8F0;
-}
-.v25-t-cols { display: grid; grid-template-columns: 1fr 1fr; height: 210px; }
-.v25-t-col {
-  overflow-y: auto; padding: 4px; display: flex; flex-direction: column; gap: 2px;
-  scrollbar-width: thin;
-}
-.v25-col-h { border-right: 1px solid #E2E8F0; }
-.v25-t-opt {
-  border: none; background: transparent; color: #0F172A;
-  padding: 6px 0; border-radius: 7px; font-family: 'JetBrains Mono', monospace;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-}
-.v25-t-opt:hover { background: #EFF6FF; color: #1D4ED8; }
-.v25-t-opt.active { background: #2563EB; color: #FFFFFF; font-weight: 800; }
-"""
-
-def apply_24h():
+def apply_fix():
     with open("js/v25-time24.js", "w", encoding="utf-8") as f:
         f.write(V25_TIME24_JS.strip() + "\n")
-    print("✔ Đã tạo js/v25-time24.js (Hệ 24 giờ: 00–23 giờ, 00–59 phút)")
-
-    css_path = "css/design-system.css"
-    css = open(css_path, "r", encoding="utf-8").read() if os.path.exists(css_path) else ""
-    marker = "/* ==================== V25.0: CUSTOM 24H TIME PICKER"
-    if marker in css:
-        css = css.split(marker)[0].rstrip()
-    with open(css_path, "w", encoding="utf-8") as f:
-        f.write(css + "\n\n" + V25_CSS.strip() + "\n")
-    print("✔ Đã cập nhật css/design-system.css")
+    print("✔ Đã ghi lại js/v25-time24.js (tự nạp CSS + popup đồng hồ nổi gọn gàng)")
 
     if os.path.exists("index.html"):
         html = open("index.html", "r", encoding="utf-8").read()
-        if "js/v25-time24.js" not in html:
-            if '<script src="js/v24-fix-smooth.js"></script>' in html:
-                html = html.replace('<script src="js/v24-fix-smooth.js"></script>', '<script src="js/v24-fix-smooth.js"></script>\n  <script src="js/v25-time24.js"></script>')
-            else:
-                html = html.replace('</body>', '  <script src="js/v25-time24.js"></script>\n</body>')
-            with open("index.html", "w", encoding="utf-8") as f:
-                f.write(html)
-            print("✔ Đã nhúng js/v25-time24.js vào index.html")
+        html = re.sub(r'css/design-system\.css(?:\?v=\d+)?', 'css/design-system.css?v=26', html)
+        html = re.sub(r'js/v25-time24\.js(?:\?v=\d+)?', 'js/v25-time24.js?v=26', html)
+        with open("index.html", "w", encoding="utf-8") as f:
+            f.write(html)
+        print("✔ Đã gắn ?v=26 chống cache trong index.html")
 
-    print("\nXONG! Hãy chạy git push để cập nhật lên GitHub.")
+    print("\nXONG! Chạy git add . -> git commit -> git push.")
 
 if __name__ == "__main__":
-    apply_24h()
+    apply_fix()
