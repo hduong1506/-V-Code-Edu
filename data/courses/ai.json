@@ -1,0 +1,413 @@
+{
+  "id": "ai",
+  "version": 2,
+  "lang": "python",
+  "title": "Nhập môn AI & Khoa học dữ liệu",
+  "subtitle": "Hiểu AI từ bên trong — tự cài đặt thuật toán bằng Python thuần",
+  "level": "Trung cấp",
+  "description": "Không dùng thư viện có sẵn: em sẽ tự viết thống kê mô tả, chuẩn hóa dữ liệu, hồi quy tuyến tính, k-NN, perceptron, túi từ và bộ lọc thư rác Naive Bayes, rồi đánh giá mô hình bằng accuracy/precision/recall/F1. Yêu cầu: đã hoàn thành khóa Python cơ bản.",
+  "track": "ai",
+  "accent": "violet",
+  "tags": [
+    "ai",
+    "machine learning",
+    "khoa học dữ liệu",
+    "python"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Dữ liệu & thống kê",
+      "summary": "Mọi hệ thống AI bắt đầu từ dữ liệu: đo trung tâm, đo độ phân tán, chuẩn hóa và đếm tần suất.",
+      "lessons": [
+        {
+          "id": "ai-1-1",
+          "title": "Trung bình và trung vị",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Một con số đại diện cho cả tập dữ liệu\n\nTrước khi xây mô hình AI, nhà khoa học dữ liệu luôn **mô tả** dữ liệu. Hai thước đo \"trung tâm\" phổ biến nhất:\n\n- **Trung bình cộng** (mean): $\\bar{x} = \\dfrac{x_1 + x_2 + \\dots + x_n}{n}$\n- **Trung vị** (median): giá trị **đứng giữa** sau khi sắp xếp. Nếu $n$ chẵn, lấy trung bình của hai giá trị giữa.\n\nVí dụ thu nhập (triệu đồng/tháng) của 5 người: `8 9 10 11 120`.\n\n| Thước đo | Giá trị |\n|---|---|\n| Trung bình | $(8+9+10+11+120)/5 = 31.6$ |\n| Trung vị | $10$ |\n\nChỉ một người thu nhập rất cao (**giá trị ngoại lai**) đã kéo trung bình lên 31.6 — con số chẳng đại diện cho ai cả! Trung vị **bền vững** hơn trước ngoại lai. Vì vậy báo cáo thu nhập, giá nhà… thường dùng trung vị.\n\n```python\na = sorted([3, 1, 4, 1, 5])   # [1, 1, 3, 4, 5]\nn = len(a)\nif n % 2 == 1:\n    trung_vi = a[n // 2]\nelse:\n    trung_vi = (a[n // 2 - 1] + a[n // 2]) / 2\n```",
+          "task": "Một dòng gồm các số thực cách nhau bởi dấu cách. In ra hai dòng: **trung bình cộng** và **trung vị**, đều làm tròn **2 chữ số thập phân**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3 1 4 1 5\n\nĐầu ra:\n2.80\n3.00\n```",
+          "starter": "a = list(map(float, input().split()))\n# Tính trung bình và trung vị",
+          "solution": "a = list(map(float, input().split()))\nn = len(a)\ntb = sum(a) / n\nb = sorted(a)\nif n % 2 == 1:\n    tv = b[n // 2]\nelse:\n    tv = (b[n // 2 - 1] + b[n // 2]) / 2\nprint(f\"{tb:.2f}\")\nprint(f\"{tv:.2f}\")",
+          "hints": [
+            "Trung bình = sum(a) / len(a).",
+            "Sắp xếp trước khi lấy trung vị; xét riêng n chẵn và n lẻ."
+          ],
+          "tests": [
+            {
+              "input": "3 1 4 1 5\n",
+              "expected": "2.80\n3.00",
+              "hidden": false
+            },
+            {
+              "input": "2 8 4 6\n",
+              "expected": "5.00\n5.00",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "7.00\n7.00",
+              "hidden": false
+            },
+            {
+              "input": "10 -2 3.5 8 120\n",
+              "expected": "27.90\n8.00",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-1-2",
+          "title": "Độ lệch chuẩn: dữ liệu phân tán ra sao?",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Cùng trung bình, khác hẳn nhau\n\nHai lớp cùng có điểm trung bình 7:\n\n- Lớp A: `7 7 7 7`\n- Lớp B: `4 10 4 10`\n\nRõ ràng lớp B \"chênh lệch\" hơn nhiều. **Độ lệch chuẩn** đo mức độ dữ liệu phân tán quanh trung bình:\n\n$$\\sigma = \\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_i - \\bar{x})^2}$$\n\nCác bước tính:\n\n1. Tính trung bình $\\bar{x}$.\n2. Với mỗi giá trị, tính độ lệch bình phương $(x_i - \\bar{x})^2$ — bình phương để số âm không triệt tiêu số dương.\n3. Lấy trung bình các độ lệch bình phương (gọi là **phương sai**).\n4. Lấy căn bậc hai để quay về đơn vị ban đầu.\n\nVới lớp B: $\\bar{x} = 7$, các độ lệch bình phương là $9, 9, 9, 9$, phương sai $= 9$, nên $\\sigma = 3$.\n\nTrong AI, độ lệch chuẩn dùng để **chuẩn hóa** dữ liệu, phát hiện điểm bất thường (cách trung bình hơn $3\\sigma$) và đánh giá độ ổn định của mô hình.",
+          "task": "Một dòng gồm các số thực. In **độ lệch chuẩn tổng thể** $\\sigma$ (chia cho $n$), làm tròn **2 chữ số thập phân**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n2 4 4 4 5 5 7 9\n\nĐầu ra:\n2.00\n```",
+          "starter": "a = list(map(float, input().split()))\n# Tính độ lệch chuẩn theo 4 bước",
+          "solution": "a = list(map(float, input().split()))\nn = len(a)\ntb = sum(a) / n\nphuong_sai = sum((x - tb) ** 2 for x in a) / n\nprint(f\"{phuong_sai ** 0.5:.2f}\")",
+          "hints": [
+            "Bước 1: tb = sum(a) / n.",
+            "Phương sai = trung bình của (x - tb) ** 2; độ lệch chuẩn = căn bậc hai của phương sai."
+          ],
+          "tests": [
+            {
+              "input": "2 4 4 4 5 5 7 9\n",
+              "expected": "2.00",
+              "hidden": false
+            },
+            {
+              "input": "5 5 5\n",
+              "expected": "0.00",
+              "hidden": false
+            },
+            {
+              "input": "1 2 3 4\n",
+              "expected": "1.12",
+              "hidden": false
+            },
+            {
+              "input": "4 10 4 10\n",
+              "expected": "3.00",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-1-3",
+          "title": "Chuẩn hóa Min–Max",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Đưa dữ liệu về cùng thang đo\n\nGiả sử một mô hình dự đoán giá nhà dùng hai đặc trưng: **diện tích** (30 – 300 m²) và **số phòng** (1 – 6). Vì diện tích có giá trị lớn hơn rất nhiều, nhiều thuật toán (như k-NN mà em sẽ học) sẽ coi diện tích \"quan trọng\" hơn — chỉ vì đơn vị đo!\n\n**Chuẩn hóa Min–Max** đưa mọi giá trị về đoạn $[0, 1]$:\n\n$$x' = \\frac{x - \\min}{\\max - \\min}$$\n\nGiá trị nhỏ nhất thành 0, lớn nhất thành 1, các giá trị khác nằm ở giữa theo đúng tỉ lệ.\n\n| x | 10 | 20 | 15 | 30 |\n|---|---|---|---|---|\n| x' | 0.00 | 0.50 | 0.25 | 1.00 |\n\n**Trường hợp đặc biệt**: nếu mọi giá trị bằng nhau thì $\\max - \\min = 0$ — phép chia không xác định. Khi đó ta quy ước mọi giá trị chuẩn hóa bằng 0.\n\n```python\nlo, hi = min(a), max(a)\nchuan = [(x - lo) / (hi - lo) for x in a]\n```\n\nĐây là một bước **tiền xử lý dữ liệu** mà hầu như dự án học máy nào cũng cần.",
+          "task": "Một dòng gồm các số thực. In các giá trị sau chuẩn hóa Min–Max trên **một dòng**, cách nhau bởi dấu cách, mỗi giá trị làm tròn **2 chữ số thập phân**. Nếu mọi giá trị bằng nhau, in toàn `0.00`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n10 20 15 30\n\nĐầu ra:\n0.00 0.50 0.25 1.00\n```",
+          "starter": "a = list(map(float, input().split()))\n# Chuẩn hóa về đoạn [0, 1]",
+          "solution": "a = list(map(float, input().split()))\nlo, hi = min(a), max(a)\nif hi == lo:\n    chuan = [0.0] * len(a)\nelse:\n    chuan = [(x - lo) / (hi - lo) for x in a]\nprint(\" \".join(f\"{x:.2f}\" for x in chuan))",
+          "hints": [
+            "Tìm lo = min(a), hi = max(a).",
+            "Xử lý riêng trường hợp hi == lo để tránh chia cho 0.",
+            "In: \" \".join(f\"{x:.2f}\" for x in chuan)"
+          ],
+          "tests": [
+            {
+              "input": "10 20 15 30\n",
+              "expected": "0.00 0.50 0.25 1.00",
+              "hidden": false
+            },
+            {
+              "input": "5 5 5\n",
+              "expected": "0.00 0.00 0.00",
+              "hidden": false
+            },
+            {
+              "input": "-1 0 1\n",
+              "expected": "0.00 0.50 1.00",
+              "hidden": false
+            },
+            {
+              "input": "3 7 4\n",
+              "expected": "0.00 1.00 0.25",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-1-4",
+          "title": "Đếm tần suất với từ điển",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Từ điển (dict): tra cứu tức thì\n\n`dict` lưu các cặp **khóa → giá trị**. Đếm số lần xuất hiện là ứng dụng kinh điển:\n\n```python\ndem = {}\nfor tu in [\"mèo\", \"chó\", \"mèo\"]:\n    dem[tu] = dem.get(tu, 0) + 1\nprint(dem)   # {'mèo': 2, 'chó': 1}\n```\n\n`dem.get(tu, 0)` trả về giá trị hiện có, hoặc 0 nếu khóa chưa tồn tại.\n\nBên trong, `dict` là một **bảng băm** (hash table): khóa được biến đổi thành vị trí lưu trữ, nên việc tra cứu hay cập nhật chỉ tốn thời gian **gần như hằng số** $O(1)$ — dù có hàng triệu khóa. Hãy xem trực quan trong Lăng kính → Bảng băm.\n\n## Tìm phần tử xuất hiện nhiều nhất (mode)\n\nDuyệt qua các cặp `(khóa, số đếm)` và giữ lại \"nhà vô địch\". Khi số đếm **bằng nhau**, đề bài thường yêu cầu một quy tắc phá hòa rõ ràng, ví dụ chọn từ đứng trước theo thứ tự từ điển:\n\n```python\ntot_nhat = min(dem, key=lambda w: (-dem[w], w))\n```\n\nMẹo: sắp xếp theo bộ `(-số_đếm, từ)` nghĩa là số đếm **giảm dần**, rồi đến từ **tăng dần**.",
+          "task": "Một dòng gồm nhiều từ. Không phân biệt hoa thường (đổi hết sang chữ thường). In từ xuất hiện **nhiều nhất** và số lần xuất hiện, cách nhau bởi dấu cách. Nếu nhiều từ có cùng số lần, chọn từ **nhỏ nhất theo thứ tự từ điển**.\n\n**Ví dụ**\n\n```\nĐầu vào:\nmeo cho meo ga cho meo\n\nĐầu ra:\nmeo 3\n```",
+          "starter": "tu = input().lower().split()\ndem = {}\n# Đếm tần suất rồi tìm từ xuất hiện nhiều nhất",
+          "solution": "tu = input().lower().split()\ndem = {}\nfor w in tu:\n    dem[w] = dem.get(w, 0) + 1\ntot = min(dem, key=lambda w: (-dem[w], w))\nprint(tot, dem[tot])",
+          "hints": [
+            "dem[w] = dem.get(w, 0) + 1 để đếm.",
+            "Chọn từ có số đếm lớn nhất; khi hòa thì so sánh chính các từ: min(dem, key=lambda w: (-dem[w], w))."
+          ],
+          "tests": [
+            {
+              "input": "meo cho meo ga cho meo\n",
+              "expected": "meo 3",
+              "hidden": false
+            },
+            {
+              "input": "a b c\n",
+              "expected": "a 1",
+              "hidden": false
+            },
+            {
+              "input": "Python python PYTHON java\n",
+              "expected": "python 3",
+              "hidden": false
+            },
+            {
+              "input": "x y y x\n",
+              "expected": "x 2",
+              "hidden": true
+            }
+          ],
+          "prism": "hash-table"
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Học máy từ con số 0",
+      "summary": "Tự cài đặt ba thuật toán học máy kinh điển chỉ với Python thuần: hồi quy tuyến tính, k-NN và perceptron.",
+      "lessons": [
+        {
+          "id": "ai-2-1",
+          "title": "Hồi quy tuyến tính: phương pháp bình phương tối thiểu",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Máy \"học\" một đường thẳng\n\nCó dữ liệu số giờ tự học $x$ và điểm kiểm tra $y$ của vài bạn. Ta muốn tìm đường thẳng $y = ax + b$ **khớp nhất** với dữ liệu để dự đoán điểm cho một số giờ mới.\n\n\"Khớp nhất\" nghĩa là tổng **bình phương sai số** $\\sum (y_i - (ax_i + b))^2$ nhỏ nhất. Giải bài toán tối ưu này bằng giải tích, ta được công thức:\n\n$$a = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sum (x_i - \\bar{x})^2}, \\qquad b = \\bar{y} - a\\bar{x}$$\n\nVí dụ với các điểm $(1, 3), (2, 5), (3, 7), (4, 9)$: $\\bar{x} = 2.5$, $\\bar{y} = 6$.\n\n| $x - \\bar{x}$ | $y - \\bar{y}$ | tích | $(x-\\bar{x})^2$ |\n|---|---|---|---|\n| -1.5 | -3 | 4.5 | 2.25 |\n| -0.5 | -1 | 0.5 | 0.25 |\n| 0.5 | 1 | 0.5 | 0.25 |\n| 1.5 | 3 | 4.5 | 2.25 |\n\n$a = 10 / 5 = 2$, $b = 6 - 2 \\times 2.5 = 1$. Mô hình là $y = 2x + 1$, nên với $x = 6$ ta dự đoán $y = 13$.\n\nĐây là thuật toán học máy cổ điển nhất — và là nền tảng của mạng nơ-ron: một nơ-ron cũng tính $w \\cdot x + b$!",
+          "task": "Dòng đầu là `n` (`n ≥ 2`), tiếp theo `n` dòng mỗi dòng hai số thực `x y` (các giá trị `x` không bằng nhau hết), dòng cuối là `x_moi`. In ba dòng, mỗi giá trị làm tròn **2 chữ số thập phân**:\n\n```\na = <hệ số góc>\nb = <hệ số tự do>\nDu doan: <a * x_moi + b>\n```\n\n**Ví dụ**\n\n```\nĐầu vào:\n4\n1 3\n2 5\n3 7\n4 9\n6\n\nĐầu ra:\na = 2.00\nb = 1.00\nDu doan: 13.00\n```",
+          "starter": "n = int(input())\nxs, ys = [], []\nfor _ in range(n):\n    x, y = map(float, input().split())\n    xs.append(x)\n    ys.append(y)\nx_moi = float(input())\n# Tính a, b theo công thức bình phương tối thiểu",
+          "solution": "n = int(input())\nxs, ys = [], []\nfor _ in range(n):\n    x, y = map(float, input().split())\n    xs.append(x)\n    ys.append(y)\nx_moi = float(input())\ntx = sum(xs) / n\nty = sum(ys) / n\ntu = sum((x - tx) * (y - ty) for x, y in zip(xs, ys))\nmau = sum((x - tx) ** 2 for x in xs)\na = tu / mau\nb = ty - a * tx\nprint(f\"a = {a:.2f}\")\nprint(f\"b = {b:.2f}\")\nprint(f\"Du doan: {a * x_moi + b:.2f}\")",
+          "hints": [
+            "Tính trung bình tx, ty trước.",
+            "Tử số: tổng (x - tx) * (y - ty); mẫu số: tổng (x - tx) ** 2.",
+            "b = ty - a * tx."
+          ],
+          "tests": [
+            {
+              "input": "4\n1 3\n2 5\n3 7\n4 9\n6\n",
+              "expected": "a = 2.00\nb = 1.00\nDu doan: 13.00",
+              "hidden": false
+            },
+            {
+              "input": "5\n1 52\n2 55\n3 61\n4 64\n5 68\n6\n",
+              "expected": "a = 4.10\nb = 47.70\nDu doan: 72.30",
+              "hidden": false
+            },
+            {
+              "input": "2\n0 1\n10 21\n3\n",
+              "expected": "a = 2.00\nb = 1.00\nDu doan: 7.00",
+              "hidden": false
+            },
+            {
+              "input": "4\n2 4\n4 5\n6 7\n8 8\n10\n",
+              "expected": "a = 0.70\nb = 2.50\nDu doan: 9.50",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-2-2",
+          "title": "k láng giềng gần nhất (k-NN)",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## \"Gần mực thì đen, gần đèn thì sáng\"\n\n**k-NN** (k-Nearest Neighbors) phân loại một điểm mới bằng cách nhìn vào **k điểm gần nó nhất** trong dữ liệu đã biết nhãn, rồi cho chúng **bỏ phiếu**.\n\nThuật toán:\n\n1. Tính khoảng cách từ điểm cần phân loại tới mọi điểm huấn luyện. Khoảng cách Euclid: $d = \\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$.\n2. Sắp xếp tăng dần theo khoảng cách, lấy $k$ điểm đầu.\n3. Nhãn xuất hiện nhiều nhất trong $k$ điểm là kết quả.\n\n**Mẹo**: để so sánh khoảng cách, không cần lấy căn — so sánh $d^2$ cho cùng thứ tự và tránh sai số số thực.\n\n```python\nds = []\nfor i, (x, y, nhan) in enumerate(du_lieu):\n    d2 = (x - qx) ** 2 + (y - qy) ** 2\n    ds.append((d2, i, nhan))   # i giúp phá hòa: điểm đứng trước được ưu tiên\nds.sort()\n```\n\nChọn $k$ thế nào? $k$ quá nhỏ thì dễ bị nhiễu; $k$ quá lớn thì ranh giới giữa các lớp bị \"mờ\". Người ta thường chọn $k$ lẻ để giảm khả năng hòa phiếu.\n\nk-NN không cần \"huấn luyện\" gì cả — nó chỉ ghi nhớ dữ liệu. Vì vậy nó còn được gọi là thuật toán **học lười** (lazy learning).",
+          "task": "Dòng đầu là `n`; `n` dòng tiếp theo mỗi dòng có `x y nhan` (`x`, `y` là số thực, `nhan` là một từ); tiếp theo là dòng chứa `k`; dòng cuối là `qx qy`.\n\nPhân loại điểm `(qx, qy)` bằng k-NN:\n\n- Khoảng cách bằng nhau thì điểm **xuất hiện trước** trong dữ liệu được ưu tiên.\n- Số phiếu bằng nhau thì chọn nhãn **nhỏ hơn theo thứ tự từ điển**.\n\nIn hai dòng: nhãn dự đoán và số phiếu dạng `phiếu/k`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n6\n1 1 xanh\n1 2 xanh\n2 1 xanh\n6 6 do\n6 7 do\n7 6 do\n3\n2 2\n\nĐầu ra:\nxanh\n3/3\n```",
+          "starter": "n = int(input())\ndu_lieu = []\nfor _ in range(n):\n    x, y, nhan = input().split()\n    du_lieu.append((float(x), float(y), nhan))\nk = int(input())\nqx, qy = map(float, input().split())\n# Tính khoảng cách, chọn k điểm gần nhất và bỏ phiếu",
+          "solution": "n = int(input())\ndu_lieu = []\nfor _ in range(n):\n    x, y, nhan = input().split()\n    du_lieu.append((float(x), float(y), nhan))\nk = int(input())\nqx, qy = map(float, input().split())\nds = []\nfor i, (x, y, nhan) in enumerate(du_lieu):\n    ds.append(((x - qx) ** 2 + (y - qy) ** 2, i, nhan))\nds.sort()\nphieu = {}\nfor _, _, nhan in ds[:k]:\n    phieu[nhan] = phieu.get(nhan, 0) + 1\ntot = min(phieu, key=lambda c: (-phieu[c], c))\nprint(tot)\nprint(f\"{phieu[tot]}/{k}\")",
+          "hints": [
+            "Lưu bộ (khoảng cách bình phương, chỉ số, nhãn) rồi sort() — chỉ số tự phá hòa khoảng cách.",
+            "Đếm phiếu của k phần tử đầu bằng dict.",
+            "Chọn nhãn: min(phieu, key=lambda c: (-phieu[c], c))."
+          ],
+          "tests": [
+            {
+              "input": "6\n1 1 xanh\n1 2 xanh\n2 1 xanh\n6 6 do\n6 7 do\n7 6 do\n3\n2 2\n",
+              "expected": "xanh\n3/3",
+              "hidden": false
+            },
+            {
+              "input": "6\n1 1 xanh\n1 2 xanh\n2 1 xanh\n6 6 do\n6 7 do\n7 6 do\n3\n4 4\n",
+              "expected": "xanh\n2/3",
+              "hidden": false
+            },
+            {
+              "input": "6\n1 1 xanh\n1 2 xanh\n2 1 xanh\n6 6 do\n6 7 do\n7 6 do\n1\n5 5\n",
+              "expected": "do\n1/1",
+              "hidden": false
+            },
+            {
+              "input": "6\n1 1 xanh\n1 2 xanh\n2 1 xanh\n6 6 do\n6 7 do\n7 6 do\n5\n3 3\n",
+              "expected": "xanh\n3/5",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-2-3",
+          "title": "Perceptron — nơ-ron nhân tạo đầu tiên",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Mô phỏng một tế bào thần kinh\n\nNăm 1958, Frank Rosenblatt đề xuất **perceptron**: một nơ-ron nhận các tín hiệu $x_1, x_2$, nhân với **trọng số** $w_1, w_2$, cộng thêm **độ lệch** $b$, rồi \"kích hoạt\" nếu tổng dương:\n\n$$\\hat{y} = \\begin{cases} 1 & \\text{nếu } w_1x_1 + w_2x_2 + b > 0 \\\\ 0 & \\text{ngược lại} \\end{cases}$$\n\n## Học từ sai lầm\n\nBan đầu mọi trọng số bằng 0. Với từng mẫu $(x_1, x_2, y)$:\n\n1. Dự đoán $\\hat{y}$.\n2. Sai số $e = y - \\hat{y}$ (bằng $-1$, $0$ hoặc $1$).\n3. Cập nhật với **tốc độ học** $\\eta$:\n\n$$w_1 \\mathrel{+}= \\eta \\, e \\, x_1, \\quad w_2 \\mathrel{+}= \\eta \\, e \\, x_2, \\quad b \\mathrel{+}= \\eta \\, e$$\n\nĐoán đúng ($e = 0$) thì không đổi gì; đoán sai thì trọng số được \"kéo\" về phía câu trả lời đúng. Duyệt hết dữ liệu một lượt gọi là một **epoch**.\n\nVới cổng logic **AND** (chỉ ra 1 khi cả hai đầu vào bằng 1), perceptron học được sau vài epoch. Nhưng với **XOR**, nó không bao giờ học được — vì không có đường thẳng nào tách được hai lớp. Hạn chế này dẫn tới sự ra đời của mạng nơ-ron **nhiều lớp** — tiền thân của học sâu ngày nay.",
+          "task": "Dòng 1 gồm số epoch `E` và tốc độ học `lr`. Dòng 2 là số mẫu `n`; `n` dòng tiếp theo mỗi dòng có `x1 x2 y` (`y` là 0 hoặc 1). Huấn luyện perceptron (khởi tạo `w1 = w2 = b = 0`, duyệt mẫu theo đúng thứ tự, kích hoạt khi tổng **lớn hơn hẳn** 0). In ra:\n\n- Dòng 1: `w1 w2 b`, mỗi số làm tròn 2 chữ số thập phân, cách nhau bởi dấu cách.\n- Dòng 2: dự đoán của mô hình cuối cùng cho từng mẫu huấn luyện, cách nhau bởi dấu cách.\n\n**Ví dụ** (cổng AND)\n\n```\nĐầu vào:\n10 1\n4\n0 0 0\n0 1 0\n1 0 0\n1 1 1\n\nĐầu ra:\n2.00 1.00 -2.00\n0 0 0 1\n```",
+          "starter": "E, lr = input().split()\nE, lr = int(E), float(lr)\nn = int(input())\nmau = [tuple(map(float, input().split())) for _ in range(n)]\nw1 = w2 = b = 0.0\n# Huấn luyện perceptron trong E epoch",
+          "solution": "E, lr = input().split()\nE, lr = int(E), float(lr)\nn = int(input())\nmau = [tuple(map(float, input().split())) for _ in range(n)]\nw1 = w2 = b = 0.0\n\ndef du_doan(x1, x2):\n    return 1 if w1 * x1 + w2 * x2 + b > 0 else 0\n\nfor _ in range(E):\n    for x1, x2, y in mau:\n        e = y - du_doan(x1, x2)\n        w1 += lr * e * x1\n        w2 += lr * e * x2\n        b += lr * e\nprint(f\"{w1:.2f} {w2:.2f} {b:.2f}\")\nprint(*[du_doan(x1, x2) for x1, x2, _ in mau])",
+          "hints": [
+            "Mỗi epoch duyệt qua toàn bộ mẫu theo thứ tự.",
+            "e = y - du_doan; cập nhật w1 += lr * e * x1, w2 += lr * e * x2, b += lr * e.",
+            "Kích hoạt khi tổng > 0 (không phải >= 0)."
+          ],
+          "tests": [
+            {
+              "input": "10 1\n4\n0 0 0\n0 1 0\n1 0 0\n1 1 1\n",
+              "expected": "2.00 1.00 -2.00\n0 0 0 1",
+              "hidden": false
+            },
+            {
+              "input": "10 1\n4\n0 0 0\n0 1 1\n1 0 1\n1 1 1\n",
+              "expected": "1.00 1.00 0.00\n0 1 1 1",
+              "hidden": false
+            },
+            {
+              "input": "20 0.5\n4\n0 0 1\n0 1 1\n1 0 1\n1 1 0\n",
+              "expected": "-1.00 -0.50 1.50\n1 1 1 0",
+              "hidden": false
+            },
+            {
+              "input": "1 1\n2\n2 1 1\n-1 -2 0\n",
+              "expected": "2.00 1.00 1.00\n1 0",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "AI ứng dụng: xử lý ngôn ngữ & đánh giá mô hình",
+      "summary": "Biến văn bản thành con số, xây bộ lọc thư rác Naive Bayes và đo chất lượng mô hình bằng các chỉ số chuẩn.",
+      "lessons": [
+        {
+          "id": "ai-3-1",
+          "title": "Túi từ (Bag of Words)",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Máy tính chỉ hiểu con số\n\nMuốn AI xử lý văn bản, trước tiên phải **biểu diễn văn bản bằng số**. Cách đơn giản nhất là **túi từ** (bag of words): bỏ qua thứ tự và ngữ pháp, chỉ đếm **mỗi từ xuất hiện bao nhiêu lần**.\n\nCác bước tiền xử lý:\n\n1. **Chuẩn hóa**: đổi sang chữ thường để \"Học\" và \"học\" là một.\n2. **Bỏ dấu câu**: `, . ! ? ; :` …\n3. **Tách từ** (tokenize) theo khoảng trắng.\n4. **Đếm** bằng từ điển.\n\n```python\ncau = \"Học, học nữa, học mãi!\"\nfor ky_tu in \",.!?;:\":\n    cau = cau.replace(ky_tu, \" \")\ntu = cau.lower().split()   # ['học', 'học', 'nữa', 'học', 'mãi']\n```\n\nKết quả là một \"vector đếm\": `{học: 3, mãi: 1, nữa: 1}`. Hai văn bản có vector giống nhau thì có thể nói về cùng chủ đề.\n\n**Hạn chế**: \"chó cắn người\" và \"người cắn chó\" có cùng túi từ! Các mô hình hiện đại như GPT dùng **embedding** và cơ chế **attention** để nắm được cả thứ tự và ngữ cảnh. Tuy vậy túi từ vẫn là điểm khởi đầu tuyệt vời — và đủ tốt cho bộ lọc thư rác ở bài sau.",
+          "task": "Nhập một đoạn văn bản (một dòng). Đổi sang chữ thường, thay các dấu câu `, . ! ? ; :` bằng dấu cách, rồi tách từ. In mỗi từ phân biệt trên một dòng theo dạng `từ: số_lần`, sắp xếp các từ **tăng dần theo thứ tự từ điển** (dùng `sorted`).\n\n**Ví dụ**\n\n```\nĐầu vào:\nHọc, học nữa, học mãi!\n\nĐầu ra:\nhọc: 3\nmãi: 1\nnữa: 1\n```",
+          "starter": "cau = input()\n# Chuẩn hóa, bỏ dấu câu, tách từ và đếm",
+          "solution": "cau = input().lower()\nfor ky_tu in \",.!?;:\":\n    cau = cau.replace(ky_tu, \" \")\ndem = {}\nfor w in cau.split():\n    dem[w] = dem.get(w, 0) + 1\nfor w in sorted(dem):\n    print(f\"{w}: {dem[w]}\")",
+          "hints": [
+            "Thay từng dấu câu bằng dấu cách: cau = cau.replace(ky_tu, \" \").",
+            "Đếm bằng dict rồi duyệt for w in sorted(dem)."
+          ],
+          "tests": [
+            {
+              "input": "Học, học nữa, học mãi!\n",
+              "expected": "học: 3\nmãi: 1\nnữa: 1",
+              "hidden": false
+            },
+            {
+              "input": "AI giúp người, người dạy AI.\n",
+              "expected": "ai: 2\ndạy: 1\ngiúp: 1\nngười: 2",
+              "hidden": false
+            },
+            {
+              "input": "Một từ\n",
+              "expected": "một: 1\ntừ: 1",
+              "hidden": false
+            },
+            {
+              "input": "the cat; THE dog. the end?\n",
+              "expected": "cat: 1\ndog: 1\nend: 1\nthe: 3",
+              "hidden": true
+            }
+          ],
+          "prism": "hash-table"
+        },
+        {
+          "id": "ai-3-2",
+          "title": "Bộ lọc thư rác Naive Bayes",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Xác suất giúp máy ra quyết định\n\nBộ lọc thư rác đầu tiên được dùng rộng rãi (khoảng năm 2002) dựa trên **định lý Bayes**. Ý tưởng: một tin nhắn chứa nhiều từ như \"miễn phí\", \"trúng thưởng\" thì **khả năng cao** là thư rác.\n\nVới mỗi lớp $c \\in \\{spam, ham\\}$, ta tính **điểm**:\n\n$$\\text{điểm}(c) = \\log P(c) + \\sum_{w \\in \\text{tin nhắn}} \\log P(w \\mid c)$$\n\n- $P(c)$ = tỉ lệ tin nhắn thuộc lớp $c$ trong dữ liệu huấn luyện.\n- $P(w \\mid c) = \\dfrac{\\text{số lần } w \\text{ xuất hiện trong lớp } c + 1}{\\text{tổng số từ của lớp } c + |V|}$, với $|V|$ là số từ **phân biệt** trong toàn bộ dữ liệu huấn luyện.\n\nLớp nào có điểm cao hơn thì chọn lớp đó.\n\n**Vì sao \"+1\"?** (gọi là *làm trơn Laplace*) Nếu một từ chưa từng xuất hiện trong lớp spam, $P(w \\mid spam) = 0$ sẽ khiến cả tích bằng 0 — chỉ một từ lạ đã quyết định tất cả. Cộng 1 giúp tránh điều đó.\n\n**Vì sao dùng log?** Nhân nhiều xác suất nhỏ sẽ ra số cực nhỏ (tràn số dưới). Vì $\\log(ab) = \\log a + \\log b$, ta đổi phép nhân thành phép cộng.\n\nGọi là \"ngây thơ\" (naive) vì mô hình giả định các từ **độc lập** với nhau — không đúng với ngôn ngữ thật, nhưng thực tế vẫn hoạt động rất tốt!",
+          "task": "Dòng đầu là `n`; `n` dòng tiếp theo có dạng `nhan|nội dung` với `nhan` là `spam` hoặc `ham`; dòng cuối là tin nhắn cần phân loại. Tách từ bằng khoảng trắng (đã viết thường sẵn).\n\nTính điểm theo công thức ở phần lý thuyết (dùng `math.log`, làm trơn Laplace, $|V|$ là số từ phân biệt của dữ liệu huấn luyện). Bỏ qua các từ trong tin nhắn **không có** trong $V$. In `spam` nếu điểm spam **lớn hơn hẳn** điểm ham, ngược lại in `ham`.\n\n**Ví dụ**: với dữ liệu huấn luyện gồm các tin nhắn khuyến mãi (spam) và tin nhắn lớp học (ham), tin `nhận quà miễn phí` được phân loại là `spam`.",
+          "starter": "import math\n\nn = int(input())\ndu_lieu = []\nfor _ in range(n):\n    nhan, noi_dung = input().split(\"|\")\n    du_lieu.append((nhan, noi_dung.split()))\ntin = input().split()\n# Đếm từ theo lớp, tính điểm log cho spam và ham",
+          "solution": "import math\n\nn = int(input())\ndu_lieu = []\nfor _ in range(n):\n    nhan, noi_dung = input().split(\"|\")\n    du_lieu.append((nhan, noi_dung.split()))\ntin = input().split()\n\nso_tin = {\"spam\": 0, \"ham\": 0}\ndem_tu = {\"spam\": {}, \"ham\": {}}\ntong_tu = {\"spam\": 0, \"ham\": 0}\nV = set()\nfor nhan, tu in du_lieu:\n    so_tin[nhan] += 1\n    for w in tu:\n        dem_tu[nhan][w] = dem_tu[nhan].get(w, 0) + 1\n        tong_tu[nhan] += 1\n        V.add(w)\n\ndiem = {}\nfor c in (\"spam\", \"ham\"):\n    s = math.log(so_tin[c] / n)\n    for w in tin:\n        if w in V:\n            s += math.log((dem_tu[c].get(w, 0) + 1) / (tong_tu[c] + len(V)))\n    diem[c] = s\nprint(\"spam\" if diem[\"spam\"] > diem[\"ham\"] else \"ham\")",
+          "hints": [
+            "Duyệt dữ liệu: đếm số tin mỗi lớp, số lần mỗi từ xuất hiện trong từng lớp, tổng số từ mỗi lớp và tập V.",
+            "điểm(c) = log(số tin lớp c / n) + tổng log((đếm(w, c) + 1) / (tổng từ lớp c + |V|)).",
+            "Chỉ cộng các từ có trong V; hòa điểm thì in ham."
+          ],
+          "tests": [
+            {
+              "input": "6\nspam|trúng thưởng iphone miễn phí\nspam|nhận quà miễn phí ngay hôm nay\nspam|khuyến mãi giảm giá sốc chỉ hôm nay\nham|họp lớp lúc 8 giờ sáng mai\nham|nộp bài tập tin học trước thứ sáu\nham|cuối tuần đi đá bóng nhé\nnhận quà miễn phí\n",
+              "expected": "spam",
+              "hidden": false
+            },
+            {
+              "input": "6\nspam|trúng thưởng iphone miễn phí\nspam|nhận quà miễn phí ngay hôm nay\nspam|khuyến mãi giảm giá sốc chỉ hôm nay\nham|họp lớp lúc 8 giờ sáng mai\nham|nộp bài tập tin học trước thứ sáu\nham|cuối tuần đi đá bóng nhé\nnộp bài tập tin học\n",
+              "expected": "ham",
+              "hidden": false
+            },
+            {
+              "input": "6\nspam|trúng thưởng iphone miễn phí\nspam|nhận quà miễn phí ngay hôm nay\nspam|khuyến mãi giảm giá sốc chỉ hôm nay\nham|họp lớp lúc 8 giờ sáng mai\nham|nộp bài tập tin học trước thứ sáu\nham|cuối tuần đi đá bóng nhé\ngiảm giá sốc hôm nay\n",
+              "expected": "spam",
+              "hidden": false
+            },
+            {
+              "input": "6\nspam|trúng thưởng iphone miễn phí\nspam|nhận quà miễn phí ngay hôm nay\nspam|khuyến mãi giảm giá sốc chỉ hôm nay\nham|họp lớp lúc 8 giờ sáng mai\nham|nộp bài tập tin học trước thứ sáu\nham|cuối tuần đi đá bóng nhé\nđi họp lớp sáng mai nhé\n",
+              "expected": "ham",
+              "hidden": true
+            },
+            {
+              "input": "6\nspam|trúng thưởng iphone miễn phí\nspam|nhận quà miễn phí ngay hôm nay\nspam|khuyến mãi giảm giá sốc chỉ hôm nay\nham|họp lớp lúc 8 giờ sáng mai\nham|nộp bài tập tin học trước thứ sáu\nham|cuối tuần đi đá bóng nhé\nxin chào bạn\n",
+              "expected": "ham",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "ai-3-3",
+          "title": "Đánh giá mô hình: accuracy, precision, recall, F1",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Mô hình \"đúng 95%\" chưa chắc đã tốt!\n\nGiả sử chỉ 5% bệnh nhân mắc bệnh. Một mô hình **luôn đoán \"không bệnh\"** sẽ đúng 95% — nhưng hoàn toàn vô dụng. Vì vậy ta cần nhiều thước đo hơn.\n\nVới bài toán hai lớp (1 = dương tính, 0 = âm tính), đếm 4 loại kết quả:\n\n| | Dự đoán 1 | Dự đoán 0 |\n|---|---|---|\n| **Thực tế 1** | TP (đúng dương) | FN (bỏ sót) |\n| **Thực tế 0** | FP (báo nhầm) | TN (đúng âm) |\n\nCác chỉ số:\n\n- **Accuracy** $= \\dfrac{TP + TN}{\\text{tổng}}$ — tỉ lệ đoán đúng.\n- **Precision** $= \\dfrac{TP}{TP + FP}$ — trong những lần báo \"dương\", bao nhiêu lần đúng?\n- **Recall** $= \\dfrac{TP}{TP + FN}$ — trong các ca dương thật, tìm ra được bao nhiêu?\n- **F1** $= \\dfrac{2 \\cdot P \\cdot R}{P + R}$ — trung bình điều hòa, cân bằng giữa precision và recall.\n\nChọn chỉ số theo bối cảnh: chẩn đoán ung thư cần **recall cao** (không được bỏ sót); lọc thư rác cần **precision cao** (đừng vứt nhầm thư quan trọng).\n\nKhi mẫu số bằng 0 (ví dụ mô hình không bao giờ đoán 1), ta quy ước chỉ số đó bằng 0.",
+          "task": "Dòng 1 là các nhãn **thực tế**, dòng 2 là các nhãn **dự đoán** (cùng độ dài, mỗi nhãn là 0 hoặc 1, cách nhau bởi dấu cách). In 4 dòng, mỗi giá trị làm tròn **2 chữ số thập phân**; mẫu số bằng 0 thì chỉ số đó là `0.00`:\n\n```\nAccuracy: ...\nPrecision: ...\nRecall: ...\nF1: ...\n```\n\n**Ví dụ**\n\n```\nĐầu vào:\n1 0 1 1 0 0 1 0\n1 0 0 1 0 1 1 0\n\nĐầu ra:\nAccuracy: 0.75\nPrecision: 0.75\nRecall: 0.75\nF1: 0.75\n```",
+          "starter": "thuc = list(map(int, input().split()))\ndoan = list(map(int, input().split()))\n# Đếm TP, FP, FN, TN rồi tính các chỉ số",
+          "solution": "thuc = list(map(int, input().split()))\ndoan = list(map(int, input().split()))\ntp = sum(1 for t, p in zip(thuc, doan) if t == 1 and p == 1)\ntn = sum(1 for t, p in zip(thuc, doan) if t == 0 and p == 0)\nfp = sum(1 for t, p in zip(thuc, doan) if t == 0 and p == 1)\nfn = sum(1 for t, p in zip(thuc, doan) if t == 1 and p == 0)\n\ndef chia(a, b):\n    return a / b if b else 0.0\n\nacc = chia(tp + tn, len(thuc))\nprec = chia(tp, tp + fp)\nrec = chia(tp, tp + fn)\nf1 = chia(2 * prec * rec, prec + rec)\nprint(f\"Accuracy: {acc:.2f}\")\nprint(f\"Precision: {prec:.2f}\")\nprint(f\"Recall: {rec:.2f}\")\nprint(f\"F1: {f1:.2f}\")",
+          "hints": [
+            "Đếm TP, TN, FP, FN bằng cách duyệt zip(thuc, doan).",
+            "Viết hàm chia(a, b) trả về 0 khi b == 0.",
+            "F1 = 2 * P * R / (P + R)."
+          ],
+          "tests": [
+            {
+              "input": "1 0 1 1 0 0 1 0\n1 0 0 1 0 1 1 0\n",
+              "expected": "Accuracy: 0.75\nPrecision: 0.75\nRecall: 0.75\nF1: 0.75",
+              "hidden": false
+            },
+            {
+              "input": "1 1 1 0\n1 1 1 1\n",
+              "expected": "Accuracy: 0.75\nPrecision: 0.75\nRecall: 1.00\nF1: 0.86",
+              "hidden": false
+            },
+            {
+              "input": "0 0 0\n0 0 0\n",
+              "expected": "Accuracy: 1.00\nPrecision: 0.00\nRecall: 0.00\nF1: 0.00",
+              "hidden": false
+            },
+            {
+              "input": "1 0 1 0 1\n0 0 0 0 1\n",
+              "expected": "Accuracy: 0.60\nPrecision: 1.00\nRecall: 0.33\nF1: 0.50",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3841 @@
+{
+  "version": 2,
+  "worlds": [
+    {
+      "id": 1,
+      "name": "Python Khởi Hành",
+      "lang": "python",
+      "description": "Làm quen với nhập xuất, biến và các phép toán số học trong Python."
+    },
+    {
+      "id": 2,
+      "name": "Python Chiến Thuật",
+      "lang": "python",
+      "description": "Rẽ nhánh if – elif – else, toán tử logic và tư duy xét trường hợp."
+    },
+    {
+      "id": 3,
+      "name": "Python Thuật Toán",
+      "lang": "python",
+      "description": "Vòng lặp, xử lý chữ số và các thuật toán số học kinh điển: ước, số nguyên tố, Euclid, Fibonacci."
+    },
+    {
+      "id": 4,
+      "name": "Pháo Đài Ngôn Ngữ C",
+      "lang": "c",
+      "description": "Chinh phục C: printf/scanf, switch, vòng lặp, mảng, chuỗi ký tự, hàm, đệ quy và con trỏ."
+    },
+    {
+      "id": 5,
+      "name": "Đỉnh Cao C++ HSG",
+      "lang": "cpp",
+      "description": "Thuật toán thi học sinh giỏi bằng C++: sắp xếp, tìm kiếm nhị phân, tổng tiền tố, hai con trỏ, quy hoạch động, BFS/DFS."
+    }
+  ],
+  "challenges": [
+    {
+      "id": "stage-1",
+      "stage": 1,
+      "world": 1,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 100,
+      "title": "Khởi động hệ thống",
+      "task": "Nhập tên chiến binh (một dòng, có thể có dấu cách). In ra lời chào `Chao <ten>`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nHung\n```\n\nKết quả:\n```\nChao Hung\n```",
+      "starter": "ten = input()\n# Viết code của em ở đây\n",
+      "solution": "ten = input()\nprint('Chao ' + ten)\n",
+      "hints": [
+        "Nối chuỗi bằng dấu `+`: `'Chao ' + ten`."
+      ],
+      "tests": [
+        {
+          "input": "Hung\n",
+          "expected": "Chao Hung",
+          "hidden": false
+        },
+        {
+          "input": "Lan Anh\n",
+          "expected": "Chao Lan Anh",
+          "hidden": false
+        },
+        {
+          "input": "V-Code\n",
+          "expected": "Chao V-Code",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io",
+        "string"
+      ]
+    },
+    {
+      "id": "stage-2",
+      "stage": 2,
+      "world": 1,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 100,
+      "title": "Chu vi mảnh đất",
+      "task": "Nhập cạnh `a` (số nguyên dương) của một mảnh đất hình vuông. In ra chu vi của nó.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n20\n```",
+      "starter": "a = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nprint(4 * a)\n",
+      "hints": [
+        "Chu vi hình vuông bằng 4 lần cạnh."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "20",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "48",
+          "hidden": false
+        },
+        {
+          "input": "1000000\n",
+          "expected": "4000000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io",
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-3",
+      "stage": 3,
+      "world": 1,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 100,
+      "title": "Diện tích sân trường",
+      "task": "Nhập chiều dài `a` và chiều rộng `b` (số nguyên dương) trên **2 dòng**. In ra diện tích hình chữ nhật.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n4\n```\n\nKết quả:\n```\n24\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nprint(a * b)\n",
+      "hints": [
+        "Mỗi lệnh `input()` đọc một dòng.",
+        "Diện tích = a * b."
+      ],
+      "tests": [
+        {
+          "input": "6\n4\n",
+          "expected": "24",
+          "hidden": false
+        },
+        {
+          "input": "10\n5\n",
+          "expected": "50",
+          "hidden": false
+        },
+        {
+          "input": "250\n120\n",
+          "expected": "30000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io",
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-4",
+      "stage": 4,
+      "world": 1,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 100,
+      "title": "Đổi nhiệt độ C sang F",
+      "task": "Nhập nhiệt độ `C` (số nguyên). In ra nhiệt độ Fahrenheit theo công thức `C * 9 // 5 + 32` (chia lấy phần nguyên).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n100\n```\n\nKết quả:\n```\n212\n```",
+      "starter": "c = int(input())\n# Viết code của em ở đây\n",
+      "solution": "c = int(input())\nprint(c * 9 // 5 + 32)\n",
+      "hints": [
+        "Dùng phép chia nguyên `//` của Python."
+      ],
+      "tests": [
+        {
+          "input": "100\n",
+          "expected": "212",
+          "hidden": false
+        },
+        {
+          "input": "37\n",
+          "expected": "98",
+          "hidden": false
+        },
+        {
+          "input": "-40\n",
+          "expected": "-40",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-5",
+      "stage": 5,
+      "world": 1,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 100,
+      "title": "Tính tiền mua vở",
+      "task": "Mỗi quyển vở giá **7000** đồng. Nhập số quyển `n`, in ra tổng số tiền phải trả.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n```\n\nKết quả:\n```\n21000\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n * 7000)\n",
+      "hints": [
+        "Tổng tiền = n * 7000."
+      ],
+      "tests": [
+        {
+          "input": "3\n",
+          "expected": "21000",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "84000",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-6",
+      "stage": 6,
+      "world": 1,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 100,
+      "title": "Chia kẹo công bằng",
+      "task": "Có `n` cái kẹo chia đều cho **4** bạn. In ra 2 dòng: số kẹo mỗi bạn nhận được và số kẹo còn dư.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n2\n2\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n // 4)\nprint(n % 4)\n",
+      "hints": [
+        "Mỗi bạn nhận `n // 4`, số dư là `n % 4`."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "2\n2",
+          "hidden": false
+        },
+        {
+          "input": "8\n",
+          "expected": "2\n0",
+          "hidden": false
+        },
+        {
+          "input": "3\n",
+          "expected": "0\n3",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-7",
+      "stage": 7,
+      "world": 1,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 100,
+      "title": "Đổi phút sang giây",
+      "task": "Nhập số phút `m`. In ra tổng số giây tương ứng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n300\n```",
+      "starter": "m = int(input())\n# Viết code của em ở đây\n",
+      "solution": "m = int(input())\nprint(m * 60)\n",
+      "hints": [
+        "1 phút = 60 giây."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "300",
+          "hidden": false
+        },
+        {
+          "input": "90\n",
+          "expected": "5400",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-8",
+      "stage": 8,
+      "world": 1,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 100,
+      "title": "Chữ số hàng đơn vị",
+      "task": "Nhập số nguyên dương `n`. In ra chữ số hàng đơn vị (chữ số tận cùng bên phải) của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n1234\n```\n\nKết quả:\n```\n4\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n % 10)\n",
+      "hints": [
+        "Phép chia lấy dư cho 10 cho chữ số cuối cùng."
+      ],
+      "tests": [
+        {
+          "input": "1234\n",
+          "expected": "4",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "7",
+          "hidden": false
+        },
+        {
+          "input": "90\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-9",
+      "stage": 9,
+      "world": 1,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 100,
+      "title": "Chữ số hàng chục",
+      "task": "Nhập số nguyên dương `n` (n ≥ 10). In ra chữ số hàng chục của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n1234\n```\n\nKết quả:\n```\n3\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n // 10 % 10)\n",
+      "hints": [
+        "Bỏ chữ số cuối bằng `n // 10`, rồi lấy chữ số cuối của kết quả."
+      ],
+      "tests": [
+        {
+          "input": "1234\n",
+          "expected": "3",
+          "hidden": false
+        },
+        {
+          "input": "58\n",
+          "expected": "5",
+          "hidden": false
+        },
+        {
+          "input": "100\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-10",
+      "stage": 10,
+      "world": 1,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 100,
+      "title": "Tổng hai chữ số",
+      "task": "Nhập một số nguyên có đúng **2 chữ số**. In ra tổng hai chữ số của nó.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n38\n```\n\nKết quả:\n```\n11\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n // 10 + n % 10)\n",
+      "hints": [
+        "Chữ số hàng chục là `n // 10`, hàng đơn vị là `n % 10`."
+      ],
+      "tests": [
+        {
+          "input": "38\n",
+          "expected": "11",
+          "hidden": false
+        },
+        {
+          "input": "99\n",
+          "expected": "18",
+          "hidden": false
+        },
+        {
+          "input": "10\n",
+          "expected": "1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-11",
+      "stage": 11,
+      "world": 1,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 100,
+      "title": "Đảo ngược số hai chữ số",
+      "task": "Nhập một số có đúng 2 chữ số. In ra số nhận được khi đảo ngược thứ tự hai chữ số (ví dụ 38 → 83, 40 → 4).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n38\n```\n\nKết quả:\n```\n83\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n % 10 * 10 + n // 10)\n",
+      "hints": [
+        "Số mới = (hàng đơn vị) * 10 + (hàng chục).",
+        "Kết quả là một số nên 04 được in thành 4."
+      ],
+      "tests": [
+        {
+          "input": "38\n",
+          "expected": "83",
+          "hidden": false
+        },
+        {
+          "input": "91\n",
+          "expected": "19",
+          "hidden": false
+        },
+        {
+          "input": "40\n",
+          "expected": "4",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-12",
+      "stage": 12,
+      "world": 1,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 100,
+      "title": "Bình phương và lập phương",
+      "task": "Nhập số nguyên `n`. In ra 3 dòng: `n²`, `n³` và tổng của hai giá trị đó.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n```\n\nKết quả:\n```\n9\n27\n36\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nb = n * n\nl = n * n * n\nprint(b)\nprint(l)\nprint(b + l)\n",
+      "hints": [
+        "Có thể dùng `n ** 2` và `n ** 3`."
+      ],
+      "tests": [
+        {
+          "input": "3\n",
+          "expected": "9\n27\n36",
+          "hidden": false
+        },
+        {
+          "input": "-2\n",
+          "expected": "4\n-8\n-4",
+          "hidden": false
+        },
+        {
+          "input": "100\n",
+          "expected": "10000\n1000000\n1010000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-13",
+      "stage": 13,
+      "world": 1,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 100,
+      "title": "Tốc độ chạy bộ",
+      "task": "Nhập quãng đường `s` (mét) và thời gian `t` (giây, t > 0) trên 2 dòng. In ra vận tốc làm tròn xuống thành số nguyên (`s // t`) và quãng đường còn dư (`s % t`) trên 2 dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n100\n12\n```\n\nKết quả:\n```\n8\n4\n```",
+      "starter": "s = int(input())\nt = int(input())\n# Viết code của em ở đây\n",
+      "solution": "s = int(input())\nt = int(input())\nprint(s // t)\nprint(s % t)\n",
+      "hints": [
+        "Dùng `//` và `%`."
+      ],
+      "tests": [
+        {
+          "input": "100\n12\n",
+          "expected": "8\n4",
+          "hidden": false
+        },
+        {
+          "input": "400\n80\n",
+          "expected": "5\n0",
+          "hidden": false
+        },
+        {
+          "input": "5\n7\n",
+          "expected": "0\n5",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-14",
+      "stage": 14,
+      "world": 1,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 100,
+      "title": "Giảm giá ngày hội sách",
+      "task": "Mọi cuốn sách được giảm **10%**. Nhập giá gốc `p` (bội số của 10). In ra giá sau khi giảm.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n50000\n```\n\nKết quả:\n```\n45000\n```",
+      "starter": "p = int(input())\n# Viết code của em ở đây\n",
+      "solution": "p = int(input())\nprint(p - p // 10)\n",
+      "hints": [
+        "Số tiền giảm là `p // 10`."
+      ],
+      "tests": [
+        {
+          "input": "50000\n",
+          "expected": "45000",
+          "hidden": false
+        },
+        {
+          "input": "120\n",
+          "expected": "108",
+          "hidden": false
+        },
+        {
+          "input": "10\n",
+          "expected": "9",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-15",
+      "stage": 15,
+      "world": 1,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 100,
+      "title": "Tổng ba số liên tiếp",
+      "task": "Nhập số nguyên `n`. In ra tổng `n + (n + 1) + (n + 2)`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n18\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nprint(n + (n + 1) + (n + 2))\n",
+      "hints": [
+        "Có thể rút gọn thành `3 * n + 3`."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "18",
+          "hidden": false
+        },
+        {
+          "input": "-1\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "1000000000\n",
+          "expected": "3000000003",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-16",
+      "stage": 16,
+      "world": 1,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 100,
+      "title": "Chu vi tam giác",
+      "task": "Nhập ba cạnh `a`, `b`, `c` của một tam giác trên 3 dòng. In ra chu vi tam giác.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n4\n5\n```\n\nKết quả:\n```\n12\n```",
+      "starter": "a = int(input())\nb = int(input())\nc = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nc = int(input())\nprint(a + b + c)\n",
+      "hints": [
+        "Chu vi bằng tổng ba cạnh."
+      ],
+      "tests": [
+        {
+          "input": "3\n4\n5\n",
+          "expected": "12",
+          "hidden": false
+        },
+        {
+          "input": "7\n7\n7\n",
+          "expected": "21",
+          "hidden": false
+        },
+        {
+          "input": "10\n24\n26\n",
+          "expected": "60",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-17",
+      "stage": 17,
+      "world": 1,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 100,
+      "title": "Điểm trung bình cộng",
+      "task": "Nhập điểm Toán, Văn, Anh (số nguyên) trên 3 dòng. In ra điểm trung bình làm tròn **2 chữ số thập phân**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n7\n9\n```\n\nKết quả:\n```\n8.00\n```",
+      "starter": "toan = int(input())\nvan = int(input())\nanh = int(input())\n# Viết code của em ở đây\n",
+      "solution": "toan = int(input())\nvan = int(input())\nanh = int(input())\ntb = (toan + van + anh) / 3\nprint(f'{tb:.2f}')\n",
+      "hints": [
+        "Dùng phép chia thường `/`.",
+        "Định dạng 2 chữ số thập phân: `f'{tb:.2f}'`."
+      ],
+      "tests": [
+        {
+          "input": "8\n7\n9\n",
+          "expected": "8.00",
+          "hidden": false
+        },
+        {
+          "input": "10\n9\n9\n",
+          "expected": "9.33",
+          "hidden": false
+        },
+        {
+          "input": "5\n6\n6\n",
+          "expected": "5.67",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic",
+        "format"
+      ]
+    },
+    {
+      "id": "stage-18",
+      "stage": 18,
+      "world": 1,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 100,
+      "title": "Đếm ký tự mật danh",
+      "task": "Nhập một mật danh (một dòng, có thể chứa dấu cách). In ra số ký tự của mật danh (tính cả dấu cách).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nShadow\n```\n\nKết quả:\n```\n6\n```",
+      "starter": "s = input()\n# Viết code của em ở đây\n",
+      "solution": "s = input()\nprint(len(s))\n",
+      "hints": [
+        "Hàm `len()` trả về độ dài chuỗi."
+      ],
+      "tests": [
+        {
+          "input": "Shadow\n",
+          "expected": "6",
+          "hidden": false
+        },
+        {
+          "input": "Ha Noi 2026\n",
+          "expected": "11",
+          "hidden": false
+        },
+        {
+          "input": "x\n",
+          "expected": "1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "string"
+      ]
+    },
+    {
+      "id": "stage-19",
+      "stage": 19,
+      "world": 1,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 100,
+      "title": "Số giờ và phút dư",
+      "task": "Nhập tổng số phút `m`. In ra theo mẫu `<h> gio <p> phut` với `h` là số giờ trọn vẹn và `p` là số phút còn dư.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n135\n```\n\nKết quả:\n```\n2 gio 15 phut\n```",
+      "starter": "m = int(input())\n# Viết code của em ở đây\n",
+      "solution": "m = int(input())\nprint(f'{m // 60} gio {m % 60} phut')\n",
+      "hints": [
+        "Số giờ là `m // 60`, phút dư là `m % 60`.",
+        "Dùng f-string để ghép kết quả."
+      ],
+      "tests": [
+        {
+          "input": "135\n",
+          "expected": "2 gio 15 phut",
+          "hidden": false
+        },
+        {
+          "input": "59\n",
+          "expected": "0 gio 59 phut",
+          "hidden": false
+        },
+        {
+          "input": "600\n",
+          "expected": "10 gio 0 phut",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic",
+        "format"
+      ]
+    },
+    {
+      "id": "stage-20",
+      "stage": 20,
+      "world": 1,
+      "lang": "python",
+      "rank": "BOSS",
+      "boss": true,
+      "xp": 300,
+      "title": "BOSS 1: Kho báu đầu tiên",
+      "task": "Đoàn chiến binh mở được `k` rương báu, mỗi rương chứa `g` đồng vàng. Hoàn thành nhiệm vụ được thưởng thêm **50** vàng. Toàn bộ vàng được đóng vào các túi, mỗi túi chứa đúng 100 đồng.\n\nNhập `g` và `k` trên 2 dòng. In ra 3 dòng:\n\n```\nTong vang: T\nSo tui: X\nVang le: Y\n```\n\ntrong đó `T` là tổng số vàng, `X` là số túi đầy, `Y` là số vàng lẻ không đủ một túi.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n30\n5\n```\n\nKết quả:\n```\nTong vang: 200\nSo tui: 2\nVang le: 0\n```",
+      "starter": "g = int(input())\nk = int(input())\n# Viết code của em ở đây\n",
+      "solution": "g = int(input())\nk = int(input())\nt = g * k + 50\nprint(f'Tong vang: {t}')\nprint(f'So tui: {t // 100}')\nprint(f'Vang le: {t % 100}')\n",
+      "hints": [
+        "Tổng vàng = g * k + 50.",
+        "Số túi = tổng // 100, vàng lẻ = tổng % 100."
+      ],
+      "tests": [
+        {
+          "input": "30\n5\n",
+          "expected": "Tong vang: 200\nSo tui: 2\nVang le: 0",
+          "hidden": false
+        },
+        {
+          "input": "120\n10\n",
+          "expected": "Tong vang: 1250\nSo tui: 12\nVang le: 50",
+          "hidden": false
+        },
+        {
+          "input": "0\n3\n",
+          "expected": "Tong vang: 50\nSo tui: 0\nVang le: 50",
+          "hidden": true
+        },
+        {
+          "input": "7\n13\n",
+          "expected": "Tong vang: 141\nSo tui: 1\nVang le: 41",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic",
+        "boss"
+      ]
+    },
+    {
+      "id": "stage-21",
+      "stage": 21,
+      "world": 2,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 150,
+      "title": "Cổng chẵn hay lẻ",
+      "task": "Nhập số nguyên `n`. In `CHAN` nếu `n` chẵn, ngược lại in `LE`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n```\n\nKết quả:\n```\nCHAN\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif n % 2 == 0:\n    print('CHAN')\nelse:\n    print('LE')\n",
+      "hints": [
+        "Số chẵn chia hết cho 2: `n % 2 == 0`."
+      ],
+      "tests": [
+        {
+          "input": "4\n",
+          "expected": "CHAN",
+          "hidden": false
+        },
+        {
+          "input": "-7\n",
+          "expected": "LE",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "CHAN",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-22",
+      "stage": 22,
+      "world": 2,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 150,
+      "title": "Âm, dương hay không",
+      "task": "Nhập số nguyên `n`. In `DUONG` nếu n > 0, `AM` nếu n < 0, `KHONG` nếu n = 0.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n15\n```\n\nKết quả:\n```\nDUONG\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif n > 0:\n    print('DUONG')\nelif n < 0:\n    print('AM')\nelse:\n    print('KHONG')\n",
+      "hints": [
+        "Dùng `if – elif – else`."
+      ],
+      "tests": [
+        {
+          "input": "15\n",
+          "expected": "DUONG",
+          "hidden": false
+        },
+        {
+          "input": "-3\n",
+          "expected": "AM",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "KHONG",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-23",
+      "stage": 23,
+      "world": 2,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 150,
+      "title": "Đấu tay đôi hai số",
+      "task": "Nhập hai số nguyên `a`, `b` trên 2 dòng. In ra số lớn hơn (nếu bằng nhau in giá trị đó).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n9\n```\n\nKết quả:\n```\n9\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nif a >= b:\n    print(a)\nelse:\n    print(b)\n",
+      "hints": [
+        "So sánh `a >= b`."
+      ],
+      "tests": [
+        {
+          "input": "3\n9\n",
+          "expected": "9",
+          "hidden": false
+        },
+        {
+          "input": "10\n-2\n",
+          "expected": "10",
+          "hidden": false
+        },
+        {
+          "input": "5\n5\n",
+          "expected": "5",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-24",
+      "stage": 24,
+      "world": 2,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 150,
+      "title": "Vua của ba số",
+      "task": "Nhập ba số nguyên `a`, `b`, `c` trên 3 dòng. In ra số lớn nhất **không dùng hàm max**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n9\n4\n```\n\nKết quả:\n```\n9\n```",
+      "starter": "a = int(input())\nb = int(input())\nc = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nc = int(input())\nlon = a\nif b > lon:\n    lon = b\nif c > lon:\n    lon = c\nprint(lon)\n",
+      "hints": [
+        "Giả sử `a` lớn nhất rồi lần lượt so sánh với `b` và `c`."
+      ],
+      "tests": [
+        {
+          "input": "3\n9\n4\n",
+          "expected": "9",
+          "hidden": false
+        },
+        {
+          "input": "-5\n-1\n-8\n",
+          "expected": "-1",
+          "hidden": false
+        },
+        {
+          "input": "7\n7\n2\n",
+          "expected": "7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-25",
+      "stage": 25,
+      "world": 2,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 150,
+      "title": "Kiểm tra năm nhuận",
+      "task": "Nhập năm `y`. Năm nhuận là năm chia hết cho 400, hoặc chia hết cho 4 nhưng không chia hết cho 100. In `NHUAN` hoặc `KHONG`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2024\n```\n\nKết quả:\n```\nNHUAN\n```",
+      "starter": "y = int(input())\n# Viết code của em ở đây\n",
+      "solution": "y = int(input())\nif y % 400 == 0 or (y % 4 == 0 and y % 100 != 0):\n    print('NHUAN')\nelse:\n    print('KHONG')\n",
+      "hints": [
+        "Kết hợp điều kiện bằng `or` và `and`.",
+        "Năm 1900 không nhuận, năm 2000 nhuận."
+      ],
+      "tests": [
+        {
+          "input": "2024\n",
+          "expected": "NHUAN",
+          "hidden": false
+        },
+        {
+          "input": "1900\n",
+          "expected": "KHONG",
+          "hidden": false
+        },
+        {
+          "input": "2000\n",
+          "expected": "NHUAN",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "logic"
+      ]
+    },
+    {
+      "id": "stage-26",
+      "stage": 26,
+      "world": 2,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 150,
+      "title": "Xếp loại học lực",
+      "task": "Nhập điểm nguyên `d` (0 … 10). In `GIOI` nếu d ≥ 8, `KHA` nếu d ≥ 6, `TB` nếu d ≥ 5, ngược lại `YEU`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n9\n```\n\nKết quả:\n```\nGIOI\n```",
+      "starter": "d = int(input())\n# Viết code của em ở đây\n",
+      "solution": "d = int(input())\nif d >= 8:\n    print('GIOI')\nelif d >= 6:\n    print('KHA')\nelif d >= 5:\n    print('TB')\nelse:\n    print('YEU')\n",
+      "hints": [
+        "Kiểm tra từ mức cao xuống thấp."
+      ],
+      "tests": [
+        {
+          "input": "9\n",
+          "expected": "GIOI",
+          "hidden": false
+        },
+        {
+          "input": "6\n",
+          "expected": "KHA",
+          "hidden": false
+        },
+        {
+          "input": "4\n",
+          "expected": "YEU",
+          "hidden": false
+        },
+        {
+          "input": "5\n",
+          "expected": "TB",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-27",
+      "stage": 27,
+      "world": 2,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 150,
+      "title": "Bội chung của 3 và 5",
+      "task": "Nhập số nguyên `n`. In `YES` nếu `n` chia hết cho cả 3 và 5, ngược lại in `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n30\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif n % 3 == 0 and n % 5 == 0:\n    print('YES')\nelse:\n    print('NO')\n",
+      "hints": [
+        "Hai điều kiện phải đồng thời đúng: dùng `and`."
+      ],
+      "tests": [
+        {
+          "input": "30\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "9\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "25\n",
+          "expected": "NO",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "logic"
+      ]
+    },
+    {
+      "id": "stage-28",
+      "stage": 28,
+      "world": 2,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 150,
+      "title": "Điều kiện tam giác",
+      "task": "Nhập ba số nguyên dương `a`, `b`, `c` trên 3 dòng. In `YES` nếu chúng là độ dài ba cạnh của một tam giác (tổng hai cạnh bất kỳ lớn hơn cạnh còn lại), ngược lại `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n4\n5\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "a = int(input())\nb = int(input())\nc = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nc = int(input())\nif a + b > c and a + c > b and b + c > a:\n    print('YES')\nelse:\n    print('NO')\n",
+      "hints": [
+        "Cần kiểm tra cả ba bất đẳng thức tam giác."
+      ],
+      "tests": [
+        {
+          "input": "3\n4\n5\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "1\n2\n3\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "10\n1\n1\n",
+          "expected": "NO",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "geometry"
+      ]
+    },
+    {
+      "id": "stage-29",
+      "stage": 29,
+      "world": 2,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 150,
+      "title": "Tam giác đều hay cân",
+      "task": "Nhập ba cạnh của một tam giác hợp lệ trên 3 dòng. In `DEU` nếu ba cạnh bằng nhau, `CAN` nếu có đúng hai cạnh bằng nhau, ngược lại `THUONG`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n5\n5\n```\n\nKết quả:\n```\nDEU\n```",
+      "starter": "a = int(input())\nb = int(input())\nc = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nc = int(input())\nif a == b == c:\n    print('DEU')\nelif a == b or b == c or a == c:\n    print('CAN')\nelse:\n    print('THUONG')\n",
+      "hints": [
+        "Kiểm tra trường hợp đều trước, rồi mới đến cân."
+      ],
+      "tests": [
+        {
+          "input": "5\n5\n5\n",
+          "expected": "DEU",
+          "hidden": false
+        },
+        {
+          "input": "5\n7\n5\n",
+          "expected": "CAN",
+          "hidden": false
+        },
+        {
+          "input": "3\n4\n5\n",
+          "expected": "THUONG",
+          "hidden": false
+        },
+        {
+          "input": "2\n3\n3\n",
+          "expected": "CAN",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "geometry"
+      ]
+    },
+    {
+      "id": "stage-30",
+      "stage": 30,
+      "world": 2,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 150,
+      "title": "Giá vé rạp phim",
+      "task": "Nhập tuổi `t`. Giá vé: dưới 12 tuổi `40000`, từ 12 đến dưới 18 tuổi `60000`, từ 60 tuổi trở lên `50000`, còn lại `80000`. In ra giá vé.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n```\n\nKết quả:\n```\n40000\n```",
+      "starter": "t = int(input())\n# Viết code của em ở đây\n",
+      "solution": "t = int(input())\nif t < 12:\n    print(40000)\nelif t < 18:\n    print(60000)\nelif t >= 60:\n    print(50000)\nelse:\n    print(80000)\n",
+      "hints": [
+        "Chú ý ranh giới 12, 18 và 60 tuổi."
+      ],
+      "tests": [
+        {
+          "input": "8\n",
+          "expected": "40000",
+          "hidden": false
+        },
+        {
+          "input": "25\n",
+          "expected": "80000",
+          "hidden": false
+        },
+        {
+          "input": "65\n",
+          "expected": "50000",
+          "hidden": true
+        },
+        {
+          "input": "17\n",
+          "expected": "60000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-31",
+      "stage": 31,
+      "world": 2,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 150,
+      "title": "Phân hạng rank game",
+      "task": "Nhập điểm Elo. In `CAO THU` nếu ≥ 2000, `KIM CUONG` nếu ≥ 1500, `VANG` nếu ≥ 1000, ngược lại `BAC`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2150\n```\n\nKết quả:\n```\nCAO THU\n```",
+      "starter": "elo = int(input())\n# Viết code của em ở đây\n",
+      "solution": "elo = int(input())\nif elo >= 2000:\n    print('CAO THU')\nelif elo >= 1500:\n    print('KIM CUONG')\nelif elo >= 1000:\n    print('VANG')\nelse:\n    print('BAC')\n",
+      "hints": [
+        "Chuỗi `if – elif` từ cao xuống thấp."
+      ],
+      "tests": [
+        {
+          "input": "2150\n",
+          "expected": "CAO THU",
+          "hidden": false
+        },
+        {
+          "input": "999\n",
+          "expected": "BAC",
+          "hidden": false
+        },
+        {
+          "input": "1500\n",
+          "expected": "KIM CUONG",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-32",
+      "stage": 32,
+      "world": 2,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 150,
+      "title": "Giá trị tuyệt đối",
+      "task": "Nhập số nguyên `n`. In ra |n| bằng câu lệnh `if` (không dùng hàm `abs`).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n-15\n```\n\nKết quả:\n```\n15\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif n < 0:\n    n = -n\nprint(n)\n",
+      "hints": [
+        "Nếu `n < 0` thì đổi dấu."
+      ],
+      "tests": [
+        {
+          "input": "-15\n",
+          "expected": "15",
+          "hidden": false
+        },
+        {
+          "input": "8\n",
+          "expected": "8",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-33",
+      "stage": 33,
+      "world": 2,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 150,
+      "title": "Kiểm tra mật khẩu",
+      "task": "Nhập mật khẩu `s` (một dòng). Nếu độ dài ≥ 8 **và** có ít nhất một chữ số in `MANH`; nếu độ dài ≥ 8 nhưng không có chữ số in `TRUNG BINH`; ngược lại in `YEU`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nmatkhau2026\n```\n\nKết quả:\n```\nMANH\n```",
+      "starter": "s = input()\n# Viết code của em ở đây\n",
+      "solution": "s = input()\nco_so = any(ch.isdigit() for ch in s)\nif len(s) >= 8 and co_so:\n    print('MANH')\nelif len(s) >= 8:\n    print('TRUNG BINH')\nelse:\n    print('YEU')\n",
+      "hints": [
+        "`ch.isdigit()` kiểm tra một ký tự có phải chữ số không.",
+        "Có thể duyệt từng ký tự bằng vòng lặp hoặc dùng `any(...)`."
+      ],
+      "tests": [
+        {
+          "input": "matkhau2026\n",
+          "expected": "MANH",
+          "hidden": false
+        },
+        {
+          "input": "matkhaurat\n",
+          "expected": "TRUNG BINH",
+          "hidden": false
+        },
+        {
+          "input": "abc1\n",
+          "expected": "YEU",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "string"
+      ]
+    },
+    {
+      "id": "stage-34",
+      "stage": 34,
+      "world": 2,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 150,
+      "title": "Số ngày trong tháng",
+      "task": "Nhập tháng `m` (1 … 12) và năm `y` trên 2 dòng. In ra số ngày của tháng đó (tháng 2 có 29 ngày nếu là năm nhuận).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2\n2024\n```\n\nKết quả:\n```\n29\n```",
+      "starter": "m = int(input())\ny = int(input())\n# Viết code của em ở đây\n",
+      "solution": "m = int(input())\ny = int(input())\nif m == 2:\n    if y % 400 == 0 or (y % 4 == 0 and y % 100 != 0):\n        print(29)\n    else:\n        print(28)\nelif m in (4, 6, 9, 11):\n    print(30)\nelse:\n    print(31)\n",
+      "hints": [
+        "Tháng 4, 6, 9, 11 có 30 ngày.",
+        "Tháng 2 phụ thuộc năm nhuận."
+      ],
+      "tests": [
+        {
+          "input": "2\n2024\n",
+          "expected": "29",
+          "hidden": false
+        },
+        {
+          "input": "4\n2023\n",
+          "expected": "30",
+          "hidden": false
+        },
+        {
+          "input": "2\n1900\n",
+          "expected": "28",
+          "hidden": true
+        },
+        {
+          "input": "12\n2025\n",
+          "expected": "31",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "logic"
+      ]
+    },
+    {
+      "id": "stage-35",
+      "stage": 35,
+      "world": 2,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 150,
+      "title": "Tiền điện bậc thang",
+      "task": "Nhập số kWh `k`. Giá điện: 50 kWh đầu giá 1500/kWh, từ kWh thứ 51 đến 100 giá 2000/kWh, từ kWh thứ 101 trở đi giá 2500/kWh. In ra tổng tiền.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n40\n```\n\nKết quả:\n```\n60000\n```",
+      "starter": "k = int(input())\n# Viết code của em ở đây\n",
+      "solution": "k = int(input())\nif k <= 50:\n    tien = k * 1500\nelif k <= 100:\n    tien = 50 * 1500 + (k - 50) * 2000\nelse:\n    tien = 50 * 1500 + 50 * 2000 + (k - 100) * 2500\nprint(tien)\n",
+      "hints": [
+        "Tính riêng từng bậc rồi cộng lại."
+      ],
+      "tests": [
+        {
+          "input": "40\n",
+          "expected": "60000",
+          "hidden": false
+        },
+        {
+          "input": "80\n",
+          "expected": "135000",
+          "hidden": false
+        },
+        {
+          "input": "150\n",
+          "expected": "300000",
+          "hidden": true
+        },
+        {
+          "input": "100\n",
+          "expected": "175000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-36",
+      "stage": 36,
+      "world": 2,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 150,
+      "title": "Số có ba chữ số",
+      "task": "Nhập số nguyên `n`. In `YES` nếu `n` là số dương có đúng 3 chữ số, ngược lại `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n256\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif 100 <= n <= 999:\n    print('YES')\nelse:\n    print('NO')\n",
+      "hints": [
+        "Python cho phép viết `100 <= n <= 999`."
+      ],
+      "tests": [
+        {
+          "input": "256\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "99\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "-500\n",
+          "expected": "NO",
+          "hidden": true
+        },
+        {
+          "input": "1000\n",
+          "expected": "NO",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-37",
+      "stage": 37,
+      "world": 2,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 150,
+      "title": "Cảnh báo nhiệt độ CPU",
+      "task": "Nhập nhiệt độ `t`. In `NGUY HIEM` nếu t ≥ 85, `NONG` nếu t ≥ 65, ngược lại `ON DINH`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n90\n```\n\nKết quả:\n```\nNGUY HIEM\n```",
+      "starter": "t = int(input())\n# Viết code của em ở đây\n",
+      "solution": "t = int(input())\nif t >= 85:\n    print('NGUY HIEM')\nelif t >= 65:\n    print('NONG')\nelse:\n    print('ON DINH')\n",
+      "hints": [
+        "Kiểm tra ngưỡng 85 trước."
+      ],
+      "tests": [
+        {
+          "input": "90\n",
+          "expected": "NGUY HIEM",
+          "hidden": false
+        },
+        {
+          "input": "70\n",
+          "expected": "NONG",
+          "hidden": false
+        },
+        {
+          "input": "40\n",
+          "expected": "ON DINH",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-38",
+      "stage": 38,
+      "world": 2,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 150,
+      "title": "Thưởng chuỗi thắng",
+      "task": "Nhập số trận thắng liên tiếp `w`. Nếu w ≥ 10 thưởng `w * 300`, nếu w ≥ 5 thưởng `w * 200`, ngược lại `w * 100`. In ra số điểm thưởng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n```\n\nKết quả:\n```\n300\n```",
+      "starter": "w = int(input())\n# Viết code của em ở đây\n",
+      "solution": "w = int(input())\nif w >= 10:\n    print(w * 300)\nelif w >= 5:\n    print(w * 200)\nelse:\n    print(w * 100)\n",
+      "hints": [
+        "Ba mức thưởng — kiểm tra mức cao nhất trước."
+      ],
+      "tests": [
+        {
+          "input": "3\n",
+          "expected": "300",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "1400",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "3600",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-39",
+      "stage": 39,
+      "world": 2,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 150,
+      "title": "Kiểm tra chia hết cho 7",
+      "task": "Nhập số nguyên dương `n`. Nếu chia hết cho 7 in `CHIA HET`, ngược lại in phần dư của `n` khi chia cho 7.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n49\n```\n\nKết quả:\n```\nCHIA HET\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nif n % 7 == 0:\n    print('CHIA HET')\nelse:\n    print(n % 7)\n",
+      "hints": [
+        "Tính `n % 7` một lần và so sánh với 0."
+      ],
+      "tests": [
+        {
+          "input": "49\n",
+          "expected": "CHIA HET",
+          "hidden": false
+        },
+        {
+          "input": "50\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "13\n",
+          "expected": "6",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if"
+      ]
+    },
+    {
+      "id": "stage-40",
+      "stage": 40,
+      "world": 2,
+      "lang": "python",
+      "rank": "BOSS",
+      "boss": true,
+      "xp": 350,
+      "title": "BOSS 2: Gác cổng chiến thuật",
+      "task": "Một chiến binh có hai điểm thi `a` và `b` (nhập trên 2 dòng). Quy tắc qua cổng:\n\n- Nếu có điểm nào nhỏ hơn 5: in `FAIL: DIEM LIET`.\n- Ngược lại, nếu `a + b < 14`: in `FAIL: CHUA DU TONG`.\n- Ngược lại: in `PASS`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7\n8\n```\n\nKết quả:\n```\nPASS\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nif a < 5 or b < 5:\n    print('FAIL: DIEM LIET')\nelif a + b < 14:\n    print('FAIL: CHUA DU TONG')\nelse:\n    print('PASS')\n",
+      "hints": [
+        "Điểm liệt được kiểm tra trước tiên.",
+        "Dùng `or` cho điều kiện điểm liệt."
+      ],
+      "tests": [
+        {
+          "input": "7\n8\n",
+          "expected": "PASS",
+          "hidden": false
+        },
+        {
+          "input": "4\n10\n",
+          "expected": "FAIL: DIEM LIET",
+          "hidden": false
+        },
+        {
+          "input": "6\n7\n",
+          "expected": "FAIL: CHUA DU TONG",
+          "hidden": true
+        },
+        {
+          "input": "9\n5\n",
+          "expected": "PASS",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "if",
+        "logic",
+        "boss"
+      ]
+    },
+    {
+      "id": "stage-41",
+      "stage": 41,
+      "world": 3,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng dãy 1 đến N",
+      "task": "Nhập `n` (n ≥ 1). Dùng vòng lặp `for` để tính tổng S = 1 + 2 + … + n.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n55\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(1, n + 1):\n    s += i\nprint(s)\n",
+      "hints": [
+        "`range(1, n + 1)` sinh các số từ 1 đến n.",
+        "Khởi tạo `s = 0` trước vòng lặp."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "55",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "1000\n",
+          "expected": "500500",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-42",
+      "stage": 42,
+      "world": 3,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng số chẵn 1..N",
+      "task": "Nhập `n`. Tính tổng các số chẵn từ 1 đến `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n30\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(2, n + 1, 2):\n    s += i\nprint(s)\n",
+      "hints": [
+        "`range(2, n + 1, 2)` nhảy 2 đơn vị."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "30",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "12",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-43",
+      "stage": 43,
+      "world": 3,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng số lẻ 1..N",
+      "task": "Nhập `n`. Tính tổng các số lẻ từ 1 đến `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n25\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(1, n + 1, 2):\n    s += i\nprint(s)\n",
+      "hints": [
+        "Bắt đầu từ 1 và nhảy 2."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "25",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "16",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-44",
+      "stage": 44,
+      "world": 3,
+      "lang": "python",
+      "rank": "D",
+      "boss": false,
+      "xp": 200,
+      "title": "Tính giai thừa N!",
+      "task": "Nhập `n` (0 ≤ n ≤ 20). In ra n! (quy ước 0! = 1).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n120\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ngt = 1\nfor i in range(2, n + 1):\n    gt *= i\nprint(gt)\n",
+      "hints": [
+        "Khởi tạo `gt = 1` rồi nhân dồn."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "120",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "20\n",
+          "expected": "2432902008176640000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-45",
+      "stage": 45,
+      "world": 3,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 200,
+      "title": "Đếm bội số của 3",
+      "task": "Nhập `n`. Đếm xem từ 1 đến `n` có bao nhiêu số chia hết cho 3.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n3\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ndem = 0\nfor i in range(1, n + 1):\n    if i % 3 == 0:\n        dem += 1\nprint(dem)\n",
+      "hints": [
+        "Duyệt và đếm các số có `i % 3 == 0`."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "3",
+          "hidden": false
+        },
+        {
+          "input": "2\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "300\n",
+          "expected": "100",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-46",
+      "stage": 46,
+      "world": 3,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 200,
+      "title": "Đếm số ước của N",
+      "task": "Nhập số nguyên dương `n` (n ≤ 10⁶). Đếm số ước dương của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12\n```\n\nKết quả:\n```\n6\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ndem = 0\nfor i in range(1, n + 1):\n    if n % i == 0:\n        dem += 1\nprint(dem)\n",
+      "hints": [
+        "`i` là ước của n khi `n % i == 0`."
+      ],
+      "tests": [
+        {
+          "input": "12\n",
+          "expected": "6",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "997\n",
+          "expected": "2",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-47",
+      "stage": 47,
+      "world": 3,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng các ước của N",
+      "task": "Nhập số nguyên dương `n`. Tính tổng tất cả các ước dương của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12\n```\n\nKết quả:\n```\n28\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(1, n + 1):\n    if n % i == 0:\n        s += i\nprint(s)\n",
+      "hints": [
+        "Giống bài đếm ước nhưng cộng `i` thay vì đếm."
+      ],
+      "tests": [
+        {
+          "input": "12\n",
+          "expected": "28",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "28\n",
+          "expected": "56",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-48",
+      "stage": 48,
+      "world": 3,
+      "lang": "python",
+      "rank": "C",
+      "boss": false,
+      "xp": 200,
+      "title": "Kiểm tra số hoàn hảo",
+      "task": "Số hoàn hảo là số nguyên dương bằng tổng các ước dương **nhỏ hơn nó** (ví dụ 6 = 1 + 2 + 3). Nhập `n`, in `YES` hoặc `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n28\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(1, n):\n    if n % i == 0:\n        s += i\nprint('YES' if s == n else 'NO')\n",
+      "hints": [
+        "Chỉ cộng các ước nhỏ hơn n.",
+        "1 không phải số hoàn hảo."
+      ],
+      "tests": [
+        {
+          "input": "28\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "NO",
+          "hidden": true
+        },
+        {
+          "input": "496\n",
+          "expected": "YES",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-49",
+      "stage": 49,
+      "world": 3,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 200,
+      "title": "Kiểm tra số nguyên tố",
+      "task": "Nhập `n` (1 ≤ n ≤ 10⁹). In `YES` nếu `n` là số nguyên tố, ngược lại `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n17\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nla_nt = n >= 2\ni = 2\nwhile i * i <= n:\n    if n % i == 0:\n        la_nt = False\n        break\n    i += 1\nprint('YES' if la_nt else 'NO')\n",
+      "hints": [
+        "Chỉ cần thử ước đến √n.",
+        "Số nhỏ hơn 2 không phải số nguyên tố."
+      ],
+      "tests": [
+        {
+          "input": "17\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "999999937\n",
+          "expected": "YES",
+          "hidden": true
+        },
+        {
+          "input": "1000000000\n",
+          "expected": "NO",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-50",
+      "stage": 50,
+      "world": 3,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 200,
+      "title": "Đếm chữ số của N",
+      "task": "Nhập số nguyên không âm `n`. Đếm xem `n` có bao nhiêu chữ số (số 0 có 1 chữ số). Hãy dùng vòng lặp `while`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12345\n```\n\nKết quả:\n```\n5\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ndem = 1\nwhile n >= 10:\n    n //= 10\n    dem += 1\nprint(dem)\n",
+      "hints": [
+        "Mỗi lần `n //= 10` bớt đi một chữ số."
+      ],
+      "tests": [
+        {
+          "input": "12345\n",
+          "expected": "5",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "1000000\n",
+          "expected": "7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-51",
+      "stage": 51,
+      "world": 3,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng các chữ số",
+      "task": "Nhập số nguyên không âm `n`. Tính tổng các chữ số của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12345\n```\n\nKết quả:\n```\n15\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nwhile n > 0:\n    s += n % 10\n    n //= 10\nprint(s)\n",
+      "hints": [
+        "Lặp: cộng `n % 10` rồi `n //= 10`."
+      ],
+      "tests": [
+        {
+          "input": "12345\n",
+          "expected": "15",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "9999999\n",
+          "expected": "63",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-52",
+      "stage": 52,
+      "world": 3,
+      "lang": "python",
+      "rank": "B",
+      "boss": false,
+      "xp": 200,
+      "title": "Đảo ngược số nguyên",
+      "task": "Nhập số nguyên dương `n`. In ra số đảo ngược của `n` (bỏ số 0 ở đầu, ví dụ 1200 → 21).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12345\n```\n\nKết quả:\n```\n54321\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ndao = 0\nwhile n > 0:\n    dao = dao * 10 + n % 10\n    n //= 10\nprint(dao)\n",
+      "hints": [
+        "`dao = dao * 10 + n % 10`."
+      ],
+      "tests": [
+        {
+          "input": "12345\n",
+          "expected": "54321",
+          "hidden": false
+        },
+        {
+          "input": "1200\n",
+          "expected": "21",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-53",
+      "stage": 53,
+      "world": 3,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 200,
+      "title": "Số đối xứng (palindrome)",
+      "task": "Nhập số nguyên dương `n`. In `YES` nếu đọc xuôi và ngược giống nhau, ngược lại `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12321\n```\n\nKết quả:\n```\nYES\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ngoc = n\ndao = 0\nwhile n > 0:\n    dao = dao * 10 + n % 10\n    n //= 10\nprint('YES' if dao == goc else 'NO')\n",
+      "hints": [
+        "So sánh số ban đầu với số đảo ngược.",
+        "Nhớ lưu lại giá trị gốc trước khi biến đổi n."
+      ],
+      "tests": [
+        {
+          "input": "12321\n",
+          "expected": "YES",
+          "hidden": false
+        },
+        {
+          "input": "1210\n",
+          "expected": "NO",
+          "hidden": false
+        },
+        {
+          "input": "8\n",
+          "expected": "YES",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-54",
+      "stage": 54,
+      "world": 3,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 200,
+      "title": "Ước chung lớn nhất (Euclid)",
+      "task": "Nhập hai số nguyên dương `a`, `b` trên 2 dòng. In ra ƯCLN(a, b) bằng thuật toán Euclid.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12\n18\n```\n\nKết quả:\n```\n6\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nwhile b != 0:\n    a, b = b, a % b\nprint(a)\n",
+      "hints": [
+        "Lặp `a, b = b, a % b` đến khi b = 0."
+      ],
+      "tests": [
+        {
+          "input": "12\n18\n",
+          "expected": "6",
+          "hidden": false
+        },
+        {
+          "input": "17\n5\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "1000000000\n750000000\n",
+          "expected": "250000000",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-55",
+      "stage": 55,
+      "world": 3,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 200,
+      "title": "Bội chung nhỏ nhất",
+      "task": "Nhập hai số nguyên dương `a`, `b` trên 2 dòng. In ra BCNN(a, b).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n6\n```\n\nKết quả:\n```\n12\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nx, y = a, b\nwhile y != 0:\n    x, y = y, x % y\nprint(a // x * b)\n",
+      "hints": [
+        "BCNN(a, b) = a × b / ƯCLN(a, b).",
+        "Chia trước rồi nhân để tránh số quá lớn."
+      ],
+      "tests": [
+        {
+          "input": "4\n6\n",
+          "expected": "12",
+          "hidden": false
+        },
+        {
+          "input": "7\n13\n",
+          "expected": "91",
+          "hidden": false
+        },
+        {
+          "input": "123456\n789012\n",
+          "expected": "8117355456",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "math"
+      ]
+    },
+    {
+      "id": "stage-56",
+      "stage": 56,
+      "world": 3,
+      "lang": "python",
+      "rank": "A",
+      "boss": false,
+      "xp": 200,
+      "title": "Số Fibonacci thứ N",
+      "task": "Dãy Fibonacci: F₁ = 1, F₂ = 1, Fₙ = Fₙ₋₁ + Fₙ₋₂. Nhập `n` (1 ≤ n ≤ 90), in ra Fₙ.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n55\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\na, b = 1, 1\nfor _ in range(n - 1):\n    a, b = b, a + b\nprint(a)\n",
+      "hints": [
+        "Giữ hai số liền trước bằng hai biến."
+      ],
+      "tests": [
+        {
+          "input": "10\n",
+          "expected": "55",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "90\n",
+          "expected": "2880067194370816120",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-57",
+      "stage": 57,
+      "world": 3,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 200,
+      "title": "Tổng bình phương",
+      "task": "Nhập `n`. Tính S = 1² + 2² + … + n².\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n```\n\nKết quả:\n```\n14\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ns = 0\nfor i in range(1, n + 1):\n    s += i * i\nprint(s)\n",
+      "hints": [
+        "Cộng dồn `i * i`."
+      ],
+      "tests": [
+        {
+          "input": "3\n",
+          "expected": "14",
+          "hidden": false
+        },
+        {
+          "input": "10\n",
+          "expected": "385",
+          "hidden": false
+        },
+        {
+          "input": "1000\n",
+          "expected": "333833500",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-58",
+      "stage": 58,
+      "world": 3,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 200,
+      "title": "Chữ số lớn nhất",
+      "task": "Nhập số nguyên dương `n`. In ra chữ số lớn nhất của `n`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n38592\n```\n\nKết quả:\n```\n9\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\nlon = 0\nwhile n > 0:\n    if n % 10 > lon:\n        lon = n % 10\n    n //= 10\nprint(lon)\n",
+      "hints": [
+        "Bóc từng chữ số và cập nhật giá trị lớn nhất."
+      ],
+      "tests": [
+        {
+          "input": "38592\n",
+          "expected": "9",
+          "hidden": false
+        },
+        {
+          "input": "1000\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-59",
+      "stage": 59,
+      "world": 3,
+      "lang": "python",
+      "rank": "S",
+      "boss": false,
+      "xp": 200,
+      "title": "Lũy thừa bằng vòng lặp",
+      "task": "Nhập `a` và `b` (b ≥ 0) trên 2 dòng. Tính aᵇ bằng vòng lặp (không dùng `**` hay `pow`).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2\n10\n```\n\nKết quả:\n```\n1024\n```",
+      "starter": "a = int(input())\nb = int(input())\n# Viết code của em ở đây\n",
+      "solution": "a = int(input())\nb = int(input())\nkq = 1\nfor _ in range(b):\n    kq *= a\nprint(kq)\n",
+      "hints": [
+        "Nhân `a` vào kết quả đúng `b` lần, bắt đầu từ 1."
+      ],
+      "tests": [
+        {
+          "input": "2\n10\n",
+          "expected": "1024",
+          "hidden": false
+        },
+        {
+          "input": "5\n0\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "-3\n5\n",
+          "expected": "-243",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-60",
+      "stage": 60,
+      "world": 3,
+      "lang": "python",
+      "rank": "BOSS",
+      "boss": true,
+      "xp": 400,
+      "title": "BOSS 3: Mật mã chữ số",
+      "task": "Mật mã của cánh cổng được tạo từ số nguyên dương `n`:\n\n- Dòng 1: tổng các chữ số **chẵn** của `n`.\n- Dòng 2: tích các chữ số **lẻ** của `n` (nếu không có chữ số lẻ nào thì in 0).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n123456\n```\n\nKết quả:\n```\n12\n15\n```",
+      "starter": "n = int(input())\n# Viết code của em ở đây\n",
+      "solution": "n = int(input())\ntong_chan = 0\ntich_le = 1\nco_le = False\nwhile n > 0:\n    cs = n % 10\n    if cs % 2 == 0:\n        tong_chan += cs\n    else:\n        tich_le *= cs\n        co_le = True\n    n //= 10\nprint(tong_chan)\nprint(tich_le if co_le else 0)\n",
+      "hints": [
+        "Bóc từng chữ số và phân loại chẵn/lẻ.",
+        "Dùng một biến cờ để biết có chữ số lẻ hay không."
+      ],
+      "tests": [
+        {
+          "input": "123456\n",
+          "expected": "12\n15",
+          "hidden": false
+        },
+        {
+          "input": "2468\n",
+          "expected": "20\n0",
+          "hidden": false
+        },
+        {
+          "input": "13579\n",
+          "expected": "0\n945",
+          "hidden": true
+        },
+        {
+          "input": "100\n",
+          "expected": "0\n1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits",
+        "boss"
+      ]
+    },
+    {
+      "id": "stage-61",
+      "stage": 61,
+      "world": 4,
+      "lang": "c",
+      "rank": "D",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Lời chào printf",
+      "task": "Nhập tên người chơi (một từ không dấu, kết thúc bằng chữ cái hoặc chữ số). In ra `Hello <ten>!`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nLinh\n```\n\nKết quả:\n```\nHello Linh!\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    char ten[50];\n    scanf(\"%s\", ten);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    char ten[50];\n    scanf(\"%s\", ten);\n    printf(\"Hello %s!\\n\", ten);\n    return 0;\n}\n",
+      "hints": [
+        "Dùng đặc tả `%s` trong `printf`."
+      ],
+      "tests": [
+        {
+          "input": "Linh\n",
+          "expected": "Hello Linh!",
+          "hidden": false
+        },
+        {
+          "input": "Quan\n",
+          "expected": "Hello Quan!",
+          "hidden": false
+        },
+        {
+          "input": "Player1\n",
+          "expected": "Hello Player1!",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io"
+      ]
+    },
+    {
+      "id": "stage-62",
+      "stage": 62,
+      "world": 4,
+      "lang": "c",
+      "rank": "D",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Biến và phép tính",
+      "task": "Nhập chiều dài `a` và chiều rộng `b` (số nguyên dương ≤ 10⁴) của một hình chữ nhật. In ra 2 dòng: `Chu vi: P` và `Dien tich: S`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5 3\n```\n\nKết quả:\n```\nChu vi: 16\nDien tich: 15\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"Chu vi: %d\\n\", 2 * (a + b));\n    printf(\"Dien tich: %d\\n\", a * b);\n    return 0;\n}\n",
+      "hints": [
+        "Chu vi = 2 × (a + b), diện tích = a × b."
+      ],
+      "tests": [
+        {
+          "input": "5 3\n",
+          "expected": "Chu vi: 16\nDien tich: 15",
+          "hidden": false
+        },
+        {
+          "input": "10 10\n",
+          "expected": "Chu vi: 40\nDien tich: 100",
+          "hidden": false
+        },
+        {
+          "input": "9999 1\n",
+          "expected": "Chu vi: 20000\nDien tich: 9999",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-63",
+      "stage": 63,
+      "world": 4,
+      "lang": "c",
+      "rank": "D",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Nhập xuất scanf",
+      "task": "Nhập ba số nguyên `h m s` (giờ, phút, giây) trên một dòng. In ra tổng số giây.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n1 2 5\n```\n\nKết quả:\n```\n3725\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int h, m, s;\n    scanf(\"%d %d %d\", &h, &m, &s);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int h, m, s;\n    scanf(\"%d %d %d\", &h, &m, &s);\n    printf(\"%d\\n\", h * 3600 + m * 60 + s);\n    return 0;\n}\n",
+      "hints": [
+        "1 giờ = 3600 giây, 1 phút = 60 giây."
+      ],
+      "tests": [
+        {
+          "input": "1 2 5\n",
+          "expected": "3725",
+          "hidden": false
+        },
+        {
+          "input": "0 0 59\n",
+          "expected": "59",
+          "hidden": false
+        },
+        {
+          "input": "23 59 59\n",
+          "expected": "86399",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io",
+        "arithmetic"
+      ]
+    },
+    {
+      "id": "stage-64",
+      "stage": 64,
+      "world": 4,
+      "lang": "c",
+      "rank": "D",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Phép chia lấy dư %",
+      "task": "Nhập số nguyên `n` (|n| ≤ 10⁹). In ra 2 dòng: `CHAN` hoặc `LE`, và chữ số hàng đơn vị của |n|.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n1234\n```\n\nKết quả:\n```\nCHAN\n4\n```",
+      "starter": "#include <stdio.h>\n\n#include <stdlib.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\n#include <stdlib.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    if (n % 2 == 0) printf(\"CHAN\\n\");\n    else printf(\"LE\\n\");\n    printf(\"%d\\n\", abs(n % 10));\n    return 0;\n}\n",
+      "hints": [
+        "Số chẵn khi `n % 2 == 0` (đúng cả với số âm).",
+        "Với số âm, `n % 10` âm — dùng `abs()` trong `stdlib.h`."
+      ],
+      "tests": [
+        {
+          "input": "1234\n",
+          "expected": "CHAN\n4",
+          "hidden": false
+        },
+        {
+          "input": "-57\n",
+          "expected": "LE\n7",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "CHAN\n0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "arithmetic",
+        "if"
+      ]
+    },
+    {
+      "id": "stage-65",
+      "stage": 65,
+      "world": 4,
+      "lang": "c",
+      "rank": "C",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Cấu trúc switch-case",
+      "task": "Nhập số `d`. Dùng `switch` in ra tên thứ: 2 → `Thu Hai`, 3 → `Thu Ba`, 4 → `Thu Tu`, 5 → `Thu Nam`, 6 → `Thu Sau`, 7 → `Thu Bay`, 8 → `Chu Nhat`; giá trị khác in `Khong hop le`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2\n```\n\nKết quả:\n```\nThu Hai\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int d;\n    scanf(\"%d\", &d);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int d;\n    scanf(\"%d\", &d);\n    switch (d) {\n        case 2: printf(\"Thu Hai\\n\"); break;\n        case 3: printf(\"Thu Ba\\n\"); break;\n        case 4: printf(\"Thu Tu\\n\"); break;\n        case 5: printf(\"Thu Nam\\n\"); break;\n        case 6: printf(\"Thu Sau\\n\"); break;\n        case 7: printf(\"Thu Bay\\n\"); break;\n        case 8: printf(\"Chu Nhat\\n\"); break;\n        default: printf(\"Khong hop le\\n\");\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Mỗi `case` kết thúc bằng `break`.",
+        "Nhánh `default` cho giá trị không hợp lệ."
+      ],
+      "tests": [
+        {
+          "input": "2\n",
+          "expected": "Thu Hai",
+          "hidden": false
+        },
+        {
+          "input": "8\n",
+          "expected": "Chu Nhat",
+          "hidden": false
+        },
+        {
+          "input": "9\n",
+          "expected": "Khong hop le",
+          "hidden": true
+        },
+        {
+          "input": "5\n",
+          "expected": "Thu Nam",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "switch"
+      ]
+    },
+    {
+      "id": "stage-66",
+      "stage": 66,
+      "world": 4,
+      "lang": "c",
+      "rank": "C",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Vòng lặp for — đếm ngược",
+      "task": "Nhập `n` (1 ≤ n ≤ 100). In các số từ `n` về 1 trên một dòng (cách nhau một dấu cách), sau đó in dòng `Phong!`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n5 4 3 2 1\nPhong!\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = n; i >= 1; i--) {\n        printf(\"%d \", i);\n    }\n    printf(\"\\nPhong!\\n\");\n    return 0;\n}\n",
+      "hints": [
+        "Vòng lặp đếm lùi: `for (int i = n; i >= 1; i--)`."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "5 4 3 2 1\nPhong!",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "1\nPhong!",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "12 11 10 9 8 7 6 5 4 3 2 1\nPhong!",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-67",
+      "stage": 67,
+      "world": 4,
+      "lang": "c",
+      "rank": "C",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Vòng lặp while — chữ số",
+      "task": "Nhập số nguyên `n` (0 ≤ n < 10⁹). In ra số chữ số của `n` và chữ số đầu tiên (bên trái) của `n`, cách nhau một dấu cách.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n48213\n```\n\nKết quả:\n```\n5 4\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int dem = 1;\n    while (n >= 10) {\n        n /= 10;\n        dem++;\n    }\n    printf(\"%d %d\\n\", dem, n);\n    return 0;\n}\n",
+      "hints": [
+        "Chia 10 cho đến khi chỉ còn một chữ số.",
+        "Chữ số còn lại cuối cùng chính là chữ số đầu tiên."
+      ],
+      "tests": [
+        {
+          "input": "48213\n",
+          "expected": "5 4",
+          "hidden": false
+        },
+        {
+          "input": "7\n",
+          "expected": "1 7",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "1 0",
+          "hidden": true
+        },
+        {
+          "input": "100000000\n",
+          "expected": "9 1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop",
+        "digits"
+      ]
+    },
+    {
+      "id": "stage-68",
+      "stage": 68,
+      "world": 4,
+      "lang": "c",
+      "rank": "C",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Vòng lặp do-while",
+      "task": "Nhập lần lượt các số nguyên, dừng khi gặp số `0` (số 0 không tính). In ra `so_luong tong lon_nhat` trên một dòng. Nếu số đầu tiên đã là 0, in `Khong co du lieu`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4 7 -2 9 0\n```\n\nKết quả:\n```\n4 18 9\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int x;\n    // Viết code của em ở đây (gợi ý: do { ... } while (x != 0);)\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int x, dem = 0, tong = 0, lon = 0;\n    do {\n        scanf(\"%d\", &x);\n        if (x != 0) {\n            if (dem == 0 || x > lon) lon = x;\n            dem++;\n            tong += x;\n        }\n    } while (x != 0);\n    if (dem == 0) printf(\"Khong co du lieu\\n\");\n    else printf(\"%d %d %d\\n\", dem, tong, lon);\n    return 0;\n}\n",
+      "hints": [
+        "Vòng `do – while` luôn chạy ít nhất một lần — phù hợp để đọc dữ liệu.",
+        "Khởi tạo giá trị lớn nhất bằng số đầu tiên đọc được."
+      ],
+      "tests": [
+        {
+          "input": "4 7 -2 9 0\n",
+          "expected": "4 18 9",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "Khong co du lieu",
+          "hidden": false
+        },
+        {
+          "input": "-5 -3 -8 0\n",
+          "expected": "3 -16 -3",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "loop"
+      ]
+    },
+    {
+      "id": "stage-69",
+      "stage": 69,
+      "world": 4,
+      "lang": "c",
+      "rank": "B",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Mảng một chiều",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) và dãy `n` số nguyên. In các phần tử ở vị trí lẻ (thứ 1, 3, 5, … tính từ 1) trên một dòng, rồi in tổng của chúng ở dòng tiếp theo.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n5 8 1 9 4 2\n```\n\nKết quả:\n```\n5 1 4\n10\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    int tong = 0;\n    for (int i = 0; i < n; i += 2) {\n        printf(\"%d \", a[i]);\n        tong += a[i];\n    }\n    printf(\"\\n%d\\n\", tong);\n    return 0;\n}\n",
+      "hints": [
+        "Vị trí thứ 1, 3, 5… tương ứng chỉ số 0, 2, 4… trong C.",
+        "Dùng bước nhảy `i += 2`."
+      ],
+      "tests": [
+        {
+          "input": "6\n5 8 1 9 4 2\n",
+          "expected": "5 1 4\n10",
+          "hidden": false
+        },
+        {
+          "input": "1\n-7\n",
+          "expected": "-7\n-7",
+          "hidden": false
+        },
+        {
+          "input": "5\n10 20 30 40 50\n",
+          "expected": "10 30 50\n90",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array"
+      ]
+    },
+    {
+      "id": "stage-70",
+      "stage": 70,
+      "world": 4,
+      "lang": "c",
+      "rank": "B",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Tìm max trong mảng",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) và dãy `n` số nguyên. In ra giá trị lớn nhất và số lần nó xuất hiện, cách nhau một dấu cách.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7\n3 9 2 9 5 9 1\n```\n\nKết quả:\n```\n9 3\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    int mx = a[0];\n    for (int i = 1; i < n; i++) if (a[i] > mx) mx = a[i];\n    int dem = 0;\n    for (int i = 0; i < n; i++) if (a[i] == mx) dem++;\n    printf(\"%d %d\\n\", mx, dem);\n    return 0;\n}\n",
+      "hints": [
+        "Lần duyệt thứ nhất tìm max, lần thứ hai đếm."
+      ],
+      "tests": [
+        {
+          "input": "7\n3 9 2 9 5 9 1\n",
+          "expected": "9 3",
+          "hidden": false
+        },
+        {
+          "input": "3\n-4 -1 -9\n",
+          "expected": "-1 1",
+          "hidden": false
+        },
+        {
+          "input": "1\n0\n",
+          "expected": "0 1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array"
+      ]
+    },
+    {
+      "id": "stage-71",
+      "stage": 71,
+      "world": 4,
+      "lang": "c",
+      "rank": "B",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Chuỗi ký tự char[]",
+      "task": "Nhập một từ (chỉ gồm chữ cái tiếng Anh, độ dài ≤ 100). In ra số nguyên âm (`a e i o u`, không phân biệt hoa thường) và số phụ âm, cách nhau một dấu cách.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nEducation\n```\n\nKết quả:\n```\n5 4\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    int nguyenAm = 0, phuAm = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c >= 'A' && c <= 'Z') c = c + 32;\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') nguyenAm++;\n        else phuAm++;\n    }\n    printf(\"%d %d\\n\", nguyenAm, phuAm);\n    return 0;\n}\n",
+      "hints": [
+        "Đổi chữ hoa sang thường bằng cách cộng 32 vào mã ASCII (lưu vào biến tạm).",
+        "Ký tự không phải nguyên âm là phụ âm."
+      ],
+      "tests": [
+        {
+          "input": "Education\n",
+          "expected": "5 4",
+          "hidden": false
+        },
+        {
+          "input": "rhythm\n",
+          "expected": "0 6",
+          "hidden": false
+        },
+        {
+          "input": "AEIOUxyz\n",
+          "expected": "5 3",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "string"
+      ]
+    },
+    {
+      "id": "stage-72",
+      "stage": 72,
+      "world": 4,
+      "lang": "c",
+      "rank": "B",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Hàm tự định nghĩa",
+      "task": "Viết hàm `int tongChuSo(int x)`. Nhập `q` (1 ≤ q ≤ 20) và `q` số nguyên dương (< 10⁹). In ra số có tổng chữ số lớn nhất (nếu bằng nhau chọn số xuất hiện trước) cùng tổng chữ số của nó.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n123 99 501 18\n```\n\nKết quả:\n```\n99 18\n```",
+      "starter": "#include <stdio.h>\n\n// Viết hàm tongChuSo ở đây\n\nint main() {\n    int q;\n    int a[25];\n    scanf(\"%d\", &q);\n    for (int i = 0; i < q; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint tongChuSo(int x) {\n    int s = 0;\n    while (x > 0) {\n        s += x % 10;\n        x /= 10;\n    }\n    return s;\n}\n\nint main() {\n    int q;\n    int a[25];\n    scanf(\"%d\", &q);\n    for (int i = 0; i < q; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    int best = a[0];\n    for (int i = 1; i < q; i++) {\n        if (tongChuSo(a[i]) > tongChuSo(best)) best = a[i];\n    }\n    printf(\"%d %d\\n\", best, tongChuSo(best));\n    return 0;\n}\n",
+      "hints": [
+        "Hàm bóc chữ số bằng `% 10` và `/ 10`.",
+        "Dùng `>` (không phải `>=`) để giữ số xuất hiện trước."
+      ],
+      "tests": [
+        {
+          "input": "4\n123 99 501 18\n",
+          "expected": "99 18",
+          "hidden": false
+        },
+        {
+          "input": "1\n7\n",
+          "expected": "7 7",
+          "hidden": false
+        },
+        {
+          "input": "3\n55 91 19\n",
+          "expected": "55 10",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "function"
+      ]
+    },
+    {
+      "id": "stage-73",
+      "stage": 73,
+      "world": 4,
+      "lang": "c",
+      "rank": "A",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Hàm đệ quy giai thừa",
+      "task": "Viết hàm đệ quy `int giaiThua(int n)`. Nhập `n` (0 ≤ n ≤ 12), in ra n!.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n```\n\nKết quả:\n```\n120\n```",
+      "starter": "#include <stdio.h>\n\n// Viết hàm đệ quy giaiThua ở đây\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint giaiThua(int n) {\n    if (n <= 1) return 1;\n    return n * giaiThua(n - 1);\n}\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", giaiThua(n));\n    return 0;\n}\n",
+      "hints": [
+        "Trường hợp cơ sở: n ≤ 1 thì trả về 1.",
+        "Bước đệ quy: n * giaiThua(n - 1)."
+      ],
+      "tests": [
+        {
+          "input": "5\n",
+          "expected": "120",
+          "hidden": false
+        },
+        {
+          "input": "0\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "12\n",
+          "expected": "479001600",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "recursion"
+      ]
+    },
+    {
+      "id": "stage-74",
+      "stage": 74,
+      "world": 4,
+      "lang": "c",
+      "rank": "A",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Khái niệm con trỏ *",
+      "task": "Viết hàm `void tinh(int a, int b, int *tong, int *tich, int *lon)` ghi tổng, tích và số lớn hơn vào các con trỏ. Nhập `a b` (|a|, |b| ≤ 10⁴), in `tong tich lon` trên một dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 4\n```\n\nKết quả:\n```\n7 12 4\n```",
+      "starter": "#include <stdio.h>\n\n// Viết hàm tinh ở đây\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nvoid tinh(int a, int b, int *tong, int *tich, int *lon) {\n    *tong = a + b;\n    *tich = a * b;\n    if (a > b) *lon = a;\n    else *lon = b;\n}\n\nint main() {\n    int a, b, t, p, l;\n    scanf(\"%d %d\", &a, &b);\n    tinh(a, b, &t, &p, &l);\n    printf(\"%d %d %d\\n\", t, p, l);\n    return 0;\n}\n",
+      "hints": [
+        "Trong hàm, ghi kết quả bằng `*tong = a + b;`.",
+        "Khi gọi, truyền địa chỉ: `tinh(a, b, &t, &p, &l);`."
+      ],
+      "tests": [
+        {
+          "input": "3 4\n",
+          "expected": "7 12 4",
+          "hidden": false
+        },
+        {
+          "input": "-5 2\n",
+          "expected": "-3 -10 2",
+          "hidden": false
+        },
+        {
+          "input": "7 7\n",
+          "expected": "14 49 7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "pointer",
+        "function"
+      ]
+    },
+    {
+      "id": "stage-75",
+      "stage": 75,
+      "world": 4,
+      "lang": "c",
+      "rank": "A",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Hoán đổi bằng con trỏ",
+      "task": "Viết hàm `void hoanDoi(int *x, int *y)`. Nhập `n` (1 ≤ n ≤ 100) và dãy `n` số nguyên. Đảo ngược dãy **tại chỗ** bằng cách hoán đổi các cặp đối xứng, rồi in dãy.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n1 2 3 4 5\n```\n\nKết quả:\n```\n5 4 3 2 1\n```",
+      "starter": "#include <stdio.h>\n\n// Viết hàm hoanDoi ở đây\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nvoid hoanDoi(int *x, int *y) {\n    int t = *x;\n    *x = *y;\n    *y = t;\n}\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    for (int i = 0; i < n / 2; i++) {\n        hoanDoi(&a[i], &a[n - 1 - i]);\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", a[i]);\n    printf(\"\\n\");\n    return 0;\n}\n",
+      "hints": [
+        "Hoán đổi `a[i]` với `a[n - 1 - i]` cho i < n / 2.",
+        "Truyền địa chỉ phần tử mảng: `&a[i]`."
+      ],
+      "tests": [
+        {
+          "input": "5\n1 2 3 4 5\n",
+          "expected": "5 4 3 2 1",
+          "hidden": false
+        },
+        {
+          "input": "1\n9\n",
+          "expected": "9",
+          "hidden": false
+        },
+        {
+          "input": "6\n-1 0 8 8 3 2\n",
+          "expected": "2 3 8 8 0 -1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "pointer",
+        "array"
+      ]
+    },
+    {
+      "id": "stage-76",
+      "stage": 76,
+      "world": 4,
+      "lang": "c",
+      "rank": "A",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Bảng xếp hạng (mảng song song)",
+      "task": "Nhập `n` (1 ≤ n ≤ 50), sau đó `n` dòng mỗi dòng gồm mã học sinh và điểm (số nguyên). In danh sách theo điểm **giảm dần**, mỗi dòng `ma diem`; các bạn bằng điểm giữ nguyên thứ tự nhập.\n\n*(Trình chạy trên trình duyệt chưa hỗ trợ `struct`, hãy dùng hai mảng song song và hoán đổi đồng thời.)*\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n101 7\n102 9\n103 7\n104 10\n```\n\nKết quả:\n```\n104 10\n102 9\n101 7\n103 7\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int ma[55], diem[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int u, v;\n        scanf(\"%d %d\", &u, &v);\n        ma[i] = u;\n        diem[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int ma[55], diem[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int u, v;\n        scanf(\"%d %d\", &u, &v);\n        ma[i] = u;\n        diem[i] = v;\n    }\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j + 1 < n - i; j++) {\n            if (diem[j] < diem[j + 1]) {\n                int t = diem[j]; diem[j] = diem[j + 1]; diem[j + 1] = t;\n                t = ma[j]; ma[j] = ma[j + 1]; ma[j + 1] = t;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) printf(\"%d %d\\n\", ma[i], diem[i]);\n    return 0;\n}\n",
+      "hints": [
+        "Bubble Sort ổn định nếu chỉ hoán đổi khi `diem[j] < diem[j+1]` (dấu nhỏ hơn ngặt).",
+        "Khi hoán đổi điểm, nhớ hoán đổi cả mã."
+      ],
+      "tests": [
+        {
+          "input": "4\n101 7\n102 9\n103 7\n104 10\n",
+          "expected": "104 10\n102 9\n101 7\n103 7",
+          "hidden": false
+        },
+        {
+          "input": "1\n500 3\n",
+          "expected": "500 3",
+          "hidden": false
+        },
+        {
+          "input": "5\n1 5\n2 5\n3 8\n4 5\n5 8\n",
+          "expected": "3 8\n5 8\n1 5\n2 5\n4 5",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array",
+        "sorting"
+      ]
+    },
+    {
+      "id": "stage-77",
+      "stage": 77,
+      "world": 4,
+      "lang": "c",
+      "rank": "S",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Mảng hai chiều ma trận",
+      "task": "Nhập `n`, `m` (1 ≤ n, m ≤ 20) và ma trận `n × m` số nguyên. In tổng từng hàng (mỗi hàng một dòng), sau đó in tổng từng cột trên một dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2 3\n1 2 3\n4 5 6\n```\n\nKết quả:\n```\n6\n15\n5 7 9\n```",
+      "starter": "#include <stdio.h>\n\nint g[25][25];\n\nint main() {\n    int n, m;\n    scanf(\"%d %d\", &n, &m);\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            int v;\n            scanf(\"%d\", &v);\n            g[i][j] = v;\n        }\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint g[25][25];\n\nint main() {\n    int n, m;\n    scanf(\"%d %d\", &n, &m);\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            int v;\n            scanf(\"%d\", &v);\n            g[i][j] = v;\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        int s = 0;\n        for (int j = 0; j < m; j++) s += g[i][j];\n        printf(\"%d\\n\", s);\n    }\n    for (int j = 0; j < m; j++) {\n        int s = 0;\n        for (int i = 0; i < n; i++) s += g[i][j];\n        printf(\"%d \", s);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n",
+      "hints": [
+        "Tổng hàng i: cố định i, chạy j.",
+        "Tổng cột j: cố định j, chạy i."
+      ],
+      "tests": [
+        {
+          "input": "2 3\n1 2 3\n4 5 6\n",
+          "expected": "6\n15\n5 7 9",
+          "hidden": false
+        },
+        {
+          "input": "1 1\n-5\n",
+          "expected": "-5\n-5",
+          "hidden": false
+        },
+        {
+          "input": "3 2\n10 -10\n7 3\n0 0\n",
+          "expected": "0\n10\n0\n17 -7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array2d"
+      ]
+    },
+    {
+      "id": "stage-78",
+      "stage": 78,
+      "world": 4,
+      "lang": "c",
+      "rank": "S",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Sắp xếp nổi bọt",
+      "task": "Nhập `n` (1 ≤ n ≤ 50) và dãy `n` số nguyên. Sắp xếp tăng dần bằng Bubble Sort và in dãy.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n5 1 4 2 8\n```\n\nKết quả:\n```\n1 2 4 5 8\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j + 1 < n - i; j++) {\n            if (a[j] > a[j + 1]) {\n                int t = a[j];\n                a[j] = a[j + 1];\n                a[j + 1] = t;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) printf(\"%d \", a[i]);\n    printf(\"\\n\");\n    return 0;\n}\n",
+      "hints": [
+        "So sánh và đổi chỗ từng cặp kề nhau.",
+        "Sau mỗi lượt, phần tử lớn nhất về cuối."
+      ],
+      "tests": [
+        {
+          "input": "5\n5 1 4 2 8\n",
+          "expected": "1 2 4 5 8",
+          "hidden": false
+        },
+        {
+          "input": "1\n3\n",
+          "expected": "3",
+          "hidden": false
+        },
+        {
+          "input": "8\n0 -3 7 7 -10 2 1 5\n",
+          "expected": "-10 -3 0 1 2 5 7 7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "stage-79",
+      "stage": 79,
+      "world": 4,
+      "lang": "c",
+      "rank": "S",
+      "boss": false,
+      "xp": 250,
+      "title": "C: Mảng đếm tần suất",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) và `n` chữ số (mỗi số từ 0 đến 9). Với mỗi chữ số xuất hiện, in một dòng `chu_so: so_lan` theo thứ tự chữ số tăng dần.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n1 3 3 9 1 1\n```\n\nKết quả:\n```\n1: 3\n3: 2\n9: 1\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    int dem[10] = {0};\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    int dem[10] = {0};\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        dem[x]++;\n    }\n    for (int d = 0; d < 10; d++) {\n        if (dem[d] > 0) printf(\"%d: %d\\n\", d, dem[d]);\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Dùng chính chữ số làm chỉ số mảng: `dem[x]++`.",
+        "Mảng đếm phải được khởi tạo bằng 0."
+      ],
+      "tests": [
+        {
+          "input": "6\n1 3 3 9 1 1\n",
+          "expected": "1: 3\n3: 2\n9: 1",
+          "hidden": false
+        },
+        {
+          "input": "1\n0\n",
+          "expected": "0: 1",
+          "hidden": false
+        },
+        {
+          "input": "10\n9 8 7 6 5 5 6 7 8 9\n",
+          "expected": "5: 2\n6: 2\n7: 2\n8: 2\n9: 2",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array",
+        "counting"
+      ]
+    },
+    {
+      "id": "stage-80",
+      "stage": 80,
+      "world": 4,
+      "lang": "c",
+      "rank": "BOSS",
+      "boss": true,
+      "xp": 450,
+      "title": "BOSS 4: Quản lý điểm",
+      "task": "Nhập `n` (1 ≤ n ≤ 50), mỗi dòng tiếp theo gồm mã học sinh và 3 điểm nguyên (0 … 10). In ra:\n\n- Dòng 1: mã học sinh có điểm trung bình cao nhất (bằng nhau lấy người trước) và điểm trung bình đó (2 chữ số thập phân).\n- Dòng 2: `Gioi: k` — số học sinh có trung bình ≥ 8.0.\n- Dòng 3: `Truot: t` — số học sinh có trung bình < 5.0.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n11 8 9 10\n12 5 4 3\n13 9 9 9\n14 6 7 5\n```\n\nKết quả:\n```\n11 9.00\nGioi: 2\nTruot: 1\n```",
+      "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int ma[55], a[55], b[55], c[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int m, x, y, z;\n        scanf(\"%d %d %d %d\", &m, &x, &y, &z);\n        ma[i] = m; a[i] = x; b[i] = y; c[i] = z;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <stdio.h>\n\ndouble trungBinh(int x, int y, int z) {\n    return (x + y + z) / 3.0;\n}\n\nint main() {\n    int n;\n    int ma[55], a[55], b[55], c[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int m, x, y, z;\n        scanf(\"%d %d %d %d\", &m, &x, &y, &z);\n        ma[i] = m; a[i] = x; b[i] = y; c[i] = z;\n    }\n    int best = 0, gioi = 0, truot = 0;\n    for (int i = 0; i < n; i++) {\n        double tb = trungBinh(a[i], b[i], c[i]);\n        if (tb > trungBinh(a[best], b[best], c[best])) best = i;\n        if (tb >= 8.0) gioi++;\n        if (tb < 5.0) truot++;\n    }\n    printf(\"%d %.2f\\n\", ma[best], trungBinh(a[best], b[best], c[best]));\n    printf(\"Gioi: %d\\n\", gioi);\n    printf(\"Truot: %d\\n\", truot);\n    return 0;\n}\n",
+      "hints": [
+        "Viết hàm `double trungBinh(int x, int y, int z)` trả về `(x + y + z) / 3.0`.",
+        "Một vòng lặp vừa tìm người cao nhất vừa đếm giỏi và trượt."
+      ],
+      "tests": [
+        {
+          "input": "4\n11 8 9 10\n12 5 4 3\n13 9 9 9\n14 6 7 5\n",
+          "expected": "11 9.00\nGioi: 2\nTruot: 1",
+          "hidden": false
+        },
+        {
+          "input": "1\n99 10 10 10\n",
+          "expected": "99 10.00\nGioi: 1\nTruot: 0",
+          "hidden": false
+        },
+        {
+          "input": "5\n1 4 5 5\n2 8 8 8\n3 2 2 2\n4 8 8 8\n5 7 8 9\n",
+          "expected": "2 8.00\nGioi: 3\nTruot: 2",
+          "hidden": true
+        },
+        {
+          "input": "3\n7 0 0 0\n8 4 4 6\n9 5 5 4\n",
+          "expected": "8 4.67\nGioi: 0\nTruot: 3",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array",
+        "function",
+        "boss"
+      ]
+    },
+    {
+      "id": "stage-81",
+      "stage": 81,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "D",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Nhập xuất cin/cout",
+      "task": "Nhập hai số nguyên `a`, `b` (|a|, |b| ≤ 10⁴, b ≠ 0). In ra 4 dòng: tổng, hiệu, tích và thương `a / b` dạng số thực với **2 chữ số thập phân**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7 2\n```\n\nKết quả:\n```\n9\n5\n14\n3.50\n```",
+      "starter": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    cout << a + b << endl;\n    cout << a - b << endl;\n    cout << a * b << endl;\n    cout << fixed << setprecision(2) << (double)a / b << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Ép kiểu `(double)a / b` để tránh chia nguyên.",
+        "Dùng `fixed << setprecision(2)`."
+      ],
+      "tests": [
+        {
+          "input": "7 2\n",
+          "expected": "9\n5\n14\n3.50",
+          "hidden": false
+        },
+        {
+          "input": "10 -4\n",
+          "expected": "6\n14\n-40\n-2.50",
+          "hidden": false
+        },
+        {
+          "input": "-9 3\n",
+          "expected": "-6\n-12\n-27\n-3.00",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io"
+      ]
+    },
+    {
+      "id": "stage-82",
+      "stage": 82,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "D",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Tổng dãy lớn (long long)",
+      "task": "Nhập `n` (1 ≤ n ≤ 1000) và `n` số nguyên (0 ≤ aᵢ ≤ 10⁹). In ra tổng của dãy.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n1 2 3\n```\n\nKết quả:\n```\n6\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    long long tong = 0;\n    for (int i = 0; i < n; i++) {\n        long long x;\n        cin >> x;\n        tong += x;\n    }\n    cout << tong << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Tổng có thể tới 10¹² — dùng `long long`."
+      ],
+      "tests": [
+        {
+          "input": "3\n1 2 3\n",
+          "expected": "6",
+          "hidden": false
+        },
+        {
+          "input": "3\n1000000000 1000000000 1000000000\n",
+          "expected": "3000000000",
+          "hidden": false
+        },
+        {
+          "input": "5\n999999999 999999999 999999999 999999999 999999999\n",
+          "expected": "4999999995",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "io",
+        "overflow"
+      ]
+    },
+    {
+      "id": "stage-83",
+      "stage": 83,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "D",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Xâu ký tự — đếm chữ cái",
+      "task": "Nhập một từ chỉ gồm chữ cái thường `a … z` (độ dài ≤ 100). Với mỗi chữ cái xuất hiện, in một dòng `chu: so_lan` theo thứ tự bảng chữ cái.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nbanana\n```\n\nKết quả:\n```\na: 3\nb: 1\nn: 2\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char s[105];\n    cin >> s;\n    int dem[26] = {0};\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char s[105];\n    cin >> s;\n    int dem[26] = {0};\n    for (int i = 0; s[i] != '\\0'; i++) {\n        dem[s[i] - 'a']++;\n    }\n    for (int c = 0; c < 26; c++) {\n        if (dem[c] > 0) cout << (char)('a' + c) << \": \" << dem[c] << endl;\n    }\n    return 0;\n}\n",
+      "hints": [
+        "`s[i] - 'a'` cho chỉ số 0 … 25 của chữ cái.",
+        "In chữ cái từ chỉ số: `(char)('a' + c)`."
+      ],
+      "tests": [
+        {
+          "input": "banana\n",
+          "expected": "a: 3\nb: 1\nn: 2",
+          "hidden": false
+        },
+        {
+          "input": "z\n",
+          "expected": "z: 1",
+          "hidden": false
+        },
+        {
+          "input": "programming\n",
+          "expected": "a: 1\ng: 2\ni: 1\nm: 2\nn: 1\no: 1\np: 1\nr: 2",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "string",
+        "counting"
+      ]
+    },
+    {
+      "id": "stage-84",
+      "stage": 84,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "D",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Con trỏ và hàm",
+      "task": "Viết hàm `void capNhat(int x, int *mn, int *mx)` cập nhật giá trị nhỏ nhất/lớn nhất. Nhập `n` (1 ≤ n ≤ 1000) và `n` số nguyên, in `min max max-min` trên một dòng.\n\n*(Trình chạy trên trình duyệt chưa hỗ trợ tham chiếu `int &x`, hãy dùng con trỏ.)*\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n4 -2 9 0 3\n```\n\nKết quả:\n```\n-2 9 11\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\n// Viết hàm capNhat ở đây\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nvoid capNhat(int x, int *mn, int *mx) {\n    if (x < *mn) *mn = x;\n    if (x > *mx) *mx = x;\n}\n\nint main() {\n    int n, x;\n    cin >> n;\n    cin >> x;\n    int mn = x, mx = x;\n    for (int i = 1; i < n; i++) {\n        cin >> x;\n        capNhat(x, &mn, &mx);\n    }\n    cout << mn << \" \" << mx << \" \" << mx - mn << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Khởi tạo min, max bằng phần tử đầu tiên.",
+        "Gọi `capNhat(x, &mn, &mx);` cho các phần tử còn lại."
+      ],
+      "tests": [
+        {
+          "input": "5\n4 -2 9 0 3\n",
+          "expected": "-2 9 11",
+          "hidden": false
+        },
+        {
+          "input": "1\n7\n",
+          "expected": "7 7 0",
+          "hidden": false
+        },
+        {
+          "input": "4\n-10 -20 -5 -30\n",
+          "expected": "-30 -5 25",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "pointer",
+        "function"
+      ]
+    },
+    {
+      "id": "stage-85",
+      "stage": 85,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "C",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Mảng động mô phỏng (vector)",
+      "task": "Mô phỏng một danh sách động bằng mảng và biến kích thước. Nhập `q` (1 ≤ q ≤ 1000) thao tác: `1 x` thêm `x` vào cuối; `2` xóa phần tử cuối (bỏ qua nếu danh sách rỗng). Cuối cùng in kích thước, rồi in các phần tử trên một dòng (hoặc `EMPTY`).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n1 3\n1 8\n2\n1 5\n1 6\n```\n\nKết quả:\n```\n3\n3 5 6\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int q;\n    cin >> q;\n    int sz = 0;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int q;\n    cin >> q;\n    int sz = 0;\n    for (int k = 0; k < q; k++) {\n        int t;\n        cin >> t;\n        if (t == 1) {\n            int x;\n            cin >> x;\n            a[sz] = x;\n            sz++;\n        } else if (sz > 0) {\n            sz--;\n        }\n    }\n    cout << sz << endl;\n    if (sz == 0) cout << \"EMPTY\" << endl;\n    else {\n        for (int i = 0; i < sz; i++) cout << a[i] << \" \";\n        cout << endl;\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Thêm: `a[sz] = x; sz++;` — Xóa cuối: `sz--` khi sz > 0.",
+        "Đây chính là cách `vector::push_back` và `pop_back` hoạt động bên trong."
+      ],
+      "tests": [
+        {
+          "input": "5\n1 3\n1 8\n2\n1 5\n1 6\n",
+          "expected": "3\n3 5 6",
+          "hidden": false
+        },
+        {
+          "input": "3\n2\n1 4\n2\n",
+          "expected": "0\nEMPTY",
+          "hidden": false
+        },
+        {
+          "input": "6\n1 1\n1 2\n1 3\n2\n2\n1 9\n",
+          "expected": "2\n1 9",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "array",
+        "simulation"
+      ]
+    },
+    {
+      "id": "stage-86",
+      "stage": 86,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "C",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Sắp xếp chọn (Selection Sort)",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) và dãy `n` số nguyên. Sắp xếp tăng dần bằng **Selection Sort**: ở bước i, tìm phần tử nhỏ nhất trong đoạn a[i..n-1] và đổi chỗ với a[i]. In dãy đã sắp xếp.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n29 10 14 37 13 5\n```\n\nKết quả:\n```\n5 10 13 14 29 37\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint a[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint a[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < n; i++) {\n        int vt = i;\n        for (int j = i + 1; j < n; j++) {\n            if (a[j] < a[vt]) vt = j;\n        }\n        int t = a[i];\n        a[i] = a[vt];\n        a[vt] = t;\n    }\n    for (int i = 0; i < n; i++) cout << a[i] << \" \";\n    cout << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Tìm chỉ số `vt` của phần tử nhỏ nhất trong a[i..n-1].",
+        "Đổi chỗ a[i] và a[vt]."
+      ],
+      "tests": [
+        {
+          "input": "6\n29 10 14 37 13 5\n",
+          "expected": "5 10 13 14 29 37",
+          "hidden": false
+        },
+        {
+          "input": "1\n0\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "7\n3 3 -1 8 -1 0 2\n",
+          "expected": "-1 -1 0 2 3 3 8",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "stage-87",
+      "stage": 87,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "C",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Sắp xếp điểm theo tọa độ (pair)",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) điểm, mỗi điểm gồm tọa độ nguyên `x y`. Sắp xếp tăng dần theo `x`, nếu `x` bằng nhau thì tăng dần theo `y`. In mỗi điểm trên một dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n3 1\n1 5\n3 -2\n1 2\n```\n\nKết quả:\n```\n1 2\n1 5\n3 -2\n3 1\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint X[105], Y[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> X[i] >> Y[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint X[105], Y[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> X[i] >> Y[i];\n    for (int i = 1; i < n; i++) {\n        int kx = X[i], ky = Y[i];\n        int j = i - 1;\n        while (j >= 0 && (X[j] > kx || (X[j] == kx && Y[j] > ky))) {\n            X[j + 1] = X[j];\n            Y[j + 1] = Y[j];\n            j--;\n        }\n        X[j + 1] = kx;\n        Y[j + 1] = ky;\n    }\n    for (int i = 0; i < n; i++) cout << X[i] << \" \" << Y[i] << endl;\n    return 0;\n}\n",
+      "hints": [
+        "So sánh theo x trước, nếu bằng nhau so sánh y.",
+        "Khi dịch chuyển phần tử, di chuyển đồng thời cả X và Y."
+      ],
+      "tests": [
+        {
+          "input": "4\n3 1\n1 5\n3 -2\n1 2\n",
+          "expected": "1 2\n1 5\n3 -2\n3 1",
+          "hidden": false
+        },
+        {
+          "input": "1\n0 0\n",
+          "expected": "0 0",
+          "hidden": false
+        },
+        {
+          "input": "5\n-1 -1\n-1 -5\n2 0\n-3 7\n2 -1\n",
+          "expected": "-3 7\n-1 -5\n-1 -1\n2 -1\n2 0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "sorting"
+      ]
+    },
+    {
+      "id": "stage-88",
+      "stage": 88,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "C",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Lọc phần tử phân biệt (set)",
+      "task": "Nhập `n` (1 ≤ n ≤ 1000) và `n` số nguyên trong đoạn [0, 1000]. In số lượng giá trị phân biệt, sau đó in các giá trị phân biệt theo thứ tự tăng dần.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7\n5 1 5 3 1 9 3\n```\n\nKết quả:\n```\n4\n1 3 5 9\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nbool co[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nbool co[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int v = 0; v <= 1000; v++) co[v] = false;\n    for (int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        co[x] = true;\n    }\n    int dem = 0;\n    for (int v = 0; v <= 1000; v++) if (co[v]) dem++;\n    cout << dem << endl;\n    for (int v = 0; v <= 1000; v++) if (co[v]) cout << v << \" \";\n    cout << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Mảng đánh dấu `co[v] = true` khi gặp giá trị v.",
+        "Duyệt v từ 0 đến 1000 để in theo thứ tự tăng dần."
+      ],
+      "tests": [
+        {
+          "input": "7\n5 1 5 3 1 9 3\n",
+          "expected": "4\n1 3 5 9",
+          "hidden": false
+        },
+        {
+          "input": "1\n1000\n",
+          "expected": "1\n1000",
+          "hidden": false
+        },
+        {
+          "input": "6\n0 0 0 0 0 0\n",
+          "expected": "1\n0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "counting"
+      ]
+    },
+    {
+      "id": "stage-89",
+      "stage": 89,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "B",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Đếm tần suất (map)",
+      "task": "Nhập `n` (1 ≤ n ≤ 1000) và `n` số nguyên trong đoạn [1, 1000]. In ra giá trị xuất hiện nhiều nhất và số lần xuất hiện; nếu nhiều giá trị cùng số lần, chọn giá trị **nhỏ nhất**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n4 7 4 2 7 7 4 9\n```\n\nKết quả:\n```\n4 3\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint dem[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint dem[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int v = 0; v <= 1000; v++) dem[v] = 0;\n    for (int i = 0; i < n; i++) {\n        int x;\n        cin >> x;\n        dem[x]++;\n    }\n    int best = 1;\n    for (int v = 1; v <= 1000; v++) {\n        if (dem[v] > dem[best]) best = v;\n    }\n    cout << best << \" \" << dem[best] << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Khởi tạo mảng đếm bằng 0 trước khi dùng.",
+        "Duyệt v tăng dần và chỉ cập nhật khi đếm **lớn hơn hẳn** để giữ giá trị nhỏ nhất."
+      ],
+      "tests": [
+        {
+          "input": "8\n4 7 4 2 7 7 4 9\n",
+          "expected": "4 3",
+          "hidden": false
+        },
+        {
+          "input": "1\n500\n",
+          "expected": "500 1",
+          "hidden": false
+        },
+        {
+          "input": "6\n10 20 30 30 20 10\n",
+          "expected": "10 2",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "counting"
+      ]
+    },
+    {
+      "id": "stage-90",
+      "stage": 90,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "B",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Ngăn xếp — biểu thức hậu tố",
+      "task": "Biểu thức hậu tố (Ba Lan ngược) đặt toán tử sau hai toán hạng, ví dụ `3 4 + 2 *` = (3 + 4) × 2 = 14. Nhập `k` (1 ≤ k ≤ 100) là số token, sau đó `k` token cách nhau bởi dấu cách: số nguyên không âm hoặc một trong `+ - *`. Biểu thức luôn hợp lệ và mọi giá trị trung gian có trị tuyệt đối ≤ 10⁹. In ra giá trị biểu thức.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n3 4 + 2 *\n```\n\nKết quả:\n```\n14\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nlong long st[105];\n\nint main() {\n    int k;\n    cin >> k;\n    int top = 0;\n    for (int i = 0; i < k; i++) {\n        char tok[20];\n        cin >> tok;\n        // Viết code của em ở đây\n    }\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nlong long st[105];\n\nint main() {\n    int k;\n    cin >> k;\n    int top = 0;\n    for (int i = 0; i < k; i++) {\n        char tok[20];\n        cin >> tok;\n        char c = tok[0];\n        if ((c == '+' || c == '-' || c == '*') && tok[1] == '\\0') {\n            long long b = st[top - 1];\n            long long a = st[top - 2];\n            top -= 2;\n            long long r;\n            if (c == '+') r = a + b;\n            else if (c == '-') r = a - b;\n            else r = a * b;\n            st[top] = r;\n            top++;\n        } else {\n            long long v = 0;\n            for (int j = 0; tok[j] != '\\0'; j++) v = v * 10 + (tok[j] - '0');\n            st[top] = v;\n            top++;\n        }\n    }\n    cout << st[top - 1] << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Gặp số → đẩy vào ngăn xếp; gặp toán tử → lấy 2 phần tử trên cùng.",
+        "Chú ý thứ tự: phần tử lấy ra trước là toán hạng **bên phải**.",
+        "Đổi chuỗi chữ số thành số: `v = v * 10 + (tok[j] - '0')`."
+      ],
+      "tests": [
+        {
+          "input": "5\n3 4 + 2 *\n",
+          "expected": "14",
+          "hidden": false
+        },
+        {
+          "input": "1\n42\n",
+          "expected": "42",
+          "hidden": false
+        },
+        {
+          "input": "9\n5 1 2 + 4 * + 3 -\n",
+          "expected": "14",
+          "hidden": true
+        },
+        {
+          "input": "7\n10 2 8 * + 3 -\n",
+          "expected": "23",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "stack"
+      ]
+    },
+    {
+      "id": "stage-91",
+      "stage": 91,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "B",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Hàng đợi — trò chơi loại trừ",
+      "task": "`n` bạn đứng thành vòng tròn, đánh số 1 … n. Bắt đầu đếm từ bạn số 1, cứ đếm đến `k` thì bạn đó bị loại và việc đếm tiếp tục từ bạn kế tiếp. Nhập `n k` (1 ≤ n ≤ 30, 1 ≤ k ≤ 10), in thứ tự các bạn bị loại trên một dòng.\n\nGợi ý: dùng hàng đợi — đưa `k − 1` bạn đầu hàng xuống cuối hàng, rồi loại bạn đầu hàng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7 3\n```\n\nKết quả:\n```\n3 6 2 7 5 1 4\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint q[2000];\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint q[2000];\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    int dau = 0, cuoi = 0;\n    for (int i = 1; i <= n; i++) {\n        q[cuoi] = i;\n        cuoi++;\n    }\n    while (dau < cuoi) {\n        for (int j = 0; j < k - 1; j++) {\n            q[cuoi] = q[dau];\n            cuoi++;\n            dau++;\n        }\n        cout << q[dau] << \" \";\n        dau++;\n    }\n    cout << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Mỗi lượt: chuyển k − 1 người từ đầu xuống cuối hàng, rồi loại người đầu.",
+        "Mảng phải đủ lớn vì chỉ số cuối tăng liên tục (tối đa khoảng n × k)."
+      ],
+      "tests": [
+        {
+          "input": "7 3\n",
+          "expected": "3 6 2 7 5 1 4",
+          "hidden": false
+        },
+        {
+          "input": "1 5\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "10 2\n",
+          "expected": "2 4 6 8 10 3 7 1 9 5",
+          "hidden": true
+        },
+        {
+          "input": "30 10\n",
+          "expected": "10 20 30 11 22 3 15 27 9 24 7 23 8 26 14 2 21 16 6 4 1 5 13 19 12 29 18 25 17 28",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "queue",
+        "simulation"
+      ]
+    },
+    {
+      "id": "stage-92",
+      "stage": 92,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "B",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: K số lớn nhất (heap)",
+      "task": "Nhập `n`, `k` (1 ≤ k ≤ n ≤ 100) và dãy `n` số nguyên. In ra `k` số lớn nhất theo thứ tự giảm dần.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7 3\n5 12 3 9 12 1 7\n```\n\nKết quả:\n```\n12 12 9\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint a[105];\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint a[105];\n\nint main() {\n    int n, k;\n    cin >> n >> k;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 0; i < k; i++) {\n        int vt = i;\n        for (int j = i + 1; j < n; j++) {\n            if (a[j] > a[vt]) vt = j;\n        }\n        int t = a[i];\n        a[i] = a[vt];\n        a[vt] = t;\n        cout << a[i] << \" \";\n    }\n    cout << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Chỉ cần thực hiện k bước của Selection Sort (chọn lớn nhất).",
+        "Với dữ liệu lớn, cấu trúc heap (hàng đợi ưu tiên) cho độ phức tạp O(n log k)."
+      ],
+      "tests": [
+        {
+          "input": "7 3\n5 12 3 9 12 1 7\n",
+          "expected": "12 12 9",
+          "hidden": false
+        },
+        {
+          "input": "1 1\n-4\n",
+          "expected": "-4",
+          "hidden": false
+        },
+        {
+          "input": "6 6\n2 4 6 1 3 5\n",
+          "expected": "6 5 4 3 2 1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "heap",
+        "sorting"
+      ]
+    },
+    {
+      "id": "stage-93",
+      "stage": 93,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "A",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Tìm kiếm nhị phân — đếm số ≤ x",
+      "task": "Nhập `n` (1 ≤ n ≤ 1000) và dãy `n` số nguyên **không giảm**, sau đó `q` (1 ≤ q ≤ 100) và `q` số `x`. Với mỗi `x` in ra số phần tử ≤ x, dùng tìm kiếm nhị phân.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n1 3 3 5 8 13\n4\n3 0 13 6\n```\n\nKết quả:\n```\n3\n0\n6\n4\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n, q;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> q;\n    for (int k = 0; k < q; k++) {\n        int x;\n        cin >> x;\n        // Viết code của em ở đây\n    }\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n, q;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> q;\n    for (int k = 0; k < q; k++) {\n        int x;\n        cin >> x;\n        int lo = 0, hi = n;\n        while (lo < hi) {\n            int mid = (lo + hi) / 2;\n            if (a[mid] <= x) lo = mid + 1;\n            else hi = mid;\n        }\n        cout << lo << endl;\n    }\n    return 0;\n}\n",
+      "hints": [
+        "Tìm vị trí đầu tiên có `a[i] > x` (upper bound); vị trí đó chính là đáp án.",
+        "Dùng đoạn nửa mở [lo, hi) với `hi = n`."
+      ],
+      "tests": [
+        {
+          "input": "6\n1 3 3 5 8 13\n4\n3 0 13 6\n",
+          "expected": "3\n0\n6\n4",
+          "hidden": false
+        },
+        {
+          "input": "1\n5\n2\n5 4\n",
+          "expected": "1\n0",
+          "hidden": false
+        },
+        {
+          "input": "8\n-5 -5 0 0 0 2 9 9\n5\n0 -6 9 1 100\n",
+          "expected": "5\n0\n8\n5\n8",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "binary-search"
+      ]
+    },
+    {
+      "id": "stage-94",
+      "stage": 94,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "A",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Mảng cộng dồn 2D",
+      "task": "Nhập `n m q` (1 ≤ n, m ≤ 20, 1 ≤ q ≤ 50), ma trận `n × m` số nguyên (|aᵢⱼ| ≤ 1000) và `q` truy vấn `r1 c1 r2 c2` (đánh số từ 1). Với mỗi truy vấn in tổng các phần tử trong hình chữ nhật từ (r1, c1) đến (r2, c2).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 3 2\n1 2 3\n4 5 6\n7 8 9\n1 1 2 2\n2 2 3 3\n```\n\nKết quả:\n```\n12\n28\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint p[25][25];\n\nint main() {\n    int n, m, q;\n    cin >> n >> m >> q;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint p[25][25];\n\nint main() {\n    int n, m, q;\n    cin >> n >> m >> q;\n    for (int i = 0; i <= n; i++)\n        for (int j = 0; j <= m; j++) p[i][j] = 0;\n    for (int i = 1; i <= n; i++) {\n        for (int j = 1; j <= m; j++) {\n            int x;\n            cin >> x;\n            p[i][j] = p[i - 1][j] + p[i][j - 1] - p[i - 1][j - 1] + x;\n        }\n    }\n    for (int k = 0; k < q; k++) {\n        int r1, c1, r2, c2;\n        cin >> r1 >> c1 >> r2 >> c2;\n        cout << p[r2][c2] - p[r1 - 1][c2] - p[r2][c1 - 1] + p[r1 - 1][c1 - 1] << endl;\n    }\n    return 0;\n}\n",
+      "hints": [
+        "p[i][j] = tổng hình chữ nhật từ (1,1) đến (i,j).",
+        "p[i][j] = p[i-1][j] + p[i][j-1] − p[i-1][j-1] + a[i][j].",
+        "Tổng truy vấn dùng nguyên lý bao hàm – loại trừ."
+      ],
+      "tests": [
+        {
+          "input": "3 3 2\n1 2 3\n4 5 6\n7 8 9\n1 1 2 2\n2 2 3 3\n",
+          "expected": "12\n28",
+          "hidden": false
+        },
+        {
+          "input": "1 1 1\n-7\n1 1 1 1\n",
+          "expected": "-7",
+          "hidden": false
+        },
+        {
+          "input": "2 4 3\n1 -1 1 -1\n2 2 2 2\n1 1 2 4\n2 3 2 4\n1 2 1 3\n",
+          "expected": "8\n4\n0",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "prefix-sum"
+      ]
+    },
+    {
+      "id": "stage-95",
+      "stage": 95,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "A",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Sàng nguyên tố Eratosthenes",
+      "task": "Nhập `n` (1 ≤ n ≤ 5000). Dùng sàng Eratosthenes, in ra 2 dòng: số lượng số nguyên tố ≤ n và số nguyên tố lớn nhất ≤ n (in -1 nếu không có).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n30\n```\n\nKết quả:\n```\n10\n29\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nbool hopSo[5005];\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nbool hopSo[5005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i <= n; i++) hopSo[i] = false;\n    int dem = 0, lon = -1;\n    for (int i = 2; i <= n; i++) {\n        if (!hopSo[i]) {\n            dem++;\n            lon = i;\n            for (int j = i * i; j <= n; j += i) hopSo[j] = true;\n        }\n    }\n    cout << dem << endl;\n    cout << lon << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Mỗi số nguyên tố i đánh dấu các bội i*i, i*i + i, … là hợp số.",
+        "Số chưa bị đánh dấu khi duyệt tới là số nguyên tố."
+      ],
+      "tests": [
+        {
+          "input": "30\n",
+          "expected": "10\n29",
+          "hidden": false
+        },
+        {
+          "input": "1\n",
+          "expected": "0\n-1",
+          "hidden": false
+        },
+        {
+          "input": "5000\n",
+          "expected": "669\n4999",
+          "hidden": true
+        },
+        {
+          "input": "2\n",
+          "expected": "1\n2",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "math",
+        "sieve"
+      ]
+    },
+    {
+      "id": "stage-96",
+      "stage": 96,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "A",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Hai con trỏ — đoạn dài nhất",
+      "task": "Nhập `n` (1 ≤ n ≤ 1000), `S` (1 ≤ S ≤ 10⁹) và dãy `n` số nguyên dương (≤ 10⁶). In ra độ dài lớn nhất của một đoạn con liên tiếp có tổng ≤ S (in 0 nếu không có).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6 10\n2 5 1 3 4 1\n```\n\nKết quả:\n```\n4\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nlong long a[1005];\n\nint main() {\n    int n;\n    long long S;\n    cin >> n >> S;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nlong long a[1005];\n\nint main() {\n    int n;\n    long long S;\n    cin >> n >> S;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int l = 0, best = 0;\n    long long tong = 0;\n    for (int r = 0; r < n; r++) {\n        tong += a[r];\n        while (tong > S) {\n            tong -= a[l];\n            l++;\n        }\n        if (r - l + 1 > best) best = r - l + 1;\n    }\n    cout << best << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Mở rộng đầu phải r, khi tổng vượt S thì thu hẹp đầu trái l.",
+        "Vì các số dương, mỗi con trỏ chỉ đi tiến — độ phức tạp O(n)."
+      ],
+      "tests": [
+        {
+          "input": "6 10\n2 5 1 3 4 1\n",
+          "expected": "4",
+          "hidden": false
+        },
+        {
+          "input": "3 1\n5 6 7\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "8 15\n1 2 3 4 5 6 7 8\n",
+          "expected": "5",
+          "hidden": true
+        },
+        {
+          "input": "5 1000000000\n1000000 1000000 1000000 1000000 1000000\n",
+          "expected": "5",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "two-pointers"
+      ]
+    },
+    {
+      "id": "stage-97",
+      "stage": 97,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "S",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Dãy con tăng dài nhất (LIS)",
+      "task": "Nhập `n` (1 ≤ n ≤ 100) và dãy `n` số nguyên. In ra độ dài dãy con (không cần liên tiếp) **tăng ngặt** dài nhất.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n10 9 2 5 3 7 101 18\n```\n\nKết quả:\n```\n4\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint a[105], f[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint a[105], f[105];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int best = 0;\n    for (int i = 0; i < n; i++) {\n        f[i] = 1;\n        for (int j = 0; j < i; j++) {\n            if (a[j] < a[i] && f[j] + 1 > f[i]) f[i] = f[j] + 1;\n        }\n        if (f[i] > best) best = f[i];\n    }\n    cout << best << endl;\n    return 0;\n}\n",
+      "hints": [
+        "f[i] = độ dài dãy con tăng dài nhất **kết thúc tại** a[i].",
+        "f[i] = max(f[j] + 1) với j < i và a[j] < a[i]."
+      ],
+      "tests": [
+        {
+          "input": "8\n10 9 2 5 3 7 101 18\n",
+          "expected": "4",
+          "hidden": false
+        },
+        {
+          "input": "5\n5 4 3 2 1\n",
+          "expected": "1",
+          "hidden": false
+        },
+        {
+          "input": "10\n1 3 6 7 9 4 10 5 6 7\n",
+          "expected": "6",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "dp"
+      ]
+    },
+    {
+      "id": "stage-98",
+      "stage": 98,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "S",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Bài toán cái túi 0/1",
+      "task": "Có `n` đồ vật (1 ≤ n ≤ 20), đồ vật thứ i có khối lượng `wᵢ` và giá trị `vᵢ`. Túi chứa tối đa khối lượng `W` (1 ≤ W ≤ 200). Mỗi đồ vật chọn tối đa một lần. Nhập `n W` rồi `n` dòng `w v`, in tổng giá trị lớn nhất.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4 7\n1 1\n3 4\n4 5\n5 7\n```\n\nKết quả:\n```\n9\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint dp[205];\n\nint main() {\n    int n, W;\n    cin >> n >> W;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint dp[205];\n\nint main() {\n    int n, W;\n    cin >> n >> W;\n    for (int c = 0; c <= W; c++) dp[c] = 0;\n    for (int i = 0; i < n; i++) {\n        int w, v;\n        cin >> w >> v;\n        for (int c = W; c >= w; c--) {\n            if (dp[c - w] + v > dp[c]) dp[c] = dp[c - w] + v;\n        }\n    }\n    cout << dp[W] << endl;\n    return 0;\n}\n",
+      "hints": [
+        "dp[c] = giá trị lớn nhất với sức chứa c.",
+        "Duyệt c **giảm dần** để mỗi đồ vật chỉ được chọn một lần."
+      ],
+      "tests": [
+        {
+          "input": "4 7\n1 1\n3 4\n4 5\n5 7\n",
+          "expected": "9",
+          "hidden": false
+        },
+        {
+          "input": "1 5\n6 100\n",
+          "expected": "0",
+          "hidden": false
+        },
+        {
+          "input": "5 10\n5 10\n4 40\n6 30\n3 50\n2 15\n",
+          "expected": "105",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "dp",
+        "knapsack"
+      ]
+    },
+    {
+      "id": "stage-99",
+      "stage": 99,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "S",
+      "boss": false,
+      "xp": 300,
+      "title": "C++: Đếm số đảo (DFS trên lưới)",
+      "task": "Bản đồ `n × m` (1 ≤ n, m ≤ 12) gồm `#` (đất) và `.` (nước). Các ô đất kề cạnh nhau tạo thành một đảo. In ra số đảo và diện tích (số ô) của đảo lớn nhất (0 nếu không có đảo).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4 5\n##..#\n#...#\n..#..\n.###.\n```\n\nKết quả:\n```\n3\n4\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nchar g[15][15];\nbool tham[15][15];\nint n, m;\n\nint main() {\n    cin >> n >> m;\n    for (int i = 0; i < n; i++) cin >> g[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nchar g[15][15];\nbool tham[15][15];\nint n, m, dienTich;\n\nvoid dfs(int r, int c) {\n    if (r < 0 || c < 0 || r >= n || c >= m) return;\n    if (g[r][c] != '#' || tham[r][c]) return;\n    tham[r][c] = true;\n    dienTich++;\n    dfs(r + 1, c);\n    dfs(r - 1, c);\n    dfs(r, c + 1);\n    dfs(r, c - 1);\n}\n\nint main() {\n    cin >> n >> m;\n    for (int i = 0; i < n; i++) cin >> g[i];\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++) tham[i][j] = false;\n    int soDao = 0, lon = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            if (g[i][j] == '#' && !tham[i][j]) {\n                soDao++;\n                dienTich = 0;\n                dfs(i, j);\n                if (dienTich > lon) lon = dienTich;\n            }\n        }\n    }\n    cout << soDao << endl;\n    cout << lon << endl;\n    return 0;\n}\n",
+      "hints": [
+        "Mỗi ô đất chưa thăm là khởi đầu của một đảo mới.",
+        "Hàm DFS loang sang 4 ô kề và đếm diện tích."
+      ],
+      "tests": [
+        {
+          "input": "4 5\n##..#\n#...#\n..#..\n.###.\n",
+          "expected": "3\n4",
+          "hidden": false
+        },
+        {
+          "input": "2 2\n..\n..\n",
+          "expected": "0\n0",
+          "hidden": false
+        },
+        {
+          "input": "5 6\n######\n#....#\n#.##.#\n#....#\n######\n",
+          "expected": "2\n18",
+          "hidden": true
+        },
+        {
+          "input": "3 3\n#.#\n.#.\n#.#\n",
+          "expected": "5\n1",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "dfs",
+        "grid"
+      ]
+    },
+    {
+      "id": "stage-100",
+      "stage": 100,
+      "world": 5,
+      "lang": "cpp",
+      "rank": "BOSS",
+      "boss": true,
+      "xp": 500,
+      "title": "BOSS 5: Đỉnh cao HSG C++",
+      "task": "Một robot đi từ ô trái trên (1, 1) đến ô phải dưới (n, m) của lưới `n × m` (1 ≤ n, m ≤ 30), mỗi bước chỉ được sang **phải** hoặc xuống **dưới**. Mỗi ô chứa số xu (0 … 1000) hoặc `-1` là ô có chướng ngại vật không thể đi vào. Tìm tổng số xu **lớn nhất** robot thu được trên đường đi (tính cả ô đầu và ô cuối); in `-1` nếu không có đường đi.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 3\n1 3 1\n1 5 1\n4 2 1\n```\n\nKết quả:\n```\n12\n```",
+      "starter": "#include <iostream>\nusing namespace std;\n\nint g[35][35];\nlong long f[35][35];\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++) cin >> g[i][j];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+      "solution": "#include <iostream>\nusing namespace std;\n\nint g[35][35];\nlong long f[35][35];\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    for (int i = 0; i < n; i++)\n        for (int j = 0; j < m; j++) cin >> g[i][j];\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            f[i][j] = -1;\n            if (g[i][j] < 0) continue;\n            if (i == 0 && j == 0) {\n                f[i][j] = g[i][j];\n                continue;\n            }\n            long long best = -1;\n            if (i > 0 && f[i - 1][j] > best) best = f[i - 1][j];\n            if (j > 0 && f[i][j - 1] > best) best = f[i][j - 1];\n            if (best >= 0) f[i][j] = best + g[i][j];\n        }\n    }\n    cout << f[n - 1][m - 1] << endl;\n    return 0;\n}\n",
+      "hints": [
+        "f[i][j] = số xu lớn nhất khi đến ô (i, j); dùng −1 cho ô không tới được.",
+        "f[i][j] = max(f[i−1][j], f[i][j−1]) + g[i][j] nếu một trong hai ô trước tới được.",
+        "Nhớ xử lý ô xuất phát và các ô chướng ngại."
+      ],
+      "tests": [
+        {
+          "input": "3 3\n1 3 1\n1 5 1\n4 2 1\n",
+          "expected": "12",
+          "hidden": false
+        },
+        {
+          "input": "2 2\n1 -1\n-1 1\n",
+          "expected": "-1",
+          "hidden": false
+        },
+        {
+          "input": "4 5\n0 2 -1 4 1\n3 -1 5 0 2\n1 1 1 -1 7\n0 6 2 3 1\n",
+          "expected": "17",
+          "hidden": true
+        },
+        {
+          "input": "1 1\n7\n",
+          "expected": "7",
+          "hidden": true
+        }
+      ],
+      "tags": [
+        "dp",
+        "grid",
+        "boss"
+      ]
+    }
+  ]
+}

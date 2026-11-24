@@ -1,0 +1,153 @@
+rules_version = '2';
+
+// V-Code Edu — Firestore Security Rules
+// Deploy: Firebase Console → Firestore Database → Rules (paste) or `firebase deploy --only firestore:rules`.
+// Document keys for users are the lowercased email (same as the legacy app), so existing data keeps working.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function signedIn() { return request.auth != null && request.auth.token.email != null; }
+    function myKey() { return request.auth.token.email.lower().replace('[^a-z0-9@._-]', '_'); }
+    function isGoogleVerified() {
+      return request.auth.token.email_verified == true
+        && request.auth.token.firebase.sign_in_provider == 'google.com';
+    }
+    function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
+    function profile() { return get(/databases/$(database)/documents/users/$(myKey())).data; }
+    function isTeacher() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(myKey()))
+        && profile().role in ['teacher', 'admin'];
+    }
+    function classDoc(code) { return get(/databases/$(database)/documents/classrooms/$(code)).data; }
+    function isOwnerOf(code) { return signedIn() && classDoc(code).teacher_email == myKey(); }
+    function isMemberOf(code) {
+      return signedIn() && classDoc(code).get('student_emails', []).hasAny([myKey()]);
+    }
+    function shortText(v, max) { return v is string && v.size() <= max; }
+
+    // ---------- users/{emailKey} ----------
+    match /users/{key} {
+      function legacyLocked() { return resource != null && ('password_hash' in resource.data); }
+      function roleOk() {
+        // Role can be chosen once: none/absent → teacher|student. 'admin' is never self-assigned.
+        return !('role' in request.resource.data)
+          || (resource != null && request.resource.data.role == resource.data.get('role', 'none'))
+          || ((resource == null || resource.data.get('role', 'none') in ['none', null, ''])
+              && request.resource.data.role in ['none', 'teacher', 'student']);
+      }
+      function noPrivilegedFields() {
+        return !request.resource.data.keys().hasAny(['password_hash', 'is_admin']);
+      }
+
+      allow get: if signedIn() && key == myKey() && !legacyLocked();
+      allow list: if false;
+      allow create: if signedIn() && key == myKey()
+        && request.resource.data.email == request.auth.token.email.lower()
+        && roleOk() && noPrivilegedFields();
+
+      // Normal owner updates (not while a legacy hash is present)
+      allow update: if signedIn() && key == myKey() && !legacyLocked()
+        && request.resource.data.get('email', '') == resource.data.get('email', '')
+        && roleOk() && noPrivilegedFields();
+
+      // Legacy account claim: proves knowledge of the old password without revealing the stored hash,
+      // or Google-verified ownership of the email. The hash must be removed in the same write.
+      allow update: if signedIn() && key == myKey() && legacyLocked()
+        && !('password_hash' in request.resource.data)
+        && (request.resource.data.get('legacy_claim', '') == resource.data.password_hash || isGoogleVerified())
+        && request.resource.data.get('role', 'none') == resource.data.get('role', 'none');
+
+      allow delete: if false;
+
+      // AI conversation history (owner only)
+      match /conversations/{cid} {
+        allow read, delete: if signedIn() && key == myKey();
+        allow create, update: if signedIn() && key == myKey()
+          && request.resource.data.messages is list
+          && shortText(request.resource.data.get('title', ''), 200);
+      }
+    }
+
+    // ---------- public leaderboard ----------
+    match /leaderboard/{key} {
+      allow read: if true;
+      allow write: if signedIn() && key == myKey()
+        && request.resource.data.keys().hasOnly(['name', 'xp', 'school', 'updated_at'])
+        && request.resource.data.xp is int && request.resource.data.xp >= 0 && request.resource.data.xp < 1000000
+        && shortText(request.resource.data.name, 80);
+    }
+
+    // ---------- classrooms/{CODE} ----------
+    match /classrooms/{code} {
+      function joiningSelf() {
+        let before = resource.data.get('student_emails', []);
+        let after = request.resource.data.get('student_emails', []);
+        return changed().hasOnly(['student_emails', 'students'])
+          && after.hasAll(before) && after.size() == before.size() + 1
+          && after.hasAny([myKey()]) && !before.hasAny([myKey()]);
+      }
+      function leavingSelf() {
+        let before = resource.data.get('student_emails', []);
+        let after = request.resource.data.get('student_emails', []);
+        return changed().hasOnly(['student_emails', 'students'])
+          && before.hasAll(after) && after.size() == before.size() - 1
+          && before.hasAny([myKey()]) && !after.hasAny([myKey()]);
+      }
+
+      // Knowing the class code is the capability to look it up (needed to join).
+      allow get: if signedIn();
+      allow list: if signedIn()
+        && (resource.data.teacher_email == myKey() || resource.data.get('student_emails', []).hasAny([myKey()]));
+      allow create: if isTeacher()
+        && request.resource.data.teacher_email == myKey()
+        && request.resource.data.code == code
+        && code.matches('^[A-Z0-9-]{4,20}$')
+        && shortText(request.resource.data.name, 120);
+      allow update: if signedIn() && (
+          (resource.data.teacher_email == myKey() && request.resource.data.teacher_email == myKey() && request.resource.data.code == code)
+          || joiningSelf() || leavingSelf());
+      allow delete: if signedIn() && resource.data.teacher_email == myKey();
+
+      match /assignments/{aid} {
+        allow read: if isOwnerOf(code) || isMemberOf(code);
+        allow write: if isOwnerOf(code);
+      }
+
+      match /submissions/{sid} {
+        function deadlineOpen(aid) {
+          let a = get(/databases/$(database)/documents/classrooms/$(code)/assignments/$(aid)).data;
+          return a.get('deadline_ts', 0) == 0 || request.time.toMillis() <= a.deadline_ts;
+        }
+        allow read: if isOwnerOf(code) || (isMemberOf(code) && resource.data.email == myKey());
+        // Student submits / resubmits own work before the deadline; cannot set teacher fields.
+        allow create: if isMemberOf(code)
+          && request.resource.data.email == myKey()
+          && sid == request.resource.data.assignment_id + '__' + myKey()
+          && !request.resource.data.keys().hasAny(['teacher_score', 'teacher_note', 'graded_at', 'graded_by'])
+          && deadlineOpen(request.resource.data.assignment_id);
+        allow update: if (isMemberOf(code)
+            && resource.data.email == myKey() && request.resource.data.email == myKey()
+            && !changed().hasAny(['teacher_score', 'teacher_note', 'graded_at', 'graded_by', 'email', 'assignment_id'])
+            && deadlineOpen(resource.data.assignment_id))
+          || isOwnerOf(code);
+        allow delete: if isOwnerOf(code);
+      }
+
+      match /presence/{key} {
+        allow read: if isOwnerOf(code);
+        allow write: if isMemberOf(code) && key == myKey();
+      }
+
+      match /messages/{mid} {
+        allow read: if isOwnerOf(code) || isMemberOf(code);
+        allow create: if (isOwnerOf(code) || isMemberOf(code))
+          && request.resource.data.author_email == myKey()
+          && shortText(request.resource.data.text, 2000);
+        allow delete: if isOwnerOf(code) || (signedIn() && resource.data.author_email == myKey());
+      }
+    }
+  }
+}

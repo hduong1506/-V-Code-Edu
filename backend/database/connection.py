@@ -1,44 +1,69 @@
-import os
-from pathlib import Path
+"""Kết nối CSDL: SQLite (mặc định, tệp vcode_edu.db), MySQL (mysql+pymysql://) hoặc PostgreSQL (postgresql://).
+
+Engine được tạo theo cấu hình của từng ứng dụng (create_app) để kiểm thử có thể dùng CSDL tạm.
+"""
+from __future__ import annotations
+
+from contextlib import contextmanager
+from typing import Iterator
+
+from fastapi import Request
 from sqlalchemy import create_engine, event
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import Session, sessionmaker
 
-BASE_DIR = Path(__file__).resolve().parents[2]
-DEFAULT_SQLITE_URL = f"sqlite:///{(BASE_DIR / 'vcode_edu.db').as_posix()}"
 
-# Hỗ trợ đồng thời MySQL (mysql+pymysql://...), PostgreSQL (postgresql://...) và SQLite
-DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_SQLITE_URL).strip()
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-elif DATABASE_URL.startswith("mysql://"):
-    DATABASE_URL = DATABASE_URL.replace("mysql://", "mysql+pymysql://", 1)
+def normalize_database_url(url: str) -> str:
+    url = (url or "").strip()
+    if url.startswith("postgres://"):
+        return url.replace("postgres://", "postgresql://", 1)
+    if url.startswith("mysql://"):
+        return url.replace("mysql://", "mysql+pymysql://", 1)
+    return url
 
-is_sqlite = DATABASE_URL.startswith("sqlite")
-if is_sqlite:
-    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False}, echo=False, future=True)
-    @event.listens_for(engine, "connect")
-    def _set_sqlite_pragma(dbapi_connection, connection_record):
-        cursor = dbapi_connection.cursor()
-        cursor.execute("PRAGMA foreign_keys=ON")
-        cursor.execute("PRAGMA journal_mode=WAL")
-        cursor.close()
-else:
-    # Connection Pooling tối ưu cho MySQL / PostgreSQL khi có lượng truy cập lớn
-    engine = create_engine(
-        DATABASE_URL,
-        pool_size=20,
-        max_overflow=40,
-        pool_pre_ping=True,
-        pool_recycle=1800,
-        echo=False,
-        future=True
-    )
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+def create_db_engine(url: str) -> Engine:
+    url = normalize_database_url(url)
+    if url.startswith("sqlite"):
+        engine = create_engine(url, connect_args={"check_same_thread": False, "timeout": 15}, future=True)
+        in_memory = url in ("sqlite://", "sqlite:///:memory:")
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+        @event.listens_for(engine, "connect")
+        def _sqlite_pragmas(dbapi_connection, _record):  # noqa: ANN001
+            cursor = dbapi_connection.cursor()
+            cursor.execute("PRAGMA foreign_keys=ON")
+            if not in_memory:
+                cursor.execute("PRAGMA journal_mode=WAL")
+            cursor.close()
+
+        return engine
+    # MySQL / PostgreSQL: connection pool cho lượng truy cập lớn (cần cài driver tương ứng).
+    return create_engine(url, pool_size=10, max_overflow=20, pool_pre_ping=True, pool_recycle=1800, future=True)
+
+
+class Database:
+    def __init__(self, url: str):
+        self.url = normalize_database_url(url)
+        self.engine = create_db_engine(self.url)
+        self._sessionmaker = sessionmaker(bind=self.engine, autocommit=False, autoflush=False, expire_on_commit=False)
+
+    @contextmanager
+    def session(self) -> Iterator[Session]:
+        s = self._sessionmaker()
+        try:
+            yield s
+        except Exception:
+            s.rollback()
+            raise
+        finally:
+            s.close()
+
+    def dispose(self) -> None:
+        self.engine.dispose()
+
+
+def get_db(request: Request) -> Iterator[Session]:
+    """Phụ thuộc FastAPI: phiên CSDL của ứng dụng hiện tại."""
+    database: Database = request.app.state.database
+    with database.session() as s:
+        yield s

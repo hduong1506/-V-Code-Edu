@@ -1,0 +1,650 @@
+{
+  "id": "c",
+  "version": 2,
+  "lang": "c",
+  "title": "Lập trình C",
+  "subtitle": "Nền tảng vững chắc từ biến, vòng lặp đến con trỏ",
+  "level": "Cơ bản",
+  "description": "Khóa học C từ con số 0: cấu trúc chương trình, nhập xuất printf/scanf, rẽ nhánh và vòng lặp, mảng và chuỗi ký tự, hàm, đệ quy và con trỏ. Mỗi bài có lý thuyết ngắn gọn, ví dụ mẫu và bài tập được chấm tự động ngay trên trình duyệt.",
+  "track": "programming",
+  "accent": "cyan",
+  "tags": [
+    "c",
+    "nhập môn",
+    "con trỏ",
+    "mảng",
+    "thi tin học"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Nhập xuất và kiểu dữ liệu",
+      "summary": "Cấu trúc chương trình C, printf/scanf, kiểu int và số thực, định dạng kết quả.",
+      "lessons": [
+        {
+          "id": "c-1-1",
+          "title": "Chương trình C đầu tiên",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Mọi chương trình C đều bắt đầu chạy từ hàm **`main`**. Phần thân của hàm được đặt trong cặp ngoặc nhọn `{ }`, mỗi câu lệnh kết thúc bằng dấu chấm phẩy `;`.\n\nDòng `#include <stdio.h>` yêu cầu trình biên dịch nạp thư viện **nhập/xuất chuẩn** (standard input/output). Thư viện này cung cấp hai hàm em sẽ dùng nhiều nhất:\n\n- `printf(...)` — in dữ liệu ra màn hình.\n- `scanf(...)` — đọc dữ liệu người dùng nhập vào.\n\nBên trong chuỗi định dạng của `printf`, các **đặc tả** bắt đầu bằng `%` sẽ được thay bằng giá trị tương ứng: `%d` cho số nguyên, `%s` cho chuỗi ký tự. Ký tự `\\n` nghĩa là xuống dòng.\n\nĐể lưu một từ (chuỗi không có khoảng trắng) ta khai báo mảng ký tự, ví dụ `char ten[50];` rồi đọc bằng `scanf(\"%s\", ten);`. Lưu ý với chuỗi **không** cần dấu `&` trước tên biến.\n\n```c\n#include <stdio.h>\n\nint main() {\n    char ten[50];\n    scanf(\"%s\", ten);          // đọc một từ\n    printf(\"Chao %s\\n\", ten);  // %s được thay bằng nội dung của ten\n    return 0;                  // báo cho hệ điều hành: chạy thành công\n}\n```\n\nCâu lệnh `return 0;` ở cuối `main` báo rằng chương trình kết thúc bình thường. Hãy tập thói quen thụt lề 4 dấu cách cho các lệnh bên trong khối `{ }` để mã dễ đọc.",
+          "task": "Nhập vào **tên** của em (một từ, không dấu, không chứa khoảng trắng).\n\nIn ra đúng **2 dòng**:\n\n1. `Xin chao <ten>!`\n2. `Chao mung den voi lap trinh C.`\n\n**Dữ liệu vào:** một dòng chứa tên.\n**Kết quả:** hai dòng như mô tả.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nAn\n```\n\nKết quả:\n```\nXin chao An!\nChao mung den voi lap trinh C.\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    char ten[50];\n    scanf(\"%s\", ten);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    char ten[50];\n    scanf(\"%s\", ten);\n    printf(\"Xin chao %s!\\n\", ten);\n    printf(\"Chao mung den voi lap trinh C.\\n\");\n    return 0;\n}\n",
+          "hints": [
+            "Dùng `printf` với đặc tả `%s` để chèn tên vào câu.",
+            "Mỗi dòng cần kết thúc bằng `\\n`.",
+            "Dòng thứ nhất: `printf(\"Xin chao %s!\\n\", ten);`"
+          ],
+          "tests": [
+            {
+              "input": "An\n",
+              "expected": "Xin chao An!\nChao mung den voi lap trinh C.",
+              "hidden": false
+            },
+            {
+              "input": "Minh\n",
+              "expected": "Xin chao Minh!\nChao mung den voi lap trinh C.",
+              "hidden": false
+            },
+            {
+              "input": "VCodeEdu\n",
+              "expected": "Xin chao VCodeEdu!\nChao mung den voi lap trinh C.",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-1-2",
+          "title": "Biến kiểu int và các phép toán",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "**Biến** là một vùng nhớ có tên dùng để lưu dữ liệu. Trong C, mỗi biến phải được **khai báo kiểu** trước khi dùng. Kiểu `int` lưu số nguyên (khoảng từ −2 147 483 648 đến 2 147 483 647).\n\n```c\nint a, b;                 // khai báo hai biến nguyên\nscanf(\"%d %d\", &a, &b);   // đọc hai số, nhớ dấu & trước tên biến\nint tong = a + b;\nprintf(\"%d\\n\", tong);\n```\n\nVới `scanf`, dấu `&` lấy **địa chỉ** của biến để hàm biết cần ghi giá trị vào đâu.\n\nCác phép toán số học trên số nguyên:\n\n| Phép toán | Ý nghĩa | Ví dụ (a = 7, b = 3) |\n|---|---|---|\n| `a + b` | cộng | 10 |\n| `a - b` | trừ | 4 |\n| `a * b` | nhân | 21 |\n| `a / b` | **chia lấy phần nguyên** | 2 |\n| `a % b` | chia lấy **phần dư** | 1 |\n\nChú ý: khi cả hai toán hạng là số nguyên, phép `/` bỏ đi phần thập phân. Muốn in ký tự `%` bằng `printf`, em phải viết **hai** dấu `%%` vì một dấu `%` đơn lẻ được hiểu là bắt đầu đặc tả.\n\nMột lệnh `printf` có thể in nhiều giá trị: `printf(\"%d + %d = %d\\n\", a, b, a + b);` — các giá trị được thay vào lần lượt theo thứ tự.",
+          "task": "Nhập hai số nguyên `a` và `b` (0 ≤ a ≤ 10 000, 1 ≤ b ≤ 10 000).\n\nIn ra **5 dòng** theo đúng mẫu (thay `a`, `b` và kết quả bằng số cụ thể):\n\n```\na + b = ...\na - b = ...\na * b = ...\na / b = ...   (chia lấy phần nguyên)\na % b = ...   (chia lấy phần dư)\n```\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7 3\n```\n\nKết quả:\n```\n7 + 3 = 10\n7 - 3 = 4\n7 * 3 = 21\n7 / 3 = 2\n7 % 3 = 1\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    scanf(\"%d %d\", &a, &b);\n    printf(\"%d + %d = %d\\n\", a, b, a + b);\n    printf(\"%d - %d = %d\\n\", a, b, a - b);\n    printf(\"%d * %d = %d\\n\", a, b, a * b);\n    printf(\"%d / %d = %d\\n\", a, b, a / b);\n    printf(\"%d %% %d = %d\\n\", a, b, a % b);\n    return 0;\n}\n",
+          "hints": [
+            "Mỗi dòng là một lệnh `printf` có 3 đặc tả `%d`.",
+            "Để in ký tự `%` hãy viết `%%` trong chuỗi định dạng.",
+            "Dòng cuối: `printf(\"%d %% %d = %d\\n\", a, b, a % b);`"
+          ],
+          "tests": [
+            {
+              "input": "7 3\n",
+              "expected": "7 + 3 = 10\n7 - 3 = 4\n7 * 3 = 21\n7 / 3 = 2\n7 % 3 = 1",
+              "hidden": false
+            },
+            {
+              "input": "10 5\n",
+              "expected": "10 + 5 = 15\n10 - 5 = 5\n10 * 5 = 50\n10 / 5 = 2\n10 % 5 = 0",
+              "hidden": false
+            },
+            {
+              "input": "0 4\n",
+              "expected": "0 + 4 = 4\n0 - 4 = -4\n0 * 4 = 0\n0 / 4 = 0\n0 % 4 = 0",
+              "hidden": true
+            },
+            {
+              "input": "9999 7\n",
+              "expected": "9999 + 7 = 10006\n9999 - 7 = 9992\n9999 * 7 = 69993\n9999 / 7 = 1428\n9999 % 7 = 3",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-1-3",
+          "title": "Số thực và định dạng printf",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Số có phần thập phân được lưu bằng kiểu **số thực**: `float` (độ chính xác khoảng 7 chữ số) hoặc `double` (khoảng 15 chữ số). Khi tính toán, nên dùng `double` để kết quả chính xác hơn.\n\n```c\nfloat r;\nscanf(\"%f\", &r);              // %f để đọc vào biến float\ndouble s = 3.14 * r * r;      // tính toán bằng double\nprintf(\"%.2f\\n\", s);          // in 2 chữ số sau dấu phẩy\n```\n\nĐặc tả `%.2f` nghĩa là in số thực, **làm tròn đến 2 chữ số thập phân**. Tương tự `%.1f` lấy 1 chữ số, `%.3f` lấy 3 chữ số. Nếu chỉ viết `%f`, C sẽ in 6 chữ số thập phân.\n\nMột số lưu ý quan trọng:\n\n- Trong C, dấu thập phân là dấu **chấm** (`3.14`), không phải dấu phẩy.\n- Phép chia giữa hai số nguyên luôn cho số nguyên: `5 / 2` bằng `2`. Muốn được `2.5` hãy viết `5 / 2.0` hoặc ép kiểu `(double)5 / 2`.\n- Thứ tự thực hiện phép toán giống toán học: nhân chia trước, cộng trừ sau; dùng ngoặc `( )` khi cần.\n\nCông thức hình tròn bán kính r: **chu vi** C = 2 × π × r và **diện tích** S = π × r². Trong bài này ta dùng π = 3.14.",
+          "task": "Nhập bán kính `r` của một hình tròn (số thực dương, tối đa 2 chữ số thập phân).\n\nVới **π = 3.14**, in ra 2 dòng:\n\n```\nChu vi: X\nDien tich: Y\n```\n\ntrong đó X, Y được làm tròn đến **2 chữ số thập phân**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n2.25\n```\n\nKết quả:\n```\nChu vi: 14.13\nDien tich: 15.90\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    float r;\n    scanf(\"%f\", &r);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    float r;\n    scanf(\"%f\", &r);\n    double cv = 2 * 3.14 * r;\n    double dt = 3.14 * r * r;\n    printf(\"Chu vi: %.2f\\n\", cv);\n    printf(\"Dien tich: %.2f\\n\", dt);\n    return 0;\n}\n",
+          "hints": [
+            "Chu vi = 2 * 3.14 * r, diện tích = 3.14 * r * r.",
+            "Lưu kết quả vào biến `double` rồi in bằng `%.2f`."
+          ],
+          "tests": [
+            {
+              "input": "2.25\n",
+              "expected": "Chu vi: 14.13\nDien tich: 15.90",
+              "hidden": false
+            },
+            {
+              "input": "10\n",
+              "expected": "Chu vi: 62.80\nDien tich: 314.00",
+              "hidden": false
+            },
+            {
+              "input": "0.75\n",
+              "expected": "Chu vi: 4.71\nDien tich: 1.77",
+              "hidden": true
+            },
+            {
+              "input": "3.5\n",
+              "expected": "Chu vi: 21.98\nDien tich: 38.47",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-1-4",
+          "title": "Đổi giây sang giờ:phút:giây",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Phép **chia nguyên** `/` và **chia lấy dư** `%` là bộ đôi cực kỳ hữu ích khi đổi đơn vị.\n\nVí dụ với `n = 3725` giây:\n\n- Số giờ: `n / 3600` = 1 (vì 3725 chứa trọn 1 lần 3600).\n- Số giây còn lại sau khi lấy giờ: `n % 3600` = 125.\n- Số phút: `125 / 60` = 2, số giây: `125 % 60` = 5.\n\nVậy 3725 giây = **01:02:05**.\n\nĐể in số luôn có đủ 2 chữ số (thêm số 0 phía trước khi cần), dùng đặc tả độ rộng kèm cờ `0`:\n\n```c\nint h = 1, m = 2, s = 5;\nprintf(\"%02d:%02d:%02d\\n\", h, m, s);   // in ra 01:02:05\n```\n\nTrong `%02d`: số `2` là độ rộng tối thiểu, chữ số `0` yêu cầu lấp chỗ trống bằng số 0 thay vì dấu cách. Nếu viết `%5d`, số sẽ được căn phải trong 5 ô.\n\nHãy chú ý thứ tự tính toán: nên tính giờ trước, sau đó dùng phần dư để tính phút và giây. Có thể viết gọn `n % 3600 / 60` vì `%` và `/` cùng mức ưu tiên và được thực hiện từ trái sang phải.",
+          "task": "Nhập số nguyên `n` (0 ≤ n < 360 000) là số giây.\n\nIn ra thời gian dạng `HH:MM:SS`, mỗi phần gồm đúng **2 chữ số**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3725\n```\n\nKết quả:\n```\n01:02:05\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int h = n / 3600;\n    int m = n % 3600 / 60;\n    int s = n % 60;\n    printf(\"%02d:%02d:%02d\\n\", h, m, s);\n    return 0;\n}\n",
+          "hints": [
+            "Giờ = n / 3600; phần còn lại là n % 3600.",
+            "Phút = (n % 3600) / 60, giây = n % 60.",
+            "In bằng `printf(\"%02d:%02d:%02d\\n\", h, m, s);`"
+          ],
+          "tests": [
+            {
+              "input": "3725\n",
+              "expected": "01:02:05",
+              "hidden": false
+            },
+            {
+              "input": "59\n",
+              "expected": "00:00:59",
+              "hidden": false
+            },
+            {
+              "input": "86399\n",
+              "expected": "23:59:59",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "00:00:00",
+              "hidden": true
+            },
+            {
+              "input": "359999\n",
+              "expected": "99:59:59",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Rẽ nhánh và vòng lặp",
+      "summary": "if – else, switch – case, vòng lặp for và while, kỹ thuật bóc tách chữ số.",
+      "lessons": [
+        {
+          "id": "c-2-1",
+          "title": "Câu lệnh if – else: xếp loại học lực",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Câu lệnh **`if`** cho phép chương trình chọn hướng xử lý dựa trên một điều kiện đúng/sai.\n\n```c\nif (dieu_kien) {\n    // chạy khi điều kiện đúng\n} else if (dieu_kien_khac) {\n    // chạy khi điều kiện đầu sai và điều kiện này đúng\n} else {\n    // chạy khi tất cả điều kiện trên đều sai\n}\n```\n\nCác **toán tử so sánh**: `>`, `<`, `>=`, `<=`, `==` (bằng — chú ý **hai** dấu bằng), `!=` (khác). Kết hợp nhiều điều kiện bằng **toán tử logic**: `&&` (và), `||` (hoặc), `!` (phủ định).\n\n```c\nfloat d = 7.2;\nif (d >= 8.0) {\n    printf(\"Gioi\\n\");\n} else if (d >= 6.5) {\n    printf(\"Kha\\n\");\n}\n```\n\nChuỗi `else if` được kiểm tra **từ trên xuống**, gặp điều kiện đúng đầu tiên thì thực hiện rồi bỏ qua phần còn lại. Nhờ vậy khi đã ở nhánh `else if (d >= 6.5)` ta biết chắc `d < 8.0` — không cần viết lại điều kiện `d < 8.0`.\n\nLỗi thường gặp: viết `if (d = 8)` (gán) thay vì `if (d == 8)` (so sánh), hoặc đặt dấu `;` ngay sau `if (...)` làm câu lệnh `if` trở nên rỗng.\n\nKhi kiểm thử chương trình rẽ nhánh, hãy thử đặc biệt các **giá trị biên** như 8.0, 6.5, 5.0 — đây là nơi lỗi dùng nhầm `>` với `>=` hay xuất hiện nhất.",
+          "task": "Nhập điểm trung bình `d` (số thực, 0 ≤ d ≤ 10, có tối đa 1 chữ số thập phân). In ra xếp loại:\n\n- `Gioi` nếu d ≥ 8.0\n- `Kha` nếu 6.5 ≤ d < 8.0\n- `Trung binh` nếu 5.0 ≤ d < 6.5\n- `Yeu` nếu d < 5.0\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8.5\n```\n\nKết quả:\n```\nGioi\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    float d;\n    scanf(\"%f\", &d);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    float d;\n    scanf(\"%f\", &d);\n    if (d >= 8.0) {\n        printf(\"Gioi\\n\");\n    } else if (d >= 6.5) {\n        printf(\"Kha\\n\");\n    } else if (d >= 5.0) {\n        printf(\"Trung binh\\n\");\n    } else {\n        printf(\"Yeu\\n\");\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Kiểm tra từ mức cao nhất xuống: 8.0 → 6.5 → 5.0.",
+            "Dùng chuỗi `if ... else if ... else`."
+          ],
+          "tests": [
+            {
+              "input": "8.5\n",
+              "expected": "Gioi",
+              "hidden": false
+            },
+            {
+              "input": "6.5\n",
+              "expected": "Kha",
+              "hidden": false
+            },
+            {
+              "input": "4.9\n",
+              "expected": "Yeu",
+              "hidden": false
+            },
+            {
+              "input": "8.0\n",
+              "expected": "Gioi",
+              "hidden": true
+            },
+            {
+              "input": "5.0\n",
+              "expected": "Trung binh",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-2-2",
+          "title": "switch – case: máy tính bỏ túi",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Khi cần so sánh **một giá trị** với nhiều hằng số khác nhau, `switch` gọn gàng hơn một chuỗi dài `if – else if`.\n\n```c\nswitch (bieu_thuc) {\n    case 1:\n        printf(\"Mot\\n\");\n        break;          // thoát khỏi switch\n    case 2:\n        printf(\"Hai\\n\");\n        break;\n    default:            // không khớp case nào\n        printf(\"Khac\\n\");\n}\n```\n\n- Giá trị sau `case` phải là **hằng số** nguyên hoặc ký tự (ví dụ `'+'`).\n- Lệnh `break` rất quan trọng: nếu quên, chương trình sẽ \"rơi\" xuống và chạy tiếp các `case` bên dưới.\n- Nhánh `default` xử lý mọi trường hợp còn lại.\n\nTrong bài này phép toán được nhập dưới dạng một ký tự như `+` hay `*`. Hàm `getchar()` đọc **đúng một ký tự** từ dữ liệu vào. Sau khi `scanf` đọc xong số `a`, ký tự tiếp theo là dấu cách, nên ta bỏ qua các dấu cách rồi mới lấy ký tự phép toán:\n\n```c\nint a, b;\nchar op;\nscanf(\"%d\", &a);            // ví dụ nhập: 12 + 30\nop = getchar();\nwhile (op == ' ') op = getchar();   // bỏ qua dấu cách\nscanf(\"%d\", &b);\nswitch (op) {\n    case '+': printf(\"%d\\n\", a + b); break;\n    /* ... */\n}\n```\n\nVới phép chia và chia lấy dư, hãy kiểm tra mẫu số **khác 0** trước khi tính để tránh lỗi chương trình. Có thể đặt một câu lệnh `if` ngay bên trong một `case`. Một `switch` gọn gàng, mỗi `case` một nhiệm vụ, giúp chương trình dễ đọc và dễ mở rộng thêm phép toán mới.",
+          "task": "Nhập một dòng dạng `a op b`, trong đó `a`, `b` là số nguyên (0 ≤ a, b ≤ 10 000) và `op` là một ký tự phép toán.\n\n- Nếu `op` là `+`, `-`, `*`: in kết quả.\n- Nếu `op` là `/` (chia lấy phần nguyên) hoặc `%` (chia lấy dư): in kết quả; nếu `b = 0` thì in `Loi: chia cho 0`.\n- Ký tự khác: in `Phep toan khong hop le`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12 + 30\n```\n\nKết quả:\n```\n42\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    char op;\n    scanf(\"%d\", &a);\n    op = getchar();\n    while (op == ' ') op = getchar();\n    scanf(\"%d\", &b);\n    // Viết code của em ở đây (gợi ý: switch (op))\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    char op;\n    scanf(\"%d\", &a);\n    op = getchar();\n    while (op == ' ') op = getchar();\n    scanf(\"%d\", &b);\n    switch (op) {\n        case '+':\n            printf(\"%d\\n\", a + b);\n            break;\n        case '-':\n            printf(\"%d\\n\", a - b);\n            break;\n        case '*':\n            printf(\"%d\\n\", a * b);\n            break;\n        case '/':\n            if (b == 0) printf(\"Loi: chia cho 0\\n\");\n            else printf(\"%d\\n\", a / b);\n            break;\n        case '%':\n            if (b == 0) printf(\"Loi: chia cho 0\\n\");\n            else printf(\"%d\\n\", a % b);\n            break;\n        default:\n            printf(\"Phep toan khong hop le\\n\");\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Dùng `switch (op)` với các `case '+'`, `case '-'`, ...",
+            "Đừng quên `break;` cuối mỗi case.",
+            "Trong `case '/'` và `case '%'` kiểm tra `if (b == 0)` trước."
+          ],
+          "tests": [
+            {
+              "input": "12 + 30\n",
+              "expected": "42",
+              "hidden": false
+            },
+            {
+              "input": "7 / 2\n",
+              "expected": "3",
+              "hidden": false
+            },
+            {
+              "input": "9 % 0\n",
+              "expected": "Loi: chia cho 0",
+              "hidden": false
+            },
+            {
+              "input": "100 * 45\n",
+              "expected": "4500",
+              "hidden": true
+            },
+            {
+              "input": "5 ^ 2\n",
+              "expected": "Phep toan khong hop le",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-2-3",
+          "title": "Vòng lặp for: bảng cửu chương",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Vòng lặp **`for`** dùng khi biết trước số lần lặp. Cú pháp gồm 3 phần trong ngoặc, ngăn cách bởi dấu `;`:\n\n```c\nfor (khoi_tao; dieu_kien; buoc_nhay) {\n    // thân vòng lặp\n}\n```\n\n1. **Khởi tạo** chạy một lần duy nhất trước khi lặp, ví dụ `int i = 1`.\n2. **Điều kiện** được kiểm tra trước mỗi lần lặp; khi sai thì vòng lặp dừng.\n3. **Bước nhảy** chạy sau mỗi lần lặp, ví dụ `i++` (tăng i thêm 1).\n\n```c\nfor (int i = 1; i <= 5; i++) {\n    printf(\"%d \", i);    // in: 1 2 3 4 5\n}\nprintf(\"\\n\");\n```\n\nBiến `i` thường được gọi là **biến đếm**. Muốn đếm lùi dùng `i--`, muốn nhảy 2 đơn vị dùng `i += 2`.\n\nBảng cửu chương của số `n` gồm 10 phép nhân: `n x 1`, `n x 2`, …, `n x 10`. Đây là ví dụ kinh điển cho vòng lặp `for`: thay vì viết 10 lệnh `printf` gần giống nhau, ta viết **một** lệnh nằm trong vòng lặp và để biến `i` thay đổi.\n\nMẹo: luôn tự hỏi \"vòng lặp chạy bao nhiêu lần, giá trị đầu và giá trị cuối của biến đếm là gì?\" trước khi viết code.",
+          "task": "Nhập số nguyên `n` (1 ≤ n ≤ 10). In bảng cửu chương của `n` gồm 10 dòng theo mẫu:\n\n```\nn x i = ket_qua\n```\n\nvới `i` lần lượt từ 1 đến 10.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n```\n\nKết quả:\n```\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    for (int i = 1; i <= 10; i++) {\n        printf(\"%d x %d = %d\\n\", n, i, n * i);\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Vòng lặp `for (int i = 1; i <= 10; i++)`.",
+            "Mỗi lần lặp in `printf(\"%d x %d = %d\\n\", n, i, n * i);`"
+          ],
+          "tests": [
+            {
+              "input": "3\n",
+              "expected": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30",
+              "hidden": false
+            },
+            {
+              "input": "9\n",
+              "expected": "9 x 1 = 9\n9 x 2 = 18\n9 x 3 = 27\n9 x 4 = 36\n9 x 5 = 45\n9 x 6 = 54\n9 x 7 = 63\n9 x 8 = 72\n9 x 9 = 81\n9 x 10 = 90",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n1 x 4 = 4\n1 x 5 = 5\n1 x 6 = 6\n1 x 7 = 7\n1 x 8 = 8\n1 x 9 = 9\n1 x 10 = 10",
+              "hidden": true
+            },
+            {
+              "input": "10\n",
+              "expected": "10 x 1 = 10\n10 x 2 = 20\n10 x 3 = 30\n10 x 4 = 40\n10 x 5 = 50\n10 x 6 = 60\n10 x 7 = 70\n10 x 8 = 80\n10 x 9 = 90\n10 x 10 = 100",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-2-4",
+          "title": "Vòng lặp while: tổng chữ số và số đảo ngược",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Vòng lặp **`while`** lặp lại chừng nào điều kiện còn đúng — phù hợp khi **không biết trước** số lần lặp.\n\n```c\nwhile (dieu_kien) {\n    // thân vòng lặp: phải làm điều kiện tiến dần tới sai\n}\n```\n\nKỹ thuật \"bóc tách chữ số\" của một số nguyên dương `n`:\n\n- `n % 10` cho **chữ số hàng đơn vị**.\n- `n / 10` **xóa** chữ số hàng đơn vị.\n- Lặp lại cho tới khi `n` bằng 0.\n\n```c\nint n = 472, tong = 0;\nwhile (n > 0) {\n    int cs = n % 10;   // 2, rồi 7, rồi 4\n    tong += cs;\n    n /= 10;           // 47, rồi 4, rồi 0\n}\nprintf(\"%d\\n\", tong);  // 13\n```\n\nĐể **đảo ngược** số, ta xây dựng số mới từ trái sang phải: mỗi lần lấy được chữ số `cs`, cập nhật `dao = dao * 10 + cs`. Với 472: dao = 2 → 27 → 274.\n\nChú ý: số 0 ở cuối số ban đầu sẽ trở thành số 0 ở đầu số đảo ngược và tự biến mất (1200 → 21) — đúng như yêu cầu.\n\nLỗi kinh điển với `while` là **vòng lặp vô hạn**: quên cập nhật biến trong điều kiện (ví dụ quên `n /= 10`). Khi đó chương trình chạy mãi không dừng.",
+          "task": "Nhập số nguyên `n` (0 ≤ n < 10⁹). In ra 2 dòng:\n\n1. Tổng các chữ số của `n`.\n2. Số đảo ngược của `n` (bỏ các số 0 ở đầu, ví dụ 1200 → 21; với n = 0 in 0).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12345\n```\n\nKết quả:\n```\n15\n54321\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    int tong = 0, dao = 0;\n    while (n > 0) {\n        int cs = n % 10;\n        tong += cs;\n        dao = dao * 10 + cs;\n        n /= 10;\n    }\n    printf(\"%d\\n%d\\n\", tong, dao);\n    return 0;\n}\n",
+          "hints": [
+            "Lặp `while (n > 0)`: lấy `n % 10` rồi `n /= 10`.",
+            "Số đảo ngược: `dao = dao * 10 + cs`.",
+            "Với n = 0 vòng lặp không chạy, cả hai kết quả đều là 0."
+          ],
+          "tests": [
+            {
+              "input": "12345\n",
+              "expected": "15\n54321",
+              "hidden": false
+            },
+            {
+              "input": "1200\n",
+              "expected": "3\n21",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "0\n0",
+              "hidden": true
+            },
+            {
+              "input": "908070605\n",
+              "expected": "35\n506070809",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "Mảng và chuỗi ký tự",
+      "summary": "Mảng một chiều, tìm kiếm tuần tự, chuỗi ký tự kết thúc bằng '\\0' và bảng mã ASCII.",
+      "lessons": [
+        {
+          "id": "c-3-1",
+          "title": "Mảng một chiều: tổng, nhỏ nhất, lớn nhất",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "**Mảng** là dãy các phần tử cùng kiểu, nằm liên tiếp trong bộ nhớ và được truy cập bằng **chỉ số** bắt đầu từ 0.\n\n```c\nint a[100];              // mảng tối đa 100 số nguyên\nint n;\nscanf(\"%d\", &n);\nfor (int i = 0; i < n; i++) {\n    int v;\n    scanf(\"%d\", &v);     // đọc vào biến tạm\n    a[i] = v;            // rồi gán cho a[0], a[1], ..., a[n-1]\n}\n```\n\n> Với trình biên dịch thật em có thể viết thẳng `scanf(\"%d\", &a[i]);`. Trình chạy trên trình duyệt của V-Code Edu chỉ đọc được vào biến đơn, nên khóa học dùng cách đọc qua biến tạm — cách này đúng ở mọi trình biên dịch.\n\nKhi khai báo `int a[100]`, mảng có các chỉ số từ `a[0]` đến `a[99]`. Truy cập `a[100]` là **vượt biên** — lỗi rất nguy hiểm trong C vì trình biên dịch không tự kiểm tra.\n\nĐể tìm **giá trị nhỏ nhất / lớn nhất**, ý tưởng là \"giả sử phần tử đầu tiên là tốt nhất\", sau đó duyệt các phần tử còn lại và cập nhật khi gặp giá trị tốt hơn:\n\n```c\nint mn = a[0], mx = a[0];\nfor (int i = 1; i < n; i++) {\n    if (a[i] < mn) mn = a[i];\n    if (a[i] > mx) mx = a[i];\n}\n```\n\nVì sao không khởi tạo `mn = 0`? Vì nếu mọi phần tử đều dương (ví dụ 5, 7, 9) thì kết quả 0 sẽ sai! Khởi tạo bằng phần tử đầu tiên luôn an toàn.\n\nTương tự, biến `tong` phải được **gán 0** trước khi cộng dồn. Trong C, biến cục bộ chưa gán giá trị chứa \"rác\" — một con số bất kỳ.",
+          "task": "Nhập số nguyên `n` (1 ≤ n ≤ 100), sau đó là `n` số nguyên `a₁ … aₙ` (|aᵢ| ≤ 10⁶).\n\nIn ra 3 dòng:\n\n```\nTong: S\nNho nhat: m\nLon nhat: M\n```\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n3 -1 7 2 0\n```\n\nKết quả:\n```\nTong: 11\nNho nhat: -1\nLon nhat: 7\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    int tong = 0, mn = a[0], mx = a[0];\n    for (int i = 0; i < n; i++) {\n        tong += a[i];\n        if (a[i] < mn) mn = a[i];\n        if (a[i] > mx) mx = a[i];\n    }\n    printf(\"Tong: %d\\n\", tong);\n    printf(\"Nho nhat: %d\\n\", mn);\n    printf(\"Lon nhat: %d\\n\", mx);\n    return 0;\n}\n",
+          "hints": [
+            "Khởi tạo `tong = 0`, `mn = a[0]`, `mx = a[0]`.",
+            "Duyệt mảng một lần, vừa cộng dồn vừa cập nhật min/max."
+          ],
+          "tests": [
+            {
+              "input": "5\n3 -1 7 2 0\n",
+              "expected": "Tong: 11\nNho nhat: -1\nLon nhat: 7",
+              "hidden": false
+            },
+            {
+              "input": "1\n42\n",
+              "expected": "Tong: 42\nNho nhat: 42\nLon nhat: 42",
+              "hidden": false
+            },
+            {
+              "input": "6\n-5 -9 -2 -7 -1 -3\n",
+              "expected": "Tong: -27\nNho nhat: -9\nLon nhat: -1",
+              "hidden": true
+            },
+            {
+              "input": "4\n1000000 999999 -1000000 5\n",
+              "expected": "Tong: 1000004\nNho nhat: -1000000\nLon nhat: 1000000",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-3-2",
+          "title": "Tìm kiếm tuần tự trong mảng",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "**Tìm kiếm tuần tự** (linear search) là thuật toán đơn giản nhất: duyệt lần lượt từng phần tử và so sánh với giá trị cần tìm. Độ phức tạp là **O(n)** — trường hợp xấu nhất phải xem hết n phần tử.\n\n```c\nint vt = -1;                 // -1 nghĩa là \"chưa tìm thấy\"\nfor (int i = 0; i < n; i++) {\n    if (a[i] == x) {\n        vt = i;\n        break;               // dừng ngay khi gặp lần đầu\n    }\n}\n```\n\nLệnh **`break`** thoát khỏi vòng lặp ngay lập tức. Nó rất hữu ích khi chỉ cần **lần xuất hiện đầu tiên**.\n\nNếu cần **đếm** số lần xuất hiện thì không được `break`, mà phải duyệt hết mảng và tăng biến đếm mỗi khi gặp `x`.\n\nTrong bài này em cần cả hai thông tin. Có thể dùng một vòng lặp duy nhất: luôn tăng biến đếm, nhưng chỉ ghi nhận vị trí khi biến vị trí vẫn đang là \"chưa tìm thấy\":\n\n```c\nif (a[i] == x) {\n    dem++;\n    if (vt == -1) vt = i;\n}\n```\n\nLưu ý: chỉ số trong C bắt đầu từ 0, còn đề bài yêu cầu vị trí đếm từ **1** — nhớ cộng thêm 1 khi in. Dùng giá trị đặc biệt `-1` để biểu diễn \"không tồn tại\" là quy ước rất phổ biến trong lập trình.",
+          "task": "Nhập `n` (1 ≤ n ≤ 100), dãy `n` số nguyên, sau đó là số nguyên `x`.\n\nIn ra 2 dòng:\n\n```\nSo lan: k\nVi tri dau tien: p\n```\n\ntrong đó `k` là số lần `x` xuất hiện, `p` là vị trí đầu tiên của `x` (đếm từ 1); nếu không có thì `p = -1`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7\n4 2 7 2 9 2 1\n2\n```\n\nKết quả:\n```\nSo lan: 3\nVi tri dau tien: 2\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    scanf(\"%d\", &x);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n, x;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    scanf(\"%d\", &x);\n    int dem = 0, vt = -1;\n    for (int i = 0; i < n; i++) {\n        if (a[i] == x) {\n            dem++;\n            if (vt == -1) vt = i + 1;\n        }\n    }\n    printf(\"So lan: %d\\n\", dem);\n    printf(\"Vi tri dau tien: %d\\n\", vt);\n    return 0;\n}\n",
+          "hints": [
+            "Dùng hai biến: `dem = 0` và `vt = -1`.",
+            "Chỉ gán `vt` lần đầu gặp x (khi `vt == -1`).",
+            "Nhớ in vị trí theo kiểu đếm từ 1: `i + 1`."
+          ],
+          "tests": [
+            {
+              "input": "7\n4 2 7 2 9 2 1\n2\n",
+              "expected": "So lan: 3\nVi tri dau tien: 2",
+              "hidden": false
+            },
+            {
+              "input": "3\n5 6 7\n8\n",
+              "expected": "So lan: 0\nVi tri dau tien: -1",
+              "hidden": false
+            },
+            {
+              "input": "1\n10\n10\n",
+              "expected": "So lan: 1\nVi tri dau tien: 1",
+              "hidden": true
+            },
+            {
+              "input": "6\n-1 -1 0 -1 3 -1\n-1\n",
+              "expected": "So lan: 4\nVi tri dau tien: 1",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-3-3",
+          "title": "Chuỗi ký tự: phân loại ký tự",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Trong C, **chuỗi** là một mảng ký tự kết thúc bằng ký tự đặc biệt **`'\\0'`** (ký tự null). Nhờ dấu kết thúc này, ta duyệt chuỗi mà không cần biết trước độ dài:\n\n```c\nchar s[105];\nscanf(\"%s\", s);\nfor (int i = 0; s[i] != '\\0'; i++) {\n    printf(\"%c\\n\", s[i]);    // in từng ký tự\n}\n```\n\nMỗi ký tự thực chất là một **số nguyên** theo bảng mã ASCII: `'A'` = 65, `'a'` = 97, `'0'` = 48. Các chữ cái và chữ số nằm liên tiếp trong bảng mã, nên có thể kiểm tra loại ký tự bằng phép so sánh khoảng:\n\n| Điều kiện | Ý nghĩa |\n|---|---|\n| `c >= 'A' && c <= 'Z'` | chữ in hoa |\n| `c >= 'a' && c <= 'z'` | chữ thường |\n| `c >= '0' && c <= '9'` | chữ số |\n\n```c\nchar c = s[i];\nif (c >= '0' && c <= '9') {\n    soChuSo++;\n}\n```\n\nHãy viết ký tự trong **nháy đơn** (`'A'`), còn chuỗi dùng **nháy kép** (`\"A\"`). `'A'` là một ký tự, còn `\"A\"` là chuỗi gồm hai ký tự `'A'` và `'\\0'`.\n\nThư viện `ctype.h` cũng có các hàm `isupper`, `islower`, `isdigit`, nhưng tự viết điều kiện giúp em hiểu rõ bản chất của bảng mã ASCII.",
+          "task": "Nhập một chuỗi `s` không chứa khoảng trắng (độ dài từ 1 đến 100, chỉ gồm ký tự ASCII).\n\nIn ra 4 dòng:\n\n```\nChu hoa: ...\nChu thuong: ...\nChu so: ...\nKy tu khac: ...\n```\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nVCode!2026\n```\n\nKết quả:\n```\nChu hoa: 2\nChu thuong: 3\nChu so: 4\nKy tu khac: 1\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    int hoa = 0, thuong = 0, so = 0, khac = 0;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c >= 'A' && c <= 'Z') hoa++;\n        else if (c >= 'a' && c <= 'z') thuong++;\n        else if (c >= '0' && c <= '9') so++;\n        else khac++;\n    }\n    printf(\"Chu hoa: %d\\n\", hoa);\n    printf(\"Chu thuong: %d\\n\", thuong);\n    printf(\"Chu so: %d\\n\", so);\n    printf(\"Ky tu khac: %d\\n\", khac);\n    return 0;\n}\n",
+          "hints": [
+            "Duyệt `for (int i = 0; s[i] != '\\0'; i++)`.",
+            "So sánh khoảng: `c >= 'A' && c <= 'Z'`...",
+            "Ký tự không thuộc 3 nhóm đầu thì tăng biến `khac`."
+          ],
+          "tests": [
+            {
+              "input": "VCode!2026\n",
+              "expected": "Chu hoa: 2\nChu thuong: 3\nChu so: 4\nKy tu khac: 1",
+              "hidden": false
+            },
+            {
+              "input": "abc\n",
+              "expected": "Chu hoa: 0\nChu thuong: 3\nChu so: 0\nKy tu khac: 0",
+              "hidden": false
+            },
+            {
+              "input": "A1b2C3$$__\n",
+              "expected": "Chu hoa: 2\nChu thuong: 1\nChu so: 3\nKy tu khac: 4",
+              "hidden": true
+            },
+            {
+              "input": "#Hoc_Lap@Trinh9\n",
+              "expected": "Chu hoa: 3\nChu thuong: 8\nChu so: 1\nKy tu khac: 3",
+              "hidden": true
+            },
+            {
+              "input": "12345\n",
+              "expected": "Chu hoa: 0\nChu thuong: 0\nChu so: 5\nKy tu khac: 0",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-3-4",
+          "title": "Đảo chuỗi và kiểm tra đối xứng",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "Chuỗi **đối xứng** (palindrome) là chuỗi đọc xuôi hay ngược đều giống nhau, ví dụ `racecar`, `abba`, `x`.\n\n**Bước 1 – tính độ dài.** Đếm số ký tự trước `'\\0'`:\n\n```c\nint n = 0;\nwhile (s[n] != '\\0') n++;\n```\n\n(Thư viện `string.h` có sẵn hàm `strlen(s)` làm việc này.)\n\n**Bước 2 – in chuỗi đảo ngược.** Không cần tạo chuỗi mới, chỉ cần in từng ký tự từ cuối về đầu:\n\n```c\nfor (int i = n - 1; i >= 0; i--) {\n    printf(\"%c\", s[i]);\n}\nprintf(\"\\n\");\n```\n\n**Bước 3 – kiểm tra đối xứng.** So sánh từng cặp ký tự đối xứng nhau qua tâm: `s[0]` với `s[n-1]`, `s[1]` với `s[n-2]`, … Chỉ cần đi đến **giữa chuỗi** (i < n / 2). Nếu có một cặp khác nhau thì kết luận ngay là không đối xứng.\n\n```c\nint doiXung = 1;               // giả sử là đối xứng\nfor (int i = 0; i < n / 2; i++) {\n    if (s[i] != s[n - 1 - i]) {\n        doiXung = 0;\n        break;\n    }\n}\n```\n\nKỹ thuật \"giả sử đúng rồi tìm phản ví dụ\" bằng một biến cờ (flag) như `doiXung` xuất hiện rất thường xuyên trong lập trình. Lưu ý bài này **phân biệt chữ hoa và chữ thường**: `Aa` không đối xứng.",
+          "task": "Nhập một chuỗi `s` không chứa khoảng trắng (độ dài 1 … 100).\n\nIn ra 2 dòng:\n\n1. Chuỗi `s` viết theo thứ tự ngược lại.\n2. `YES` nếu `s` là chuỗi đối xứng, ngược lại `NO` (phân biệt hoa/thường).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nracecar\n```\n\nKết quả:\n```\nracecar\nYES\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    char s[105];\n    scanf(\"%s\", s);\n    int n = 0;\n    while (s[n] != '\\0') n++;\n    for (int i = n - 1; i >= 0; i--) {\n        printf(\"%c\", s[i]);\n    }\n    printf(\"\\n\");\n    int doiXung = 1;\n    for (int i = 0; i < n / 2; i++) {\n        if (s[i] != s[n - 1 - i]) {\n            doiXung = 0;\n            break;\n        }\n    }\n    if (doiXung) printf(\"YES\\n\");\n    else printf(\"NO\\n\");\n    return 0;\n}\n",
+          "hints": [
+            "Tính độ dài n bằng vòng lặp `while (s[n] != '\\0') n++;`.",
+            "In ngược: `for (int i = n - 1; i >= 0; i--) printf(\"%c\", s[i]);`",
+            "So sánh `s[i]` với `s[n - 1 - i]` với i < n / 2."
+          ],
+          "tests": [
+            {
+              "input": "racecar\n",
+              "expected": "racecar\nYES",
+              "hidden": false
+            },
+            {
+              "input": "VCode\n",
+              "expected": "edoCV\nNO",
+              "hidden": false
+            },
+            {
+              "input": "abba\n",
+              "expected": "abba\nYES",
+              "hidden": true
+            },
+            {
+              "input": "Aa\n",
+              "expected": "aA\nNO",
+              "hidden": true
+            },
+            {
+              "input": "x\n",
+              "expected": "x\nYES",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "Hàm, con trỏ và dữ liệu có cấu trúc",
+      "summary": "Viết hàm, đệ quy, con trỏ để hoán đổi và trả nhiều giá trị, tổ chức dữ liệu nhiều thuộc tính.",
+      "lessons": [
+        {
+          "id": "c-4-1",
+          "title": "Hàm: kiểm tra số nguyên tố",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "**Hàm** giúp chia chương trình thành những phần nhỏ, mỗi phần làm một việc, có thể gọi lại nhiều lần.\n\n```c\nint laNguyenTo(int n) {        // kiểu trả về, tên hàm, tham số\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;   // tìm thấy ước → không nguyên tố\n    }\n    return 1;                       // không có ước nào → nguyên tố\n}\n```\n\n- **Kiểu trả về** (`int`) cho biết hàm trả lại loại giá trị gì. Hàm không trả gì thì dùng `void`.\n- **Tham số** (`int n`) là dữ liệu đầu vào của hàm. Khi gọi `laNguyenTo(17)`, giá trị 17 được **sao chép** vào `n`.\n- Lệnh `return` kết thúc hàm ngay lập tức và trả giá trị về nơi gọi.\n\nHàm phải được định nghĩa (hoặc khai báo nguyên mẫu) **trước** chỗ gọi nó trong `main`.\n\n**Vì sao chỉ thử ước đến √n?** Nếu n = a × b với a ≤ b thì a ≤ √n. Do đó nếu không có ước nào từ 2 đến √n thì n là số nguyên tố. Điều kiện `i * i <= n` tương đương `i <= √n` nhưng không cần dùng số thực. Với n = 1 000 000, ta chỉ thử khoảng 1 000 số thay vì một triệu số!\n\nSố nguyên tố là số tự nhiên lớn hơn 1 chỉ có hai ước là 1 và chính nó. Chú ý: 1 **không** phải số nguyên tố, 2 là số nguyên tố chẵn duy nhất.",
+          "task": "Nhập số nguyên `q` (1 ≤ q ≤ 10), sau đó là `q` số nguyên `x` (1 ≤ x ≤ 10⁶).\n\nVới mỗi số, in trên một dòng `YES` nếu nó là số nguyên tố, ngược lại `NO`. Hãy viết hàm `int laNguyenTo(int n)`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n1 2 9 17\n```\n\nKết quả:\n```\nNO\nYES\nNO\nYES\n```",
+          "starter": "#include <stdio.h>\n\n// Viết hàm laNguyenTo ở đây\n\nint main() {\n    int q, x;\n    scanf(\"%d\", &q);\n    for (int k = 0; k < q; k++) {\n        scanf(\"%d\", &x);\n        // Gọi hàm và in kết quả\n    }\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint laNguyenTo(int n) {\n    if (n < 2) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}\n\nint main() {\n    int q, x;\n    scanf(\"%d\", &q);\n    for (int k = 0; k < q; k++) {\n        scanf(\"%d\", &x);\n        if (laNguyenTo(x)) printf(\"YES\\n\");\n        else printf(\"NO\\n\");\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Số nhỏ hơn 2 không phải số nguyên tố.",
+            "Chỉ cần thử các ước `i` với `i * i <= n`.",
+            "Trong `main`: `if (laNguyenTo(x)) printf(\"YES\\n\"); else printf(\"NO\\n\");`"
+          ],
+          "tests": [
+            {
+              "input": "4\n1 2 9 17\n",
+              "expected": "NO\nYES\nNO\nYES",
+              "hidden": false
+            },
+            {
+              "input": "3\n97 100 7919\n",
+              "expected": "YES\nNO\nYES",
+              "hidden": false
+            },
+            {
+              "input": "5\n999983 1000000 4 3 25\n",
+              "expected": "YES\nNO\nNO\nYES\nNO",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-4-2",
+          "title": "Đệ quy: ước chung lớn nhất và lũy thừa",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Hàm **đệ quy** là hàm tự gọi lại chính nó với một bài toán **nhỏ hơn**. Mỗi hàm đệ quy cần hai thành phần:\n\n1. **Trường hợp cơ sở** — bài toán đủ nhỏ để trả lời ngay, giúp đệ quy dừng lại.\n2. **Bước đệ quy** — đưa bài toán về bài toán nhỏ hơn cùng dạng.\n\n**Ước chung lớn nhất (thuật toán Euclid):** UCLN(a, b) = UCLN(b, a mod b), và UCLN(a, 0) = a.\n\n```c\nint ucln(int a, int b) {\n    if (b == 0) return a;        // trường hợp cơ sở\n    return ucln(b, a % b);       // bước đệ quy\n}\n```\n\nVí dụ: ucln(12, 18) → ucln(18, 12) → ucln(12, 6) → ucln(6, 0) = **6**. Mỗi bước số nhỏ đi rất nhanh nên thuật toán cực kỳ hiệu quả.\n\n**Lũy thừa:** xⁿ = x × xⁿ⁻¹ và x⁰ = 1.\n\n```c\nint luyThua(int x, int n) {\n    if (n == 0) return 1;\n    return x * luyThua(x, n - 1);\n}\n```\n\nKhi gọi `luyThua(2, 3)`, máy tính lần lượt \"xếp chồng\" các lời gọi luyThua(2,3) → luyThua(2,2) → luyThua(2,1) → luyThua(2,0) = 1, rồi nhân ngược trở ra: 2 → 4 → 8.\n\nNếu quên trường hợp cơ sở, hàm sẽ gọi mãi đến khi **tràn ngăn xếp** (stack overflow). Vì vậy, khi viết đệ quy hãy luôn viết trường hợp cơ sở **trước tiên**.",
+          "task": "Dữ liệu vào gồm 2 dòng:\n\n- Dòng 1: hai số nguyên `a`, `b` (1 ≤ a, b ≤ 10⁶).\n- Dòng 2: hai số nguyên `x`, `n` (1 ≤ x ≤ 9, 0 ≤ n ≤ 9).\n\nIn ra 2 dòng: UCLN(a, b) và xⁿ. Hãy cài đặt cả hai bằng **hàm đệ quy**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n12 18\n2 10\n```\n\nKết quả:\n```\n6\n1024\n```",
+          "starter": "#include <stdio.h>\n\n// Viết hàm đệ quy ucln và luyThua ở đây\n\nint main() {\n    int a, b, x, n;\n    scanf(\"%d %d\", &a, &b);\n    scanf(\"%d %d\", &x, &n);\n    // Gọi hàm và in kết quả\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint ucln(int a, int b) {\n    if (b == 0) return a;\n    return ucln(b, a % b);\n}\n\nint luyThua(int x, int n) {\n    if (n == 0) return 1;\n    return x * luyThua(x, n - 1);\n}\n\nint main() {\n    int a, b, x, n;\n    scanf(\"%d %d\", &a, &b);\n    scanf(\"%d %d\", &x, &n);\n    printf(\"%d\\n\", ucln(a, b));\n    printf(\"%d\\n\", luyThua(x, n));\n    return 0;\n}\n",
+          "hints": [
+            "UCLN: nếu b == 0 thì trả về a, ngược lại trả về ucln(b, a % b).",
+            "Lũy thừa: nếu n == 0 trả về 1, ngược lại x * luyThua(x, n - 1)."
+          ],
+          "tests": [
+            {
+              "input": "12 18\n2 10\n",
+              "expected": "6\n1024",
+              "hidden": false
+            },
+            {
+              "input": "17 5\n3 0\n",
+              "expected": "1\n1",
+              "hidden": false
+            },
+            {
+              "input": "1000000 750000\n9 9\n",
+              "expected": "250000\n387420489",
+              "hidden": true
+            },
+            {
+              "input": "7 7\n1 9\n",
+              "expected": "7\n1",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-4-3",
+          "title": "Con trỏ: trả về nhiều giá trị và hoán đổi",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Mỗi biến nằm ở một **địa chỉ** trong bộ nhớ. Toán tử `&` lấy địa chỉ của biến, còn **con trỏ** là biến dùng để lưu địa chỉ.\n\n```c\nint x = 5;\nint *p = &x;     // p trỏ tới x\n*p = 10;         // ghi vào ô nhớ mà p trỏ tới → x bây giờ bằng 10\n```\n\nKý hiệu `*p` (toán tử **giải tham chiếu**) nghĩa là \"giá trị tại địa chỉ p\".\n\nTại sao cần con trỏ? Khi gọi hàm, tham số được **sao chép**, nên hàm không sửa được biến của nơi gọi. Truyền **địa chỉ** sẽ giải quyết vấn đề này:\n\n```c\nvoid hoanDoi(int *x, int *y) {\n    int t = *x;\n    *x = *y;\n    *y = t;\n}\n// gọi: hoanDoi(&a, &b);  hoặc với mảng: hoanDoi(&a[i], &a[j]);\n```\n\nCon trỏ cũng giúp một hàm **trả về nhiều kết quả** — hàm ghi kết quả vào các biến mà nơi gọi cung cấp địa chỉ:\n\n```c\nvoid timMinMax(int a[], int n, int *mn, int *mx) {\n    *mn = a[0];\n    *mx = a[0];\n    for (int i = 1; i < n; i++) {\n        if (a[i] < *mn) *mn = a[i];\n        if (a[i] > *mx) *mx = a[i];\n    }\n}\n```\n\nKhi truyền **mảng** vào hàm (`int a[]`), C thực chất truyền địa chỉ phần tử đầu, vì vậy hàm có thể sửa trực tiếp các phần tử của mảng gốc. Đây cũng chính là lý do `scanf(\"%d\", &x)` cần dấu `&`.\n\nHãy cẩn thận: con trỏ chưa được gán địa chỉ hợp lệ mà đã dùng `*p` là một trong những lỗi nguy hiểm nhất của C, có thể làm chương trình dừng đột ngột.",
+          "task": "Nhập `n` (2 ≤ n ≤ 100) và dãy `n` số nguyên.\n\n1. Dùng hàm `void timMinMax(int a[], int n, int *mn, int *mx)` để tìm giá trị nhỏ nhất và lớn nhất, in trên một dòng: `min max`.\n2. Dùng hàm `void hoanDoi(int *x, int *y)` để đổi chỗ phần tử nhỏ nhất **đầu tiên** và phần tử lớn nhất **đầu tiên** trong dãy, rồi in dãy mới trên một dòng (các số cách nhau một dấu cách).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n4 9 1 7 3\n```\n\nKết quả:\n```\n1 9\n4 1 9 7 3\n```",
+          "starter": "#include <stdio.h>\n\n// Viết hàm timMinMax và hoanDoi ở đây\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nvoid timMinMax(int a[], int n, int *mn, int *mx) {\n    *mn = a[0];\n    *mx = a[0];\n    for (int i = 1; i < n; i++) {\n        if (a[i] < *mn) *mn = a[i];\n        if (a[i] > *mx) *mx = a[i];\n    }\n}\n\nvoid hoanDoi(int *x, int *y) {\n    int t = *x;\n    *x = *y;\n    *y = t;\n}\n\nint main() {\n    int n;\n    int a[105];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int v;\n        scanf(\"%d\", &v);\n        a[i] = v;\n    }\n    int mn, mx;\n    timMinMax(a, n, &mn, &mx);\n    printf(\"%d %d\\n\", mn, mx);\n    int vmin = 0, vmax = 0;\n    for (int i = 0; i < n; i++) {\n        if (a[i] == mn) { vmin = i; break; }\n    }\n    for (int i = 0; i < n; i++) {\n        if (a[i] == mx) { vmax = i; break; }\n    }\n    hoanDoi(&a[vmin], &a[vmax]);\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", a[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}\n",
+          "hints": [
+            "Gọi `timMinMax(a, n, &mn, &mx);` — truyền địa chỉ của mn, mx.",
+            "Tìm chỉ số đầu tiên có giá trị mn và mx bằng vòng lặp có `break`.",
+            "Đổi chỗ bằng `hoanDoi(&a[vmin], &a[vmax]);`."
+          ],
+          "tests": [
+            {
+              "input": "5\n4 9 1 7 3\n",
+              "expected": "1 9\n4 1 9 7 3",
+              "hidden": false
+            },
+            {
+              "input": "2\n5 5\n",
+              "expected": "5 5\n5 5",
+              "hidden": false
+            },
+            {
+              "input": "6\n-3 8 8 -10 0 2\n",
+              "expected": "-10 8\n-3 -10 8 8 0 2",
+              "hidden": true
+            },
+            {
+              "input": "4\n1 2 3 4\n",
+              "expected": "1 4\n4 2 3 1",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "c-4-4",
+          "title": "Dữ liệu có cấu trúc: quản lý điểm học sinh",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "Một học sinh có nhiều thông tin: mã số, điểm Toán, Văn, Anh… Trong C chuẩn, ta gom chúng thành một **kiểu cấu trúc** bằng từ khóa `struct`:\n\n```c\nstruct HocSinh {\n    int ma;\n    int toan, van, anh;\n};\n\nstruct HocSinh ds[50];          // mảng 50 học sinh\nds[0].ma = 101;                 // truy cập thành phần bằng dấu chấm\n```\n\n`struct` giúp mã nguồn rõ nghĩa: mọi dữ liệu của một học sinh đi cùng nhau.\n\n> **Lưu ý về trình chạy trên trình duyệt:** trình thông dịch C dùng trong V-Code Edu hiện **chưa hỗ trợ `struct`**. Vì vậy ở bài này ta dùng kỹ thuật tương đương là **mảng song song** — mỗi thuộc tính là một mảng, và phần tử thứ `i` của mọi mảng cùng mô tả học sinh thứ `i`. Khi lập trình với trình biên dịch thật (GCC, Code::Blocks, Dev-C++), em nên dùng `struct`.\n\n```c\nint ma[50], toan[50], van[50], anh[50];\nfor (int i = 0; i < n; i++) {\n    int m, t, v, a;\n    scanf(\"%d %d %d %d\", &m, &t, &v, &a);\n    ma[i] = m; toan[i] = t; van[i] = v; anh[i] = a;\n}\n```\n\nĐể tìm **thủ khoa** (tổng điểm cao nhất, nếu bằng nhau lấy người nhập trước), lưu **chỉ số** của người tốt nhất thay vì lưu điểm — từ chỉ số ta lấy được mọi thông tin khác:\n\n```c\nint best = 0;\nfor (int i = 1; i < n; i++) {\n    if (tong(i) > tong(best)) best = i;   // dấu > (không phải >=) giữ người đến trước\n}\n```\n\nĐiểm trung bình phải tính bằng số thực: `tong / 3.0`. Nếu viết `tong / 3` em sẽ nhận phép chia nguyên và mất phần thập phân.",
+          "task": "Nhập `n` (1 ≤ n ≤ 50). Mỗi dòng trong `n` dòng tiếp theo gồm 4 số nguyên: mã học sinh (100 … 999) và điểm Toán, Văn, Anh (0 … 10).\n\nIn ra 3 dòng:\n\n```\nThu khoa: <ma>\nDiem TB: <diem trung binh cua thu khoa, 2 chu so thap phan>\nDat: <so hoc sinh co diem trung binh >= 5.0>\n```\n\nThủ khoa là học sinh có tổng điểm cao nhất; nếu nhiều người bằng nhau, chọn người xuất hiện trước.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3\n101 8 7 9\n102 9 9 6\n103 4 5 3\n```\n\nKết quả:\n```\nThu khoa: 101\nDiem TB: 8.00\nDat: 2\n```",
+          "starter": "#include <stdio.h>\n\nint main() {\n    int n;\n    int ma[55], toan[55], van[55], anh[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int m, t, v, a;\n        scanf(\"%d %d %d %d\", &m, &t, &v, &a);\n        ma[i] = m; toan[i] = t; van[i] = v; anh[i] = a;\n    }\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <stdio.h>\n\nint main() {\n    int n;\n    int ma[55], toan[55], van[55], anh[55];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        int m, t, v, a;\n        scanf(\"%d %d %d %d\", &m, &t, &v, &a);\n        ma[i] = m; toan[i] = t; van[i] = v; anh[i] = a;\n    }\n    int best = 0, dat = 0;\n    for (int i = 0; i < n; i++) {\n        int tong = toan[i] + van[i] + anh[i];\n        if (tong > toan[best] + van[best] + anh[best]) best = i;\n        if (tong / 3.0 >= 5.0) dat++;\n    }\n    int tb = toan[best] + van[best] + anh[best];\n    printf(\"Thu khoa: %d\\n\", ma[best]);\n    printf(\"Diem TB: %.2f\\n\", tb / 3.0);\n    printf(\"Dat: %d\\n\", dat);\n    return 0;\n}\n",
+          "hints": [
+            "Lưu chỉ số `best` của học sinh có tổng điểm lớn nhất (dùng `>` để giữ người đến trước).",
+            "Điểm trung bình: `tong / 3.0` để có số thực.",
+            "Đếm người đạt trong cùng vòng lặp: `if (tong / 3.0 >= 5.0) dat++;`."
+          ],
+          "tests": [
+            {
+              "input": "3\n101 8 7 9\n102 9 9 6\n103 4 5 3\n",
+              "expected": "Thu khoa: 101\nDiem TB: 8.00\nDat: 2",
+              "hidden": false
+            },
+            {
+              "input": "1\n500 10 10 10\n",
+              "expected": "Thu khoa: 500\nDiem TB: 10.00\nDat: 1",
+              "hidden": false
+            },
+            {
+              "input": "4\n201 5 5 5\n202 4 6 4\n203 6 4 5\n204 5 5 4\n",
+              "expected": "Thu khoa: 201\nDiem TB: 5.00\nDat: 2",
+              "hidden": true
+            },
+            {
+              "input": "2\n301 0 0 1\n302 3 3 2\n",
+              "expected": "Thu khoa: 302\nDiem TB: 2.67\nDat: 0",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

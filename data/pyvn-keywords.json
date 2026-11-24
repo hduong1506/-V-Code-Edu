@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "description": "Từ khóa Python Tiếng Việt -> Python. Dùng chung cho trình chạy trên trình duyệt (js/runtime/pyvn.js) và công cụ kiểm tra nội dung (tools/). Chỉ thay thế ngoài chuỗi ký tự và chú thích.",
+  "phrases": [
+    { "vn": "nhap_so_thuc()", "py": "float(input())" },
+    { "vn": "nhap_so()", "py": "int(input())" },
+    { "vn": "nhap_chuoi()", "py": "input()" },
+    { "vn": "trong_khoang", "py": "in range" }
+  ],
+  "words": {
+    "neu": "if",
+    "nguoc_lai_neu": "elif",
+    "nguoc_lai": "else",
+    "lap_voi": "for",
+    "khi_ma": "while",
+    "trong": "in",
+    "va": "and",
+    "hoac": "or",
+    "khong_phai": "not",
+    "dung": "True",
+    "sai": "False",
+    "ham": "def",
+    "tra_ve": "return",
+    "thoat_lap": "break",
+    "tiep_tuc": "continue",
+    "bo_qua": "pass",
+    "in_ra": "print",
+    "do_dai": "len",
+    "so_nguyen": "int",
+    "so_thuc": "float",
+    "sap_xep": "sorted",
+    "lam_tron": "round"
+  },
+  "note": "Không ánh xạ các từ hay dùng làm tên biến (tong, rong, chuoi, lon_nhat, nho_nhat, danh_sach...) để tránh đổi nghĩa chương trình của học sinh."
+}

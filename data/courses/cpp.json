@@ -1,0 +1,834 @@
+{
+  "id": "cpp",
+  "version": 2,
+  "lang": "cpp",
+  "title": "C++ & Thuật toán",
+  "subtitle": "Từ cin/cout đến quy hoạch động và đồ thị — nền tảng thi học sinh giỏi",
+  "level": "Trung cấp",
+  "description": "Khóa học C++ định hướng thuật toán: kiểu dữ liệu và tràn số, kỹ thuật trên mảng (tổng tiền tố, hai con trỏ, Kadane), tự cài đặt sắp xếp và tìm kiếm nhị phân, đệ quy và quy hoạch động, ngăn xếp, hàng đợi, BFS và DFS. Mỗi bài liên kết với Lăng kính thuật toán để xem trực quan từng bước.",
+  "track": "algorithms",
+  "accent": "amber",
+  "tags": [
+    "c++",
+    "thuật toán",
+    "học sinh giỏi",
+    "quy hoạch động",
+    "đồ thị"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "C++ cơ bản: cin/cout, kiểu dữ liệu và định dạng",
+      "summary": "Nhập xuất bằng luồng, phạm vi kiểu dữ liệu và tràn số, iomanip, thư viện cmath.",
+      "lessons": [
+        {
+          "id": "cpp-1-1",
+          "title": "Từ C sang C++: cin và cout",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "C++ được phát triển từ C, nên mọi kiến thức về biến, `if`, vòng lặp, mảng, hàm đều dùng lại được. Điểm khác dễ thấy nhất là cách **nhập xuất** bằng luồng (stream):\n\n```cpp\n#include <iostream>\nusing namespace std;\n\nint main() {\n    char ten[50];\n    int tuoi;\n    cin >> ten >> tuoi;                         // đọc lần lượt từng giá trị\n    cout << \"Xin chao \" << ten << endl;         // nối nhiều thứ bằng <<\n    cout << \"Tuoi: \" << tuoi << \"\\n\";\n    return 0;\n}\n```\n\n- `cin >> x` đọc dữ liệu vào biến `x`. Có thể đọc liên tiếp: `cin >> a >> b >> c;`. Khoảng trắng và xuống dòng giữa các giá trị đều được bỏ qua.\n- `cout << ...` in ra màn hình; toán tử `<<` có thể nối chuỗi, số, biểu thức.\n- `endl` (hoặc `\"\\n\"`) để xuống dòng.\n\nSo với `scanf/printf`, ta **không cần đặc tả kiểu** (`%d`, `%s`) và **không cần dấu `&`** — C++ tự biết kiểu của biến. Điều này giúp giảm lỗi rất nhiều.\n\nDòng `using namespace std;` cho phép viết gọn `cout` thay vì `std::cout`. Các đối tượng `cin`, `cout`, `endl` đều thuộc **không gian tên** `std` của thư viện chuẩn.\n\nBiểu thức có thể đặt trực tiếp trong `cout`: `cout << tuoi + 1;` — nhưng nên dùng ngoặc khi biểu thức phức tạp để tránh nhầm lẫn thứ tự ưu tiên với `<<`.",
+          "task": "Nhập tên (một từ, không dấu) và tuổi (số nguyên). In ra 2 dòng:\n\n```\nChao <ten>!\nNam sau ban se <tuoi + 1> tuoi.\n```\n\n**Ví dụ**\n\nDữ liệu vào:\n```\nLan 14\n```\n\nKết quả:\n```\nChao Lan!\nNam sau ban se 15 tuoi.\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char ten[50];\n    int tuoi;\n    cin >> ten >> tuoi;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char ten[50];\n    int tuoi;\n    cin >> ten >> tuoi;\n    cout << \"Chao \" << ten << \"!\" << endl;\n    cout << \"Nam sau ban se \" << tuoi + 1 << \" tuoi.\" << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Nối chuỗi và biến bằng nhiều toán tử `<<`.",
+            "Dòng 2: `cout << \"Nam sau ban se \" << tuoi + 1 << \" tuoi.\" << endl;`"
+          ],
+          "tests": [
+            {
+              "input": "Lan 14\n",
+              "expected": "Chao Lan!\nNam sau ban se 15 tuoi.",
+              "hidden": false
+            },
+            {
+              "input": "Huy 17\n",
+              "expected": "Chao Huy!\nNam sau ban se 18 tuoi.",
+              "hidden": false
+            },
+            {
+              "input": "Mai 9\n",
+              "expected": "Chao Mai!\nNam sau ban se 10 tuoi.",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "cpp-1-2",
+          "title": "Kiểu dữ liệu và tràn số",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Mỗi kiểu số nguyên chỉ chứa được giá trị trong một **phạm vi** nhất định:\n\n| Kiểu | Phạm vi (xấp xỉ) |\n|---|---|\n| `int` | −2.1 × 10⁹ … 2.1 × 10⁹ |\n| `long long` | −9.2 × 10¹⁸ … 9.2 × 10¹⁸ |\n\nKhi kết quả vượt quá phạm vi, ta gặp lỗi **tràn số** (overflow). Trên trình biên dịch thật, giá trị sẽ bị \"quay vòng\" thành một số sai mà **không báo lỗi** — rất khó phát hiện. Trình chạy của V-Code Edu sẽ dừng và báo `overflow` để em nhận ra.\n\n```cpp\nint a = 100000, b = 100000;\nlong long sai = a * b;              // a * b tính bằng int → tràn TRƯỚC khi gán!\nlong long dung = (long long)a * b;  // ép kiểu trước khi nhân → đúng 10^10\n```\n\nĐiểm mấu chốt: kiểu của phép tính phụ thuộc vào **kiểu toán hạng**, không phụ thuộc vào biến nhận kết quả. Hai số `int` nhân với nhau cho kết quả `int`. Cách đơn giản nhất là khai báo luôn biến đầu vào bằng `long long`:\n\n```cpp\nlong long a, b;\ncin >> a >> b;\ncout << a * b << endl;\n```\n\nTrong các kỳ thi học sinh giỏi, rất nhiều bài bị mất điểm chỉ vì dùng `int` khi kết quả lên tới 10¹⁰ hay 10¹². Thói quen tốt: ước lượng **giá trị lớn nhất** có thể xuất hiện trước khi chọn kiểu dữ liệu.",
+          "task": "Nhập hai số nguyên `a`, `b` (1 ≤ a, b ≤ 10⁷). In ra 2 dòng: `a + b` và `a × b`.\n\nLưu ý: tích có thể lên tới 10¹⁴ — hãy chọn kiểu dữ liệu phù hợp.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 4\n```\n\nKết quả:\n```\n7\n12\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a >> b;\n    // Viết code của em ở đây (cẩn thận tràn số!)\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    long long a, b;\n    cin >> a >> b;\n    cout << a + b << endl;\n    cout << a * b << endl;\n    return 0;\n}\n",
+          "hints": [
+            "100000 × 100000 = 10¹⁰ lớn hơn phạm vi của `int`.",
+            "Đổi kiểu biến thành `long long` hoặc ép kiểu `(long long)a * b`."
+          ],
+          "tests": [
+            {
+              "input": "3 4\n",
+              "expected": "7\n12",
+              "hidden": false
+            },
+            {
+              "input": "100000 100000\n",
+              "expected": "200000\n10000000000",
+              "hidden": false
+            },
+            {
+              "input": "10000000 9999999\n",
+              "expected": "19999999\n99999990000000",
+              "hidden": true
+            },
+            {
+              "input": "1 1\n",
+              "expected": "2\n1",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "cpp-1-3",
+          "title": "Định dạng số thực với iomanip",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Khi in số thực bằng `cout`, ta thường muốn **cố định số chữ số thập phân**. Thư viện `<iomanip>` cung cấp các \"bộ điều chỉnh\" (manipulator):\n\n```cpp\n#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    double tb = 22.0 / 3;\n    cout << fixed << setprecision(2) << tb << endl;   // 7.33\n    cout << setw(6) << 42 << endl;                    // \"    42\" (căn phải 6 ô)\n    return 0;\n}\n```\n\n- `fixed` + `setprecision(k)`: in đúng **k chữ số sau dấu phẩy**. Hai bộ điều chỉnh này có hiệu lực cho mọi lần in số thực sau đó.\n- `setw(w)`: độ rộng tối thiểu cho **lần in kế tiếp**.\n\n**Bẫy chia nguyên:** nếu `tong` và `n` đều là `int` thì `tong / n` là phép chia nguyên. Hãy chuyển một toán hạng sang số thực:\n\n```cpp\ndouble tb = (double)tong / n;\n```\n\n**So sánh với trung bình mà không cần số thực:** `a[i] > tong / n` tương đương `a[i] * n > tong` (vì n > 0). Cách viết thứ hai chỉ dùng số nguyên nên tránh được sai số làm tròn của số thực — một kỹ thuật hay dùng trong lập trình thi đấu.\n\nLưu ý: khi muốn số thực hiển thị ổn định giữa các trình biên dịch, luôn dùng `fixed` và `setprecision`.",
+          "task": "Nhập `n` (1 ≤ n ≤ 100) và `n` điểm số nguyên (0 … 10). In ra 2 dòng:\n\n```\nTrung binh: X\nCao hon trung binh: k\n```\n\nvới `X` là điểm trung bình làm tròn **2 chữ số thập phân**, `k` là số điểm **lớn hơn hẳn** điểm trung bình.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n7 8 9 6\n```\n\nKết quả:\n```\nTrung binh: 7.50\nCao hon trung binh: 2\n```",
+          "starter": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    int a[105];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\n#include <iomanip>\nusing namespace std;\n\nint main() {\n    int n;\n    int a[105];\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int tong = 0;\n    for (int i = 0; i < n; i++) tong += a[i];\n    int k = 0;\n    for (int i = 0; i < n; i++) {\n        if (a[i] * n > tong) k++;\n    }\n    cout << \"Trung binh: \" << fixed << setprecision(2) << (double)tong / n << endl;\n    cout << \"Cao hon trung binh: \" << k << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Tính tổng bằng `int`, rồi trung bình `(double)tong / n`.",
+            "So sánh `a[i] * n > tong` để tránh sai số số thực.",
+            "In bằng `fixed << setprecision(2)`."
+          ],
+          "tests": [
+            {
+              "input": "4\n7 8 9 6\n",
+              "expected": "Trung binh: 7.50\nCao hon trung binh: 2",
+              "hidden": false
+            },
+            {
+              "input": "3\n10 10 9\n",
+              "expected": "Trung binh: 9.67\nCao hon trung binh: 2",
+              "hidden": false
+            },
+            {
+              "input": "5\n0 0 0 0 1\n",
+              "expected": "Trung binh: 0.20\nCao hon trung binh: 1",
+              "hidden": true
+            },
+            {
+              "input": "1\n5\n",
+              "expected": "Trung binh: 5.00\nCao hon trung binh: 0",
+              "hidden": true
+            },
+            {
+              "input": "6\n3 9 4 10 7 2\n",
+              "expected": "Trung binh: 5.83\nCao hon trung binh: 3",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "cpp-1-4",
+          "title": "Thư viện cmath: khoảng cách giữa hai điểm",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Thư viện `<cmath>` chứa các hàm toán học thông dụng:\n\n| Hàm | Ý nghĩa | Ví dụ |\n|---|---|---|\n| `sqrt(x)` | căn bậc hai | `sqrt(16.0)` = 4 |\n| `pow(x, y)` | x mũ y (trả về số thực) | `pow(2, 10)` = 1024 |\n| `abs(x)` | giá trị tuyệt đối | `abs(-7)` = 7 |\n| `floor(x)`, `ceil(x)` | làm tròn xuống / lên | `floor(2.7)` = 2 |\n\nTrong mặt phẳng tọa độ, có hai cách đo khoảng cách giữa A(x₁, y₁) và B(x₂, y₂):\n\n- **Khoảng cách Euclid** (đường chim bay): d = √((x₂ − x₁)² + (y₂ − y₁)²)\n- **Khoảng cách Manhattan** (đi theo các con phố vuông góc): d = |x₂ − x₁| + |y₂ − y₁|\n\n```cpp\n#include <cmath>\nint dx = x2 - x1, dy = y2 - y1;\ndouble euclid = sqrt(dx * dx + dy * dy);\nint manhattan = abs(dx) + abs(dy);\n```\n\nMẹo: với bình phương, viết `dx * dx` vừa nhanh vừa chính xác hơn `pow(dx, 2)` (hàm `pow` làm việc với số thực và có thể gây sai số nhỏ). Khi đã bật `fixed`, mọi số **thực** in ra đều có phần thập phân — vì vậy hãy lưu kết quả số nguyên vào biến `int` trước khi in.\n\nKhoảng cách Manhattan xuất hiện nhiều trong bài toán trên **lưới ô vuông** — ví dụ robot chỉ được đi lên/xuống/trái/phải. Còn khoảng cách Euclid dùng trong hình học và cả trong trí tuệ nhân tạo (thuật toán k láng giềng gần nhất).",
+          "task": "Nhập 4 số nguyên `x1 y1 x2 y2` (giá trị tuyệt đối ≤ 1000). In ra 2 dòng:\n\n1. Khoảng cách Euclid giữa hai điểm, làm tròn **3 chữ số thập phân**.\n2. Khoảng cách Manhattan (số nguyên).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n0 0 3 4\n```\n\nKết quả:\n```\n5.000\n7\n```",
+          "starter": "#include <iostream>\n#include <iomanip>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    int x1, y1, x2, y2;\n    cin >> x1 >> y1 >> x2 >> y2;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\n#include <iomanip>\n#include <cmath>\nusing namespace std;\n\nint main() {\n    int x1, y1, x2, y2;\n    cin >> x1 >> y1 >> x2 >> y2;\n    int dx = x2 - x1, dy = y2 - y1;\n    double d = sqrt((double)(dx * dx + dy * dy));\n    int manhattan = abs(dx) + abs(dy);\n    cout << fixed << setprecision(3) << d << endl;\n    cout << manhattan << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Tính `dx = x2 - x1`, `dy = y2 - y1` trước.",
+            "Euclid: `sqrt(dx * dx + dy * dy)`, in với `fixed << setprecision(3)`.",
+            "Lưu khoảng cách Manhattan vào biến `int manhattan = abs(dx) + abs(dy);` rồi mới in — số nguyên sẽ không bị ảnh hưởng bởi `fixed`."
+          ],
+          "tests": [
+            {
+              "input": "0 0 3 4\n",
+              "expected": "5.000\n7",
+              "hidden": false
+            },
+            {
+              "input": "1 1 2 2\n",
+              "expected": "1.414\n2",
+              "hidden": false
+            },
+            {
+              "input": "-5 7 10 -1\n",
+              "expected": "17.000\n23",
+              "hidden": true
+            },
+            {
+              "input": "0 0 0 0\n",
+              "expected": "0.000\n0",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Mảng và các kỹ thuật cơ bản",
+      "summary": "Duyệt mảng O(n), tổng tiền tố, hai con trỏ và thuật toán Kadane.",
+      "lessons": [
+        {
+          "id": "cpp-2-1",
+          "title": "Duyệt mảng: đoạn tăng liên tiếp dài nhất",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "Nhiều bài toán trên mảng chỉ cần **duyệt một lần** và duy trì vài biến trạng thái. Đây là nền tảng của các thuật toán hiệu quả O(n).\n\nBài toán: tìm độ dài đoạn **liên tiếp** dài nhất mà mỗi phần tử lớn hơn hẳn phần tử đứng trước.\n\nÝ tưởng: dùng biến `cur` là độ dài đoạn tăng **kết thúc tại vị trí hiện tại**, và `best` là kết quả tốt nhất từ đầu đến giờ.\n\n- Nếu `a[i] > a[i-1]`: đoạn tăng được nối dài → `cur = cur + 1`.\n- Ngược lại: đoạn tăng bị ngắt, bắt đầu lại → `cur = 1`.\n- Sau mỗi bước cập nhật `best = max(best, cur)`.\n\n```cpp\nint best = 1, cur = 1;\nfor (int i = 1; i < n; i++) {\n    if (a[i] > a[i - 1]) cur++;\n    else cur = 1;\n    if (cur > best) best = cur;\n}\n```\n\nVới dãy `1 2 3 2 3 4 5 1`: cur lần lượt là 1, 2, 3, 1, 2, 3, 4, 1 → best = **4** (đoạn 2 3 4 5).\n\nHãy để ý vòng lặp bắt đầu từ `i = 1` vì ta so sánh với phần tử đứng trước `a[i - 1]` — bắt đầu từ 0 sẽ truy cập `a[-1]`, một lỗi vượt biên mảng.\n\nKỹ thuật \"duy trì đáp án cho đoạn kết thúc tại i\" chính là bước đầu tiên dẫn tới **quy hoạch động** mà em sẽ học ở chương 4.",
+          "task": "Nhập `n` (1 ≤ n ≤ 1000) và dãy `n` số nguyên. In ra độ dài của đoạn con **liên tiếp tăng ngặt** dài nhất.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n1 2 3 2 3 4 5 1\n```\n\nKết quả:\n```\n4\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int best = 1, cur = 1;\n    for (int i = 1; i < n; i++) {\n        if (a[i] > a[i - 1]) cur++;\n        else cur = 1;\n        if (cur > best) best = cur;\n    }\n    cout << best << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Duy trì `cur` = độ dài đoạn tăng kết thúc tại i.",
+            "Nếu `a[i] > a[i-1]` thì `cur++`, ngược lại `cur = 1`."
+          ],
+          "tests": [
+            {
+              "input": "8\n1 2 3 2 3 4 5 1\n",
+              "expected": "4",
+              "hidden": false
+            },
+            {
+              "input": "5\n5 4 3 2 1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "1\n7\n",
+              "expected": "1",
+              "hidden": true
+            },
+            {
+              "input": "6\n1 2 3 4 5 6\n",
+              "expected": "6",
+              "hidden": true
+            },
+            {
+              "input": "7\n3 3 3 4 4 5 6\n",
+              "expected": "3",
+              "hidden": true
+            }
+          ],
+          "prism": "arrays"
+        },
+        {
+          "id": "cpp-2-2",
+          "title": "Tổng tiền tố (prefix sum)",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Bài toán: cho dãy n số và q câu hỏi, mỗi câu hỏi yêu cầu tính tổng đoạn từ vị trí `l` đến `r`.\n\nCách ngây thơ: mỗi câu hỏi duyệt từ l đến r → mất O(n) mỗi lần, tổng cộng O(n × q). Với n = q = 10⁵ là 10¹⁰ phép tính — quá chậm!\n\n**Mảng tổng tiền tố** giải quyết trong O(1) mỗi câu hỏi. Định nghĩa `p[i]` = tổng i phần tử đầu tiên:\n\n```\np[0] = 0\np[i] = p[i - 1] + a[i]       (a đánh số từ 1)\n```\n\nKhi đó tổng đoạn [l, r] = **p[r] − p[l − 1]**, vì p[r] chứa a[1..r] còn p[l−1] chứa a[1..l−1].\n\n```cpp\nlong long p[1005];\np[0] = 0;\nfor (int i = 1; i <= n; i++) {\n    long long x;\n    cin >> x;\n    p[i] = p[i - 1] + x;\n}\n// mỗi truy vấn:\ncout << p[r] - p[l - 1] << endl;\n```\n\nChú ý dùng `long long` vì tổng có thể vượt 2 × 10⁹. Đánh số mảng từ 1 giúp công thức gọn và không cần xử lý riêng trường hợp `l = 1`.\n\nÝ tưởng tiền xử lý một lần để trả lời nhiều truy vấn nhanh là tư duy cốt lõi trong lập trình thi đấu. Tổng tiền tố còn mở rộng được cho **mảng hai chiều** để tính tổng hình chữ nhật.",
+          "task": "Dòng đầu gồm `n`, `q` (1 ≤ n, q ≤ 1000). Dòng thứ hai gồm `n` số nguyên (|aᵢ| ≤ 10⁹). Mỗi dòng trong `q` dòng tiếp theo gồm `l r` (1 ≤ l ≤ r ≤ n).\n\nVới mỗi truy vấn in ra tổng `a[l] + … + a[r]` trên một dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5 3\n1 2 3 4 5\n1 3\n2 5\n4 4\n```\n\nKết quả:\n```\n6\n14\n4\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nlong long p[1005];\n\nint main() {\n    int n, q;\n    cin >> n >> q;\n    // Viết code của em ở đây: đọc dãy và xây dựng mảng tổng tiền tố p\n\n    for (int k = 0; k < q; k++) {\n        int l, r;\n        cin >> l >> r;\n        // Viết code của em ở đây: in tổng đoạn [l, r]\n    }\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nlong long p[1005];\n\nint main() {\n    int n, q;\n    cin >> n >> q;\n    p[0] = 0;\n    for (int i = 1; i <= n; i++) {\n        long long x;\n        cin >> x;\n        p[i] = p[i - 1] + x;\n    }\n    for (int k = 0; k < q; k++) {\n        int l, r;\n        cin >> l >> r;\n        cout << p[r] - p[l - 1] << endl;\n    }\n    return 0;\n}\n",
+          "hints": [
+            "`p[0] = 0`, `p[i] = p[i-1] + a[i]` với a đánh số từ 1.",
+            "Tổng đoạn [l, r] = `p[r] - p[l-1]`.",
+            "Dùng `long long` cho mảng p."
+          ],
+          "tests": [
+            {
+              "input": "5 3\n1 2 3 4 5\n1 3\n2 5\n4 4\n",
+              "expected": "6\n14\n4",
+              "hidden": false
+            },
+            {
+              "input": "4 2\n-3 10 -2 7\n1 4\n2 3\n",
+              "expected": "12\n8",
+              "hidden": false
+            },
+            {
+              "input": "6 3\n1000000000 1000000000 1000000000 -5 -5 -5\n1 3\n3 6\n4 6\n",
+              "expected": "3000000000\n999999985\n-15",
+              "hidden": true
+            },
+            {
+              "input": "1 1\n42\n1 1\n",
+              "expected": "42",
+              "hidden": true
+            }
+          ],
+          "prism": "arrays"
+        },
+        {
+          "id": "cpp-2-3",
+          "title": "Hai con trỏ: đếm cặp có tổng bằng X",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Cho dãy **tăng ngặt** và số X, đếm số cặp (i < j) có a[i] + a[j] = X.\n\nCách duyệt mọi cặp tốn O(n²). Với dãy đã sắp xếp, kỹ thuật **hai con trỏ** (two pointers) chỉ cần O(n):\n\n- Con trỏ `l` bắt đầu ở đầu dãy, con trỏ `r` ở cuối dãy.\n- Nếu `a[l] + a[r] == X`: tìm được một cặp → đếm, rồi dịch **cả hai** con trỏ vào trong.\n- Nếu tổng **nhỏ hơn** X: cần tổng lớn hơn → tăng `l`.\n- Nếu tổng **lớn hơn** X: cần tổng nhỏ hơn → giảm `r`.\n- Dừng khi `l >= r`.\n\n```cpp\nint l = 0, r = n - 1, dem = 0;\nwhile (l < r) {\n    int s = a[l] + a[r];\n    if (s == X) { dem++; l++; r--; }\n    else if (s < X) l++;\n    else r--;\n}\n```\n\nTại sao không bỏ sót cặp nào? Khi tổng nhỏ hơn X, `a[l]` cộng với **bất kỳ** phần tử nào bên trái `r` cũng còn nhỏ hơn X (vì dãy tăng), nên `a[l]` không thể thuộc cặp nào nữa — an toàn để bỏ qua. Lập luận tương tự cho trường hợp tổng lớn hơn.\n\nMỗi bước, khoảng [l, r] thu hẹp ít nhất 1 đơn vị nên vòng lặp chạy tối đa n lần. Hai con trỏ là kỹ thuật kinh điển trong các đề thi HSG cho các bài toán về cặp, đoạn con, và dãy đã sắp xếp.",
+          "task": "Dòng đầu gồm `n` (1 ≤ n ≤ 1000) và `X`. Dòng thứ hai là dãy `n` số nguyên **tăng ngặt** (|aᵢ| ≤ 10⁶).\n\nIn ra số cặp chỉ số (i < j) thỏa mãn a[i] + a[j] = X.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6 10\n1 3 5 7 9 11\n```\n\nKết quả:\n```\n2\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n, X;\n    cin >> n >> X;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây (gợi ý: hai con trỏ l và r)\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint main() {\n    int n, X;\n    cin >> n >> X;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int l = 0, r = n - 1, dem = 0;\n    while (l < r) {\n        int s = a[l] + a[r];\n        if (s == X) {\n            dem++;\n            l++;\n            r--;\n        } else if (s < X) {\n            l++;\n        } else {\n            r--;\n        }\n    }\n    cout << dem << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Đặt `l = 0`, `r = n - 1` và lặp khi `l < r`.",
+            "Tổng nhỏ hơn X thì `l++`, lớn hơn X thì `r--`, bằng X thì đếm và dịch cả hai."
+          ],
+          "tests": [
+            {
+              "input": "6 10\n1 3 5 7 9 11\n",
+              "expected": "2",
+              "hidden": false
+            },
+            {
+              "input": "4 100\n1 2 3 4\n",
+              "expected": "0",
+              "hidden": false
+            },
+            {
+              "input": "1 5\n5\n",
+              "expected": "0",
+              "hidden": true
+            },
+            {
+              "input": "8 0\n-7 -3 -1 0 1 2 3 7\n",
+              "expected": "3",
+              "hidden": true
+            }
+          ],
+          "prism": "arrays"
+        },
+        {
+          "id": "cpp-2-4",
+          "title": "Đoạn con có tổng lớn nhất (thuật toán Kadane)",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "Bài toán kinh điển: tìm đoạn con liên tiếp (khác rỗng) có **tổng lớn nhất**. Ví dụ với `-2 1 -3 4 -1 2 1 -5 4`, đoạn tốt nhất là `4 -1 2 1` với tổng **6**.\n\nDuyệt mọi đoạn mất O(n²) hoặc O(n³). **Thuật toán Kadane** giải trong O(n) với ý tưởng quy hoạch động:\n\nGọi `cur` là tổng lớn nhất của đoạn con **kết thúc tại vị trí i**. Với phần tử `a[i]` ta chỉ có hai lựa chọn:\n\n1. **Nối** `a[i]` vào đoạn tốt nhất kết thúc tại i − 1: `cur + a[i]`.\n2. **Bắt đầu lại** một đoạn mới chỉ gồm `a[i]`.\n\n```cpp\nlong long cur = a[0], best = a[0];\nfor (int i = 1; i < n; i++) {\n    if (cur + a[i] > a[i]) cur = cur + a[i];\n    else cur = a[i];\n    if (cur > best) best = cur;\n}\n```\n\nTrực giác: nếu tổng tích lũy `cur` đã **âm** thì nó chỉ kéo các phần tử sau xuống — tốt hơn là bỏ đi và bắt đầu lại.\n\nLưu ý khởi tạo `best = a[0]` chứ **không** phải 0: nếu mọi phần tử đều âm (ví dụ `-5 -2 -8`) thì đáp án là −2, còn khởi tạo 0 sẽ cho kết quả sai (vì đoạn con phải khác rỗng).\n\nDùng `long long` vì tổng của 1000 số có độ lớn 10⁹ có thể đạt 10¹². Kadane là ví dụ đẹp cho thấy một quan sát đúng có thể biến thuật toán O(n²) thành O(n).",
+          "task": "Nhập `n` (1 ≤ n ≤ 1000) và dãy `n` số nguyên (|aᵢ| ≤ 10⁹). In ra tổng lớn nhất của một đoạn con liên tiếp khác rỗng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n9\n-2 1 -3 4 -1 2 1 -5 4\n```\n\nKết quả:\n```\n6\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nlong long a[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nlong long a[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    long long cur = a[0], best = a[0];\n    for (int i = 1; i < n; i++) {\n        if (cur + a[i] > a[i]) cur = cur + a[i];\n        else cur = a[i];\n        if (cur > best) best = cur;\n    }\n    cout << best << endl;\n    return 0;\n}\n",
+          "hints": [
+            "`cur` = tổng lớn nhất của đoạn kết thúc tại i.",
+            "`cur = max(a[i], cur + a[i])`, rồi cập nhật `best`.",
+            "Khởi tạo `cur = best = a[0]` để xử lý dãy toàn số âm."
+          ],
+          "tests": [
+            {
+              "input": "9\n-2 1 -3 4 -1 2 1 -5 4\n",
+              "expected": "6",
+              "hidden": false
+            },
+            {
+              "input": "3\n-5 -2 -8\n",
+              "expected": "-2",
+              "hidden": false
+            },
+            {
+              "input": "5\n1000000000 1000000000 -1 1000000000 1000000000\n",
+              "expected": "3999999999",
+              "hidden": true
+            },
+            {
+              "input": "1\n-7\n",
+              "expected": "-7",
+              "hidden": true
+            },
+            {
+              "input": "6\n3 -4 5 -1 2 -10\n",
+              "expected": "6",
+              "hidden": true
+            }
+          ],
+          "prism": "dp"
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "Sắp xếp và tìm kiếm tự cài đặt",
+      "summary": "Bubble Sort, Insertion Sort, Quick Sort và tìm kiếm nhị phân.",
+      "lessons": [
+        {
+          "id": "cpp-3-1",
+          "title": "Sắp xếp nổi bọt (Bubble Sort)",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "**Sắp xếp nổi bọt** so sánh từng cặp phần tử **kề nhau** và đổi chỗ nếu chúng sai thứ tự. Sau mỗi lượt duyệt, phần tử lớn nhất còn lại sẽ \"nổi\" về cuối dãy — giống bọt khí nổi lên mặt nước.\n\n```cpp\nfor (int i = 0; i < n; i++) {\n    for (int j = 0; j + 1 < n - i; j++) {\n        if (a[j] > a[j + 1]) {\n            int t = a[j];        // hoán đổi a[j] và a[j+1]\n            a[j] = a[j + 1];\n            a[j + 1] = t;\n        }\n    }\n}\n```\n\nVì sao vòng trong chỉ chạy đến `n - i`? Sau lượt thứ i, đã có i phần tử lớn nhất nằm đúng vị trí ở cuối dãy, không cần so sánh lại.\n\n**Độ phức tạp:** O(n²) phép so sánh — chậm với dữ liệu lớn, nhưng rất dễ hiểu và là bước đầu để học các thuật toán sắp xếp nhanh hơn.\n\nSố lần hoán đổi của Bubble Sort có ý nghĩa đặc biệt: nó đúng bằng số **cặp nghịch thế** của dãy (cặp i < j mà a[i] > a[j]). Dãy đã sắp xếp có 0 cặp nghịch thế; dãy giảm dần có n(n − 1)/2 cặp.\n\nHãy mở **Lăng kính thuật toán** để xem trực quan từng bước so sánh và hoán đổi.\n\n> **Về STL:** trình biên dịch C++ thật có sẵn thư viện chuẩn STL (`vector`, `sort`, `stack`, `queue`…). Trong khóa học này em sẽ **tự cài đặt** các thuật toán bằng mảng — vừa hiểu sâu bản chất, vừa chạy được ngay trên trình duyệt.",
+          "task": "Nhập `n` (1 ≤ n ≤ 50) và dãy `n` số nguyên. Sắp xếp tăng dần bằng **Bubble Sort** (theo đúng mã mẫu: so sánh cặp kề nhau, đổi chỗ khi `a[j] > a[j+1]`).\n\nIn ra 2 dòng: dãy đã sắp xếp và `So lan hoan doi: k`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n5\n5 1 4 2 8\n```\n\nKết quả:\n```\n1 2 4 5 8\nSo lan hoan doi: 4\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[55];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[55];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    int dem = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j + 1 < n - i; j++) {\n            if (a[j] > a[j + 1]) {\n                int t = a[j];\n                a[j] = a[j + 1];\n                a[j + 1] = t;\n                dem++;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) cout << a[i] << \" \";\n    cout << endl;\n    cout << \"So lan hoan doi: \" << dem << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Hai vòng lặp lồng nhau; vòng trong so sánh `a[j]` và `a[j+1]`.",
+            "Mỗi lần hoán đổi tăng biến đếm."
+          ],
+          "tests": [
+            {
+              "input": "5\n5 1 4 2 8\n",
+              "expected": "1 2 4 5 8\nSo lan hoan doi: 4",
+              "hidden": false
+            },
+            {
+              "input": "4\n1 2 3 4\n",
+              "expected": "1 2 3 4\nSo lan hoan doi: 0",
+              "hidden": false
+            },
+            {
+              "input": "6\n6 5 4 3 2 1\n",
+              "expected": "1 2 3 4 5 6\nSo lan hoan doi: 15",
+              "hidden": true
+            },
+            {
+              "input": "7\n3 -1 3 0 -1 2 2\n",
+              "expected": "-1 -1 0 2 2 3 3\nSo lan hoan doi: 10",
+              "hidden": true
+            }
+          ],
+          "prism": "sorting"
+        },
+        {
+          "id": "cpp-3-2",
+          "title": "Sắp xếp chèn: bảng xếp hạng giảm dần",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "**Sắp xếp chèn** (Insertion Sort) hoạt động giống cách em xếp bài trên tay: lần lượt cầm từng lá bài mới và **chèn** nó vào đúng vị trí trong phần đã sắp xếp.\n\nVới dãy a[0..n−1], giả sử đoạn a[0..i−1] đã được sắp xếp. Lấy `key = a[i]`, dịch các phần tử \"đứng sai phía\" sang phải một ô để tạo chỗ trống, rồi đặt `key` vào.\n\nSắp xếp **giảm dần** (lớn đứng trước):\n\n```cpp\nfor (int i = 1; i < n; i++) {\n    int key = a[i];\n    int j = i - 1;\n    while (j >= 0 && a[j] < key) {   // phần tử nhỏ hơn key phải lùi về sau\n        a[j + 1] = a[j];\n        j--;\n    }\n    a[j + 1] = key;\n}\n```\n\nĐổi dấu `<` thành `>` trong điều kiện `while` sẽ được sắp xếp **tăng dần**.\n\n**Ưu điểm:** rất nhanh với dãy **gần như đã sắp xếp** (chỉ tốn O(n)), sắp xếp \"tại chỗ\" không cần mảng phụ, và **ổn định** (các phần tử bằng nhau giữ nguyên thứ tự ban đầu). Trường hợp xấu nhất vẫn là O(n²).\n\nThực tế, nhiều thư viện sắp xếp hiện đại dùng Insertion Sort cho các đoạn nhỏ (dưới khoảng 16 phần tử) bên trong những thuật toán lớn hơn như Quick Sort hay Merge Sort.\n\n> **Về STL:** trình biên dịch C++ thật có sẵn thư viện chuẩn STL (`vector`, `sort`, `stack`, `queue`…). Trong khóa học này em sẽ **tự cài đặt** các thuật toán bằng mảng — vừa hiểu sâu bản chất, vừa chạy được ngay trên trình duyệt.",
+          "task": "Nhập `n` (1 ≤ n ≤ 50) và `n` điểm số nguyên. Sắp xếp **giảm dần** bằng Insertion Sort.\n\nIn ra 2 dòng: dãy đã sắp xếp và `Top 3: S` với `S` là tổng của 3 điểm cao nhất (nếu n < 3 thì là tổng tất cả).\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n7 9 3 10 8 5\n```\n\nKết quả:\n```\n10 9 8 7 5 3\nTop 3: 27\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[55];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[55];\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    for (int i = 1; i < n; i++) {\n        int key = a[i];\n        int j = i - 1;\n        while (j >= 0 && a[j] < key) {\n            a[j + 1] = a[j];\n            j--;\n        }\n        a[j + 1] = key;\n    }\n    for (int i = 0; i < n; i++) cout << a[i] << \" \";\n    cout << endl;\n    int s = 0;\n    for (int i = 0; i < n && i < 3; i++) s += a[i];\n    cout << \"Top 3: \" << s << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Lưu `key = a[i]`, dịch các phần tử nhỏ hơn key sang phải.",
+            "Điều kiện dừng: `j >= 0 && a[j] < key`.",
+            "Top 3: cộng `a[i]` với `i < n && i < 3`."
+          ],
+          "tests": [
+            {
+              "input": "6\n7 9 3 10 8 5\n",
+              "expected": "10 9 8 7 5 3\nTop 3: 27",
+              "hidden": false
+            },
+            {
+              "input": "2\n4 6\n",
+              "expected": "6 4\nTop 3: 10",
+              "hidden": false
+            },
+            {
+              "input": "5\n1 1 1 1 1\n",
+              "expected": "1 1 1 1 1\nTop 3: 3",
+              "hidden": true
+            },
+            {
+              "input": "8\n-2 15 0 15 7 -9 3 12\n",
+              "expected": "15 15 12 7 3 0 -2 -9\nTop 3: 42",
+              "hidden": true
+            }
+          ],
+          "prism": "sorting"
+        },
+        {
+          "id": "cpp-3-3",
+          "title": "Sắp xếp nhanh (Quick Sort)",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "**Quick Sort** dùng chiến lược **chia để trị**:\n\n1. Chọn một phần tử làm **chốt** (pivot), ví dụ phần tử ở giữa.\n2. **Phân hoạch**: đưa các phần tử nhỏ hơn chốt sang trái, lớn hơn chốt sang phải.\n3. **Đệ quy** sắp xếp hai nửa trái và phải.\n\n```cpp\nint a[205];\n\nvoid quickSort(int l, int r) {\n    if (l >= r) return;                 // đoạn 0 hoặc 1 phần tử: đã sắp xếp\n    int pivot = a[(l + r) / 2];\n    int i = l, j = r;\n    while (i <= j) {\n        while (a[i] < pivot) i++;       // tìm phần tử sai phía bên trái\n        while (a[j] > pivot) j--;       // tìm phần tử sai phía bên phải\n        if (i <= j) {\n            int t = a[i]; a[i] = a[j]; a[j] = t;\n            i++; j--;\n        }\n    }\n    quickSort(l, j);\n    quickSort(i, r);\n}\n```\n\nSau vòng `while (i <= j)`, mọi phần tử trong a[l..j] ≤ pivot và mọi phần tử trong a[i..r] ≥ pivot, nên hai nửa có thể sắp xếp độc lập.\n\n**Độ phức tạp:** trung bình O(n log n) — nhanh hơn rất nhiều so với O(n²) của Bubble/Insertion Sort. Với n = 10⁶, n² là 10¹² phép tính trong khi n log n chỉ khoảng 2 × 10⁷. Trường hợp xấu (chốt luôn là min/max) là O(n²); chọn chốt ở giữa giúp tránh trường hợp này với dãy đã sắp xếp sẵn.\n\nSau khi sắp xếp, các giá trị bằng nhau đứng **liền kề**, nên đếm số giá trị khác nhau chỉ cần so sánh mỗi phần tử với phần tử đứng trước nó.\n\n> **Về STL:** trình biên dịch C++ thật có sẵn thư viện chuẩn STL (`vector`, `sort`, `stack`, `queue`…). Trong khóa học này em sẽ **tự cài đặt** các thuật toán bằng mảng — vừa hiểu sâu bản chất, vừa chạy được ngay trên trình duyệt.",
+          "task": "Nhập `n` (1 ≤ n ≤ 200) và dãy `n` số nguyên. Sắp xếp tăng dần bằng **Quick Sort**.\n\nIn ra 2 dòng: dãy đã sắp xếp và `So gia tri khac nhau: k`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n8\n5 3 8 1 9 2 7 3\n```\n\nKết quả:\n```\n1 2 3 3 5 7 8 9\nSo gia tri khac nhau: 7\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[205];\n\n// Viết hàm quickSort(int l, int r) ở đây\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    // Gọi quickSort và in kết quả\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[205];\n\nvoid quickSort(int l, int r) {\n    if (l >= r) return;\n    int pivot = a[(l + r) / 2];\n    int i = l, j = r;\n    while (i <= j) {\n        while (a[i] < pivot) i++;\n        while (a[j] > pivot) j--;\n        if (i <= j) {\n            int t = a[i];\n            a[i] = a[j];\n            a[j] = t;\n            i++;\n            j--;\n        }\n    }\n    quickSort(l, j);\n    quickSort(i, r);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    quickSort(0, n - 1);\n    for (int i = 0; i < n; i++) cout << a[i] << \" \";\n    cout << endl;\n    int k = 1;\n    for (int i = 1; i < n; i++) {\n        if (a[i] != a[i - 1]) k++;\n    }\n    cout << \"So gia tri khac nhau: \" << k << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Chốt `pivot = a[(l + r) / 2]`, hai chỉ số i chạy từ trái, j chạy từ phải.",
+            "Sau phân hoạch gọi đệ quy `quickSort(l, j)` và `quickSort(i, r)`.",
+            "Đếm giá trị khác nhau: `if (a[i] != a[i-1]) k++` trên dãy đã sắp xếp."
+          ],
+          "tests": [
+            {
+              "input": "8\n5 3 8 1 9 2 7 3\n",
+              "expected": "1 2 3 3 5 7 8 9\nSo gia tri khac nhau: 7",
+              "hidden": false
+            },
+            {
+              "input": "1\n10\n",
+              "expected": "10\nSo gia tri khac nhau: 1",
+              "hidden": false
+            },
+            {
+              "input": "200\n-13 24 -40 -3 34 -30 7 44 -20 17 -47 -10 27 -37 0 37 -27 10 47 -17 20 -44 -7 30 -34 3 40 -24 13 50 -14 23 -41 -4 33 -31 6 43 -21 16 -48 -11 26 -38 -1 36 -28 9 46 -18 19 -45 -8 29 -35 2 39 -25 12 49 -15 22 -42 -5 32 -32 5 42 -22 15 -49 -12 25 -39 -2 35 -29 8 45 -19 18 -46 -9 28 -36 1 38 -26 11 48 -16 21 -43 -6 31 -33 4 41 -23 14 -50 -13 24 -40 -3 34 -30 7 44 -20 17 -47 -10 27 -37 0 37 -27 10 47 -17 20 -44 -7 30 -34 3 40 -24 13 50 -14 23 -41 -4 33 -31 6 43 -21 16 -48 -11 26 -38 -1 36 -28 9 46 -18 19 -45 -8 29 -35 2 39 -25 12 49 -15 22 -42 -5 32 -32 5 42 -22 15 -49 -12 25 -39 -2 35 -29 8 45 -19 18 -46 -9 28 -36 1 38 -26 11 48 -16 21 -43 -6 31 -33 4 41 -23\n",
+              "expected": "-50 -49 -49 -48 -48 -47 -47 -46 -46 -45 -45 -44 -44 -43 -43 -42 -42 -41 -41 -40 -40 -39 -39 -38 -38 -37 -37 -36 -36 -35 -35 -34 -34 -33 -33 -32 -32 -31 -31 -30 -30 -29 -29 -28 -28 -27 -27 -26 -26 -25 -25 -24 -24 -23 -23 -22 -22 -21 -21 -20 -20 -19 -19 -18 -18 -17 -17 -16 -16 -15 -15 -14 -14 -13 -13 -12 -12 -11 -11 -10 -10 -9 -9 -8 -8 -7 -7 -6 -6 -5 -5 -4 -4 -3 -3 -2 -2 -1 -1 0 0 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 15 15 16 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 47 48 48 49 49 50 50\nSo gia tri khac nhau: 101",
+              "hidden": true
+            },
+            {
+              "input": "6\n4 4 4 4 4 4\n",
+              "expected": "4 4 4 4 4 4\nSo gia tri khac nhau: 1",
+              "hidden": true
+            },
+            {
+              "input": "150\n419 338 257 176 95 14 -67 -148 -229 -310 -391 -472 447 366 285 204 123 42 -39 -120 -201 -282 -363 -444 475 394 313 232 151 70 -11 -92 -173 -254 -335 -416 -497 422 341 260 179 98 17 -64 -145 -226 -307 -388 -469 450 369 288 207 126 45 -36 -117 -198 -279 -360 -441 478 397 316 235 154 73 -8 -89 -170 -251 -332 -413 -494 425 344 263 182 101 20 -61 -142 -223 -304 -385 -466 453 372 291 210 129 48 -33 -114 -195 -276 -357 -438 481 400 319 238 157 76 -5 -86 -167 -248 -329 -410 -491 428 347 266 185 104 23 -58 -139 -220 -301 -382 -463 456 375 294 213 132 51 -30 -111 -192 -273 -354 -435 484 403 322 241 160 79 -2 -83 -164 -245 -326 -407 -488 431 350\n",
+              "expected": "-497 -494 -491 -488 -472 -469 -466 -463 -444 -441 -438 -435 -416 -413 -410 -407 -391 -388 -385 -382 -363 -360 -357 -354 -335 -332 -329 -326 -310 -307 -304 -301 -282 -279 -276 -273 -254 -251 -248 -245 -229 -226 -223 -220 -201 -198 -195 -192 -173 -170 -167 -164 -148 -145 -142 -139 -120 -117 -114 -111 -92 -89 -86 -83 -67 -64 -61 -58 -39 -36 -33 -30 -11 -8 -5 -2 14 17 20 23 42 45 48 51 70 73 76 79 95 98 101 104 123 126 129 132 151 154 157 160 176 179 182 185 204 207 210 213 232 235 238 241 257 260 263 266 285 288 291 294 313 316 319 322 338 341 344 347 350 366 369 372 375 394 397 400 403 419 422 425 428 431 447 450 453 456 475 478 481 484\nSo gia tri khac nhau: 150",
+              "hidden": true
+            }
+          ],
+          "prism": "sorting"
+        },
+        {
+          "id": "cpp-3-4",
+          "title": "Tìm kiếm nhị phân",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Trên một dãy **đã sắp xếp**, ta không cần xem từng phần tử. **Tìm kiếm nhị phân** (binary search) so sánh với phần tử ở **giữa** đoạn đang xét rồi loại bỏ một nửa:\n\n- Nếu `a[mid] == x`: tìm thấy.\n- Nếu `a[mid] < x`: x chỉ có thể nằm ở nửa **phải** → `lo = mid + 1`.\n- Nếu `a[mid] > x`: x chỉ có thể nằm ở nửa **trái** → `hi = mid - 1`.\n\n```cpp\nint timNhiPhan(int a[], int n, int x) {\n    int lo = 0, hi = n - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (a[mid] == x) return mid;\n        if (a[mid] < x) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    return -1;          // không tìm thấy\n}\n```\n\n**Độ phức tạp O(log n):** mỗi bước đoạn tìm kiếm giảm một nửa. Với 1 triệu phần tử chỉ cần khoảng **20** lần so sánh, so với 1 triệu lần của tìm kiếm tuần tự!\n\nNhững lỗi hay gặp:\n\n- Điều kiện vòng lặp phải là `lo <= hi` (có dấu bằng), nếu không sẽ bỏ sót trường hợp đoạn chỉ còn 1 phần tử.\n- Quên `+ 1` / `- 1` khi cập nhật `lo`, `hi` có thể gây vòng lặp vô hạn.\n- Áp dụng trên dãy **chưa sắp xếp** cho kết quả sai.\n\nTìm kiếm nhị phân không chỉ dùng để tìm phần tử: ý tưởng \"chặt nhị phân\" còn dùng để tìm đáp án tối ưu trong rất nhiều bài thi HSG.",
+          "task": "Dòng 1: `n` (1 ≤ n ≤ 1000). Dòng 2: dãy `n` số nguyên **tăng ngặt**. Dòng 3: `q` (1 ≤ q ≤ 100). Dòng 4: `q` số cần tìm.\n\nVới mỗi số, in ra vị trí của nó trong dãy (đếm từ 1) hoặc `-1` nếu không có, mỗi kết quả một dòng.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n7\n2 5 8 12 16 23 38\n3\n23 2 7\n```\n\nKết quả:\n```\n6\n1\n-1\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\n// Viết hàm tìm kiếm nhị phân ở đây\n\nint main() {\n    int n, q, x;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> q;\n    for (int k = 0; k < q; k++) {\n        cin >> x;\n        // In vị trí của x (đếm từ 1) hoặc -1\n    }\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint a[1005];\n\nint timNhiPhan(int n, int x) {\n    int lo = 0, hi = n - 1;\n    while (lo <= hi) {\n        int mid = (lo + hi) / 2;\n        if (a[mid] == x) return mid;\n        if (a[mid] < x) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    return -1;\n}\n\nint main() {\n    int n, q, x;\n    cin >> n;\n    for (int i = 0; i < n; i++) cin >> a[i];\n    cin >> q;\n    for (int k = 0; k < q; k++) {\n        cin >> x;\n        int p = timNhiPhan(n, x);\n        if (p == -1) cout << -1 << endl;\n        else cout << p + 1 << endl;\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Duy trì đoạn [lo, hi], lặp khi `lo <= hi`.",
+            "`mid = (lo + hi) / 2`; so sánh `a[mid]` với x để bỏ một nửa.",
+            "Nhớ cộng 1 khi in vị trí."
+          ],
+          "tests": [
+            {
+              "input": "7\n2 5 8 12 16 23 38\n3\n23 2 7\n",
+              "expected": "6\n1\n-1",
+              "hidden": false
+            },
+            {
+              "input": "1\n5\n2\n5 6\n",
+              "expected": "1\n-1",
+              "hidden": false
+            },
+            {
+              "input": "10\n-50 -20 -3 0 4 9 15 21 40 99\n5\n99 -50 0 10 -21\n",
+              "expected": "10\n1\n4\n-1\n-1",
+              "hidden": true
+            }
+          ],
+          "prism": "searching"
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "Đệ quy và quy hoạch động",
+      "summary": "Tháp Hà Nội, đệ quy có nhớ, quy hoạch động từ dưới lên, bài toán đổi tiền.",
+      "lessons": [
+        {
+          "id": "cpp-4-1",
+          "title": "Đệ quy: bài toán Tháp Hà Nội",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "**Tháp Hà Nội:** có 3 cọc (1, 2, 3) và n đĩa kích thước khác nhau xếp trên cọc 1, đĩa lớn ở dưới. Hãy chuyển toàn bộ sang cọc 3 với luật:\n\n- Mỗi lần chỉ chuyển **một** đĩa trên cùng.\n- Không bao giờ đặt đĩa lớn lên trên đĩa nhỏ.\n\nLời giải đệ quy cực kỳ thanh lịch. Muốn chuyển n đĩa từ cọc `a` sang cọc `c` (dùng `b` làm trung gian):\n\n1. Chuyển n − 1 đĩa trên cùng từ `a` sang `b` (dùng `c` làm trung gian).\n2. Chuyển đĩa lớn nhất từ `a` sang `c`.\n3. Chuyển n − 1 đĩa từ `b` sang `c` (dùng `a` làm trung gian).\n\n```cpp\nvoid hanoi(int n, int a, int b, int c) {\n    if (n == 0) return;              // không còn đĩa: không làm gì\n    hanoi(n - 1, a, c, b);\n    cout << a << \" -> \" << c << endl;\n    hanoi(n - 1, b, a, c);\n}\n// gọi: hanoi(n, 1, 2, 3);\n```\n\nTa **không cần** hình dung toàn bộ quá trình — chỉ cần tin rằng lời gọi đệ quy giải đúng bài toán nhỏ hơn. Đây là tư duy cốt lõi của đệ quy.\n\nSố bước tối thiểu T(n) thỏa mãn T(n) = 2·T(n − 1) + 1, T(0) = 0, nên **T(n) = 2ⁿ − 1**. Với 64 đĩa như truyền thuyết, cần 2⁶⁴ − 1 ≈ 1.8 × 10¹⁹ bước — dù mỗi giây chuyển một đĩa cũng mất hàng trăm tỷ năm!\n\nCó thể tính 2ⁿ − 1 bằng phép dịch bit: `(1 << n) - 1`.",
+          "task": "Nhập `n` (1 ≤ n ≤ 7). In ra số bước di chuyển tối thiểu trên dòng đầu tiên, sau đó in từng bước theo dạng `a -> c` (chuyển đĩa trên cùng từ cọc `a` sang cọc `c`), dùng đúng chiến lược đệ quy ở phần lý thuyết với lời gọi `hanoi(n, 1, 2, 3)`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n1\n```\n\nKết quả:\n```\n1\n1 -> 3\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\n// Viết hàm đệ quy hanoi ở đây\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nvoid hanoi(int n, int a, int b, int c) {\n    if (n == 0) return;\n    hanoi(n - 1, a, c, b);\n    cout << a << \" -> \" << c << endl;\n    hanoi(n - 1, b, a, c);\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << (1 << n) - 1 << endl;\n    hanoi(n, 1, 2, 3);\n    return 0;\n}\n",
+          "hints": [
+            "Số bước là 2ⁿ − 1, có thể viết `(1 << n) - 1`.",
+            "hanoi(n, a, b, c): chuyển n−1 đĩa a→b, in `a -> c`, rồi chuyển n−1 đĩa b→c."
+          ],
+          "tests": [
+            {
+              "input": "1\n",
+              "expected": "1\n1 -> 3",
+              "hidden": false
+            },
+            {
+              "input": "2\n",
+              "expected": "3\n1 -> 2\n1 -> 3\n2 -> 3",
+              "hidden": false
+            },
+            {
+              "input": "3\n",
+              "expected": "7\n1 -> 3\n1 -> 2\n3 -> 2\n1 -> 3\n2 -> 1\n2 -> 3\n1 -> 3",
+              "hidden": true
+            },
+            {
+              "input": "5\n",
+              "expected": "31\n1 -> 3\n1 -> 2\n3 -> 2\n1 -> 3\n2 -> 1\n2 -> 3\n1 -> 3\n1 -> 2\n3 -> 2\n3 -> 1\n2 -> 1\n3 -> 2\n1 -> 3\n1 -> 2\n3 -> 2\n1 -> 3\n2 -> 1\n2 -> 3\n1 -> 3\n2 -> 1\n3 -> 2\n3 -> 1\n2 -> 1\n2 -> 3\n1 -> 3\n1 -> 2\n3 -> 2\n1 -> 3\n2 -> 1\n2 -> 3\n1 -> 3",
+              "hidden": true
+            }
+          ],
+          "prism": "recursion"
+        },
+        {
+          "id": "cpp-4-2",
+          "title": "Đệ quy có nhớ: số Fibonacci",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Dãy Fibonacci: F(0) = 0, F(1) = 1, F(n) = F(n − 1) + F(n − 2). Cài đặt đệ quy trực tiếp rất ngắn gọn:\n\n```cpp\nlong long fib(int n) {\n    if (n < 2) return n;\n    return fib(n - 1) + fib(n - 2);\n}\n```\n\nNhưng nó **cực kỳ chậm**: để tính fib(5) phải tính fib(3) hai lần, fib(2) ba lần… Số lời gọi tăng theo cấp số nhân (khoảng 1.6ⁿ). Với n = 50 là hàng chục tỷ lời gọi!\n\n**Đệ quy có nhớ** (memoization): lưu kết quả đã tính vào mảng, lần sau gặp lại chỉ việc lấy ra.\n\n```cpp\nlong long memo[80];          // memo[i] = -1 nghĩa là chưa tính\n\nlong long fib(int n) {\n    if (n < 2) return n;\n    if (memo[n] != -1) return memo[n];      // đã tính rồi\n    memo[n] = fib(n - 1) + fib(n - 2);       // tính và ghi nhớ\n    return memo[n];\n}\n\n// trong main, trước khi gọi:\nfor (int i = 0; i < 80; i++) memo[i] = -1;\n```\n\nBây giờ mỗi giá trị F(i) chỉ được tính **một lần**, độ phức tạp giảm từ O(1.6ⁿ) xuống **O(n)**.\n\nĐiểm then chốt là bài toán có các **bài toán con gối nhau** (cùng một bài toán con xuất hiện nhiều lần). Nhận ra điều này là bước đầu tiên của **quy hoạch động** — kỹ thuật quan trọng bậc nhất trong thi HSG.\n\nChú ý: F(75) ≈ 2 × 10¹⁵ nên phải dùng `long long`. Luôn khởi tạo mảng nhớ trước khi dùng.",
+          "task": "Nhập `n` (0 ≤ n ≤ 75). In ra F(n) với F(0) = 0, F(1) = 1. Hãy dùng **đệ quy có nhớ**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n10\n```\n\nKết quả:\n```\n55\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nlong long memo[80];\n\n// Viết hàm fib có nhớ ở đây\n\nint main() {\n    int n;\n    cin >> n;\n    // Khởi tạo memo và in fib(n)\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nlong long memo[80];\n\nlong long fib(int n) {\n    if (n < 2) return n;\n    if (memo[n] != -1) return memo[n];\n    memo[n] = fib(n - 1) + fib(n - 2);\n    return memo[n];\n}\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 0; i < 80; i++) memo[i] = -1;\n    cout << fib(n) << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Khởi tạo `memo[i] = -1` cho mọi i trước khi gọi.",
+            "Trong hàm: nếu `memo[n] != -1` thì trả về ngay.",
+            "Dùng `long long` vì F(75) rất lớn."
+          ],
+          "tests": [
+            {
+              "input": "10\n",
+              "expected": "55",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "0",
+              "hidden": true
+            },
+            {
+              "input": "75\n",
+              "expected": "2111485077978050",
+              "hidden": true
+            },
+            {
+              "input": "50\n",
+              "expected": "12586269025",
+              "hidden": true
+            }
+          ],
+          "prism": "recursion"
+        },
+        {
+          "id": "cpp-4-3",
+          "title": "Quy hoạch động: leo cầu thang",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "Một bạn leo cầu thang n bậc, mỗi bước có thể bước **1, 2 hoặc 3** bậc. Có bao nhiêu cách để lên tới bậc n?\n\n**Tư duy quy hoạch động:** gọi f[i] là số cách lên tới bậc i. Bước **cuối cùng** để đến bậc i chỉ có thể xuất phát từ bậc i − 1, i − 2 hoặc i − 3. Vậy:\n\n```\nf[i] = f[i - 1] + f[i - 2] + f[i - 3]\nf[0] = 1   (đứng yên ở chân cầu thang: 1 cách)\n```\n\n(với quy ước f của chỉ số âm bằng 0).\n\n```cpp\nlong long f[55];\nf[0] = 1;\nfor (int i = 1; i <= n; i++) {\n    f[i] = f[i - 1];\n    if (i >= 2) f[i] += f[i - 2];\n    if (i >= 3) f[i] += f[i - 3];\n}\ncout << f[n] << endl;\n```\n\nĐây là cách làm **từ dưới lên** (bottom-up / tabulation): tính lần lượt các bài toán nhỏ trước, lưu vào bảng, rồi dùng chúng để tính bài toán lớn hơn. So với đệ quy có nhớ (top-down), cách này không cần hàm đệ quy nên không lo tràn ngăn xếp.\n\nCác bước để giải một bài quy hoạch động:\n\n1. **Định nghĩa trạng thái** (f[i] nghĩa là gì?).\n2. **Tìm công thức truy hồi** (f[i] tính từ những trạng thái nào?).\n3. **Xác định giá trị cơ sở** (f[0]).\n4. **Thứ tự tính** sao cho khi tính f[i] thì các giá trị cần dùng đã có sẵn.\n\nVới n = 50, đáp án khoảng 10¹³ → dùng `long long`.",
+          "task": "Nhập `n` (1 ≤ n ≤ 50). In ra số cách leo lên bậc thứ `n` nếu mỗi bước được leo 1, 2 hoặc 3 bậc.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n4\n```\n\nKết quả:\n```\n7\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nlong long f[55];\n\nint main() {\n    int n;\n    cin >> n;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nlong long f[55];\n\nint main() {\n    int n;\n    cin >> n;\n    f[0] = 1;\n    for (int i = 1; i <= n; i++) {\n        f[i] = f[i - 1];\n        if (i >= 2) f[i] += f[i - 2];\n        if (i >= 3) f[i] += f[i - 3];\n    }\n    cout << f[n] << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Gọi f[i] là số cách lên bậc i; bước cuối đến từ i−1, i−2 hoặc i−3.",
+            "`f[0] = 1`, rồi tính lần lượt f[1], f[2], …, f[n]."
+          ],
+          "tests": [
+            {
+              "input": "4\n",
+              "expected": "7",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "3\n",
+              "expected": "4",
+              "hidden": true
+            },
+            {
+              "input": "50\n",
+              "expected": "10562230626642",
+              "hidden": true
+            },
+            {
+              "input": "10\n",
+              "expected": "274",
+              "hidden": true
+            }
+          ],
+          "prism": "dp"
+        },
+        {
+          "id": "cpp-4-4",
+          "title": "Quy hoạch động: đổi tiền ít đồng xu nhất",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "Có k loại đồng xu với mệnh giá c₁, c₂, …, cₖ (mỗi loại dùng **không giới hạn**). Cần đổi số tiền S bằng **ít đồng xu nhất**.\n\n**Tham lam có đúng không?** Với mệnh giá 1, 3, 4 và S = 6: tham lam chọn 4 + 1 + 1 (3 đồng), nhưng tối ưu là 3 + 3 (2 đồng). Tham lam **sai** — ta cần quy hoạch động.\n\n**Trạng thái:** dp[v] = số đồng xu ít nhất để tạo ra số tiền v.\n\n**Truy hồi:** đồng xu cuối cùng có mệnh giá x nào đó, phần còn lại v − x phải được đổi tối ưu:\n\n```\ndp[v] = min(dp[v - x] + 1)   với mọi mệnh giá x ≤ v\ndp[0] = 0\n```\n\n```cpp\nconst int INF = 1000000000;\nint dp[1005];\ndp[0] = 0;\nfor (int v = 1; v <= S; v++) {\n    dp[v] = INF;                          // chưa đổi được\n    for (int j = 0; j < k; j++) {\n        int x = c[j];\n        if (x <= v && dp[v - x] + 1 < dp[v]) {\n            dp[v] = dp[v - x] + 1;\n        }\n    }\n}\nif (dp[S] >= INF) cout << -1; else cout << dp[S];\n```\n\nDùng giá trị rất lớn `INF` để đánh dấu \"không thể tạo ra\". Nếu cuối cùng dp[S] vẫn là INF thì không có cách đổi và in −1.\n\n**Độ phức tạp:** O(S × k). Bài toán đổi tiền là \"họ hàng\" của bài toán **cái túi** (knapsack) — một trong những dạng quy hoạch động gặp nhiều nhất trong các kỳ thi.",
+          "task": "Dòng 1: `k` (1 ≤ k ≤ 10) và `S` (0 ≤ S ≤ 1000). Dòng 2: `k` mệnh giá nguyên dương (≤ 1000).\n\nIn ra số đồng xu ít nhất cần dùng để tạo ra đúng số tiền `S`, hoặc `-1` nếu không thể.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 11\n1 2 5\n```\n\nKết quả:\n```\n3\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint c[15];\nint dp[1005];\n\nint main() {\n    int k, S;\n    cin >> k >> S;\n    for (int i = 0; i < k; i++) cin >> c[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint c[15];\nint dp[1005];\n\nint main() {\n    int k, S;\n    cin >> k >> S;\n    for (int i = 0; i < k; i++) cin >> c[i];\n    const int INF = 1000000000;\n    dp[0] = 0;\n    for (int v = 1; v <= S; v++) {\n        dp[v] = INF;\n        for (int j = 0; j < k; j++) {\n            int x = c[j];\n            if (x <= v && dp[v - x] + 1 < dp[v]) {\n                dp[v] = dp[v - x] + 1;\n            }\n        }\n    }\n    if (dp[S] >= INF) cout << -1 << endl;\n    else cout << dp[S] << endl;\n    return 0;\n}\n",
+          "hints": [
+            "dp[v] = số đồng xu ít nhất để tạo v; dp[0] = 0.",
+            "dp[v] = min(dp[v - x] + 1) với mọi mệnh giá x ≤ v.",
+            "Dùng INF lớn để đánh dấu không tạo được; nếu dp[S] = INF thì in -1."
+          ],
+          "tests": [
+            {
+              "input": "3 11\n1 2 5\n",
+              "expected": "3",
+              "hidden": false
+            },
+            {
+              "input": "1 3\n2\n",
+              "expected": "-1",
+              "hidden": false
+            },
+            {
+              "input": "4 63\n1 5 10 25\n",
+              "expected": "6",
+              "hidden": true
+            },
+            {
+              "input": "3 6\n1 3 4\n",
+              "expected": "2",
+              "hidden": true
+            },
+            {
+              "input": "2 0\n3 7\n",
+              "expected": "0",
+              "hidden": true
+            }
+          ],
+          "prism": "dp"
+        }
+      ]
+    },
+    {
+      "id": "ch5",
+      "title": "Cấu trúc dữ liệu và đồ thị",
+      "summary": "Ngăn xếp, hàng đợi tự cài đặt, BFS tìm đường đi ngắn nhất, DFS đếm thành phần liên thông.",
+      "lessons": [
+        {
+          "id": "cpp-5-1",
+          "title": "Ngăn xếp tự cài đặt: kiểm tra dãy ngoặc",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "**Ngăn xếp** (stack) là cấu trúc dữ liệu **vào sau – ra trước** (LIFO), giống chồng đĩa: chỉ thêm và lấy ở **đỉnh**.\n\nCài đặt bằng mảng và một biến `top` (số phần tử hiện có):\n\n```cpp\nchar st[105];\nint top = 0;\n\nst[top] = c; top++;          // push: đặt c lên đỉnh\nchar x = st[top - 1];        // xem phần tử ở đỉnh\ntop--;                       // pop: bỏ phần tử ở đỉnh\nbool rong = (top == 0);      // kiểm tra rỗng\n```\n\n**Bài toán dãy ngoặc đúng:** chuỗi gồm `()[]{}` được gọi là đúng nếu mỗi ngoặc mở có ngoặc đóng **cùng loại** tương ứng và các cặp lồng nhau hợp lệ. Ví dụ `([]{()})` đúng, còn `([)]` sai.\n\nThuật toán với ngăn xếp:\n\n- Gặp ngoặc **mở** → push vào ngăn xếp.\n- Gặp ngoặc **đóng** → ngăn xếp phải khác rỗng và đỉnh phải là ngoặc mở **cùng loại**; nếu đúng thì pop, nếu không thì chuỗi sai.\n- Duyệt xong, ngăn xếp phải **rỗng** (không còn ngoặc mở nào chưa được đóng).\n\nTại sao dùng ngăn xếp? Vì ngoặc mở **gần nhất** chưa được đóng phải được đóng **trước tiên** — đúng tính chất \"vào sau ra trước\".\n\nNgăn xếp có mặt ở khắp nơi: nút Undo trong trình soạn thảo, nút Back của trình duyệt, cách máy tính quản lý các lời gọi hàm đệ quy, và tính giá trị biểu thức số học.\n\n> **Về STL:** trình biên dịch C++ thật có sẵn thư viện chuẩn STL (`vector`, `sort`, `stack`, `queue`…). Trong khóa học này em sẽ **tự cài đặt** các thuật toán bằng mảng — vừa hiểu sâu bản chất, vừa chạy được ngay trên trình duyệt.",
+          "task": "Nhập một chuỗi `s` (độ dài 1 … 100) chỉ gồm các ký tự `( ) [ ] { }`. In `YES` nếu là dãy ngoặc đúng, ngược lại in `NO`.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n([]{()})\n```\n\nKết quả:\n```\nYES\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char s[105];\n    cin >> s;\n    char st[105];\n    int top = 0;\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    char s[105];\n    cin >> s;\n    char st[105];\n    int top = 0;\n    bool ok = true;\n    for (int i = 0; s[i] != '\\0'; i++) {\n        char c = s[i];\n        if (c == '(' || c == '[' || c == '{') {\n            st[top] = c;\n            top++;\n        } else {\n            if (top == 0) {\n                ok = false;\n                break;\n            }\n            char o = st[top - 1];\n            top--;\n            if ((c == ')' && o != '(') || (c == ']' && o != '[') || (c == '}' && o != '{')) {\n                ok = false;\n                break;\n            }\n        }\n    }\n    if (top != 0) ok = false;\n    if (ok) cout << \"YES\" << endl;\n    else cout << \"NO\" << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Ngoặc mở: `st[top] = c; top++;`.",
+            "Ngoặc đóng: nếu `top == 0` hoặc đỉnh không cùng loại thì sai; ngược lại `top--`.",
+            "Cuối cùng ngăn xếp phải rỗng."
+          ],
+          "tests": [
+            {
+              "input": "([]{()})\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "([)]\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "((\n",
+              "expected": "NO",
+              "hidden": true
+            },
+            {
+              "input": "}\n",
+              "expected": "NO",
+              "hidden": true
+            },
+            {
+              "input": "()()[]{}\n",
+              "expected": "YES",
+              "hidden": true
+            }
+          ],
+          "prism": "stack-queue"
+        },
+        {
+          "id": "cpp-5-2",
+          "title": "Hàng đợi tự cài đặt: mô phỏng quầy phục vụ",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "**Hàng đợi** (queue) là cấu trúc **vào trước – ra trước** (FIFO), giống hàng người xếp hàng mua vé: ai đến trước được phục vụ trước.\n\nCài đặt bằng mảng với hai chỉ số: `dau` (vị trí người đầu hàng) và `cuoi` (vị trí trống ngay sau người cuối hàng):\n\n```cpp\nint q[1005];\nint dau = 0, cuoi = 0;\n\nq[cuoi] = x; cuoi++;         // enqueue: thêm x vào cuối hàng\nint x = q[dau]; dau++;       // dequeue: lấy người đầu hàng\nint soNguoi = cuoi - dau;    // số phần tử đang chờ\nbool rong = (dau == cuoi);\n```\n\nHàng đợi rỗng khi `dau == cuoi`. Khi lấy phần tử, ta chỉ **tăng chỉ số đầu**, không cần dịch chuyển cả mảng — vì vậy mọi thao tác đều O(1).\n\nHạn chế của cách cài đặt đơn giản này: các ô ở đầu mảng đã dùng sẽ bị bỏ phí. Nếu số thao tác rất lớn, người ta dùng **hàng đợi vòng** (circular queue): khi chỉ số chạm cuối mảng thì quay về 0 bằng phép `% kichThuoc`.\n\nHàng đợi được dùng trong: hàng đợi in ấn, xử lý yêu cầu trên máy chủ web, bộ đệm phát video, và đặc biệt là thuật toán **duyệt theo chiều rộng (BFS)** mà em sẽ học ở bài tiếp theo.\n\n> **Về STL:** trình biên dịch C++ thật có sẵn thư viện chuẩn STL (`vector`, `sort`, `stack`, `queue`…). Trong khóa học này em sẽ **tự cài đặt** các thuật toán bằng mảng — vừa hiểu sâu bản chất, vừa chạy được ngay trên trình duyệt.",
+          "task": "Dòng đầu là số thao tác `q` (1 ≤ q ≤ 1000). Mỗi dòng tiếp theo là một thao tác:\n\n- `1 x` — khách có mã `x` vào cuối hàng.\n- `2` — phục vụ khách đầu hàng: in mã khách đó, hoặc `Hang doi rong` nếu không có ai.\n- `3` — in số khách đang chờ.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6\n1 101\n1 102\n3\n2\n2\n2\n```\n\nKết quả:\n```\n2\n101\n102\nHang doi rong\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint q[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    int dau = 0, cuoi = 0;\n    for (int k = 0; k < n; k++) {\n        int t;\n        cin >> t;\n        // Viết code của em ở đây (t = 1 thì đọc thêm x)\n    }\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint q[1005];\n\nint main() {\n    int n;\n    cin >> n;\n    int dau = 0, cuoi = 0;\n    for (int k = 0; k < n; k++) {\n        int t;\n        cin >> t;\n        if (t == 1) {\n            int x;\n            cin >> x;\n            q[cuoi] = x;\n            cuoi++;\n        } else if (t == 2) {\n            if (dau == cuoi) cout << \"Hang doi rong\" << endl;\n            else {\n                cout << q[dau] << endl;\n                dau++;\n            }\n        } else {\n            cout << cuoi - dau << endl;\n        }\n    }\n    return 0;\n}\n",
+          "hints": [
+            "Hai chỉ số `dau`, `cuoi`; hàng rỗng khi `dau == cuoi`.",
+            "Thêm: `q[cuoi] = x; cuoi++;` — Lấy: `q[dau]` rồi `dau++`.",
+            "Số người chờ: `cuoi - dau`."
+          ],
+          "tests": [
+            {
+              "input": "6\n1 101\n1 102\n3\n2\n2\n2\n",
+              "expected": "2\n101\n102\nHang doi rong",
+              "hidden": false
+            },
+            {
+              "input": "3\n2\n3\n1 7\n",
+              "expected": "Hang doi rong\n0",
+              "hidden": false
+            },
+            {
+              "input": "8\n1 5\n1 6\n2\n1 7\n3\n2\n2\n3\n",
+              "expected": "5\n2\n6\n7\n0",
+              "hidden": true
+            }
+          ],
+          "prism": "stack-queue"
+        },
+        {
+          "id": "cpp-5-3",
+          "title": "BFS trên lưới: đường đi ngắn nhất",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "**Duyệt theo chiều rộng** (Breadth-First Search – BFS) khám phá các ô theo từng \"lớp\": trước hết là các ô cách điểm xuất phát 1 bước, rồi 2 bước, 3 bước… Vì vậy lần **đầu tiên** BFS chạm tới một ô chính là đường đi **ngắn nhất** tới ô đó (khi mỗi bước có cùng chi phí).\n\nCông cụ của BFS là **hàng đợi**:\n\n1. Đưa ô xuất phát S vào hàng đợi, đặt `d[S] = 0`, các ô khác `d = -1` (chưa thăm).\n2. Lấy ô đầu hàng `(r, c)`; xét 4 ô kề (trên, dưới, trái, phải).\n3. Ô kề nào nằm trong lưới, không phải tường `#` và chưa thăm → `d[kề] = d[r][c] + 1` và đưa vào cuối hàng.\n4. Lặp đến khi hàng đợi rỗng.\n\n```cpp\nint dr[4] = {1, -1, 0, 0};\nint dc[4] = {0, 0, 1, -1};\nwhile (dau < cuoi) {\n    int r = qr[dau], c = qc[dau];\n    dau++;\n    for (int k = 0; k < 4; k++) {\n        int nr = r + dr[k], nc = c + dc[k];\n        if (nr >= 0 && nr < n && nc >= 0 && nc < m\n            && g[nr][nc] != '#' && d[nr][nc] == -1) {\n            d[nr][nc] = d[r][c] + 1;\n            qr[cuoi] = nr; qc[cuoi] = nc; cuoi++;\n        }\n    }\n}\n```\n\nMảng hướng `dr`, `dc` giúp duyệt 4 ô kề gọn gàng bằng một vòng lặp. Mỗi ô vào hàng đợi tối đa một lần nên độ phức tạp là **O(n × m)**.\n\nNhớ khởi tạo **toàn bộ** mảng `d` bằng −1 trước khi BFS. Nếu sau BFS `d` tại ô đích vẫn là −1 thì không có đường đi.",
+          "task": "Dòng đầu gồm `n`, `m` (1 ≤ n, m ≤ 15). `n` dòng tiếp theo mô tả bản đồ gồm các ký tự: `.` ô trống, `#` tường, `S` điểm xuất phát, `T` điểm đích (mỗi loại `S`, `T` xuất hiện đúng một lần).\n\nMỗi bước được đi sang ô kề cạnh (trên/dưới/trái/phải) không phải tường. In ra số bước ít nhất từ `S` tới `T`, hoặc `-1` nếu không thể tới.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n3 4\nS..#\n.#..\n...T\n```\n\nKết quả:\n```\n5\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nchar g[20][20];\nint d[20][20];\nint qr[400], qc[400];\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    for (int i = 0; i < n; i++) cin >> g[i];\n    // Viết code của em ở đây\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nchar g[20][20];\nint d[20][20];\nint qr[400], qc[400];\n\nint main() {\n    int n, m;\n    cin >> n >> m;\n    for (int i = 0; i < n; i++) cin >> g[i];\n    int sr = 0, sc = 0, tr = 0, tc = 0;\n    for (int i = 0; i < n; i++) {\n        for (int j = 0; j < m; j++) {\n            d[i][j] = -1;\n            if (g[i][j] == 'S') { sr = i; sc = j; }\n            if (g[i][j] == 'T') { tr = i; tc = j; }\n        }\n    }\n    int dr[4] = {1, -1, 0, 0};\n    int dc[4] = {0, 0, 1, -1};\n    int dau = 0, cuoi = 0;\n    qr[cuoi] = sr; qc[cuoi] = sc; cuoi++;\n    d[sr][sc] = 0;\n    while (dau < cuoi) {\n        int r = qr[dau], c = qc[dau];\n        dau++;\n        for (int k = 0; k < 4; k++) {\n            int nr = r + dr[k], nc = c + dc[k];\n            if (nr >= 0 && nr < n && nc >= 0 && nc < m && g[nr][nc] != '#' && d[nr][nc] == -1) {\n                d[nr][nc] = d[r][c] + 1;\n                qr[cuoi] = nr; qc[cuoi] = nc; cuoi++;\n            }\n        }\n    }\n    cout << d[tr][tc] << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Khởi tạo `d[i][j] = -1` cho mọi ô, tìm tọa độ S và T.",
+            "Hàng đợi tọa độ bằng hai mảng `qr`, `qc`; dùng `dr`, `dc` để duyệt 4 hướng.",
+            "Đáp án là `d` tại ô T (−1 nếu không tới được)."
+          ],
+          "tests": [
+            {
+              "input": "3 4\nS..#\n.#..\n...T\n",
+              "expected": "5",
+              "hidden": false
+            },
+            {
+              "input": "2 3\nS#T\n.#.\n",
+              "expected": "-1",
+              "hidden": false
+            },
+            {
+              "input": "5 6\nS.....\n####.#\n.....#\n.#####\n.....T\n",
+              "expected": "17",
+              "hidden": true
+            },
+            {
+              "input": "1 2\nST\n",
+              "expected": "1",
+              "hidden": true
+            }
+          ],
+          "prism": "bfs"
+        },
+        {
+          "id": "cpp-5-4",
+          "title": "Đồ thị: đếm thành phần liên thông bằng DFS",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "**Đồ thị** gồm các **đỉnh** và các **cạnh** nối giữa chúng — mô hình cho mạng bạn bè, bản đồ đường đi, mạng máy tính… Một **thành phần liên thông** là nhóm đỉnh mà từ một đỉnh bất kỳ có thể đi tới mọi đỉnh khác trong nhóm.\n\nVới đồ thị nhỏ, biểu diễn bằng **ma trận kề**: `ke[u][v] = 1` nếu có cạnh nối u và v.\n\n**Duyệt theo chiều sâu** (Depth-First Search – DFS) đi \"sâu nhất có thể\" theo một hướng rồi mới quay lui:\n\n```cpp\nint n;\nint ke[55][55];\nbool tham[55];\n\nvoid dfs(int u) {\n    tham[u] = true;\n    for (int v = 1; v <= n; v++) {\n        if (ke[u][v] == 1 && !tham[v]) {\n            dfs(v);\n        }\n    }\n}\n```\n\n**Đếm thành phần liên thông:** duyệt lần lượt các đỉnh; mỗi khi gặp một đỉnh **chưa thăm**, ta đã phát hiện một thành phần mới → tăng bộ đếm và gọi `dfs` để đánh dấu toàn bộ thành phần đó.\n\n```cpp\nint soTP = 0;\nfor (int u = 1; u <= n; u++) {\n    if (!tham[u]) {\n        soTP++;\n        dfs(u);\n    }\n}\n```\n\nĐể biết **kích thước** của từng thành phần, có thể dùng một biến toàn cục `dem` tăng thêm 1 mỗi khi `dfs` thăm một đỉnh.\n\nNhớ khởi tạo ma trận kề bằng 0 trước khi đọc cạnh, và vì đồ thị **vô hướng** nên mỗi cạnh u–v phải gán cả `ke[u][v]` và `ke[v][u]`. Với ma trận kề, DFS có độ phức tạp O(n²).",
+          "task": "Dòng đầu gồm `n` (1 ≤ n ≤ 50) và `m` (0 ≤ m ≤ 200) — số đỉnh và số cạnh của đồ thị vô hướng (đỉnh đánh số 1 … n). `m` dòng tiếp theo, mỗi dòng gồm `u v` là một cạnh.\n\nIn ra 2 dòng: số thành phần liên thông và số đỉnh của thành phần liên thông **lớn nhất**.\n\n**Ví dụ**\n\nDữ liệu vào:\n```\n6 4\n1 2\n2 3\n4 5\n1 3\n```\n\nKết quả:\n```\n3\n3\n```",
+          "starter": "#include <iostream>\nusing namespace std;\n\nint n, m;\nint ke[55][55];\nbool tham[55];\n\nint main() {\n    cin >> n >> m;\n    // Viết code của em ở đây: khởi tạo ma trận kề, đọc các cạnh, đếm thành phần liên thông\n\n    return 0;\n}\n",
+          "solution": "#include <iostream>\nusing namespace std;\n\nint n, m;\nint ke[55][55];\nbool tham[55];\nint dem = 0;\n\nvoid dfs(int u) {\n    tham[u] = true;\n    dem++;\n    for (int v = 1; v <= n; v++) {\n        if (ke[u][v] == 1 && !tham[v]) dfs(v);\n    }\n}\n\nint main() {\n    cin >> n >> m;\n    for (int i = 0; i <= n; i++) {\n        tham[i] = false;\n        for (int j = 0; j <= n; j++) ke[i][j] = 0;\n    }\n    for (int k = 0; k < m; k++) {\n        int u, v;\n        cin >> u >> v;\n        ke[u][v] = 1;\n        ke[v][u] = 1;\n    }\n    int soTP = 0, lonNhat = 0;\n    for (int u = 1; u <= n; u++) {\n        if (!tham[u]) {\n            soTP++;\n            dem = 0;\n            dfs(u);\n            if (dem > lonNhat) lonNhat = dem;\n        }\n    }\n    cout << soTP << endl;\n    cout << lonNhat << endl;\n    return 0;\n}\n",
+          "hints": [
+            "Khởi tạo `ke[i][j] = 0`, đọc cạnh và gán cả hai chiều.",
+            "Mỗi đỉnh chưa thăm là khởi đầu một thành phần mới: tăng bộ đếm và gọi dfs.",
+            "Đếm số đỉnh dfs thăm được bằng biến toàn cục `dem`."
+          ],
+          "tests": [
+            {
+              "input": "6 4\n1 2\n2 3\n4 5\n1 3\n",
+              "expected": "3\n3",
+              "hidden": false
+            },
+            {
+              "input": "3 0\n",
+              "expected": "3\n1",
+              "hidden": false
+            },
+            {
+              "input": "8 7\n1 2\n2 3\n3 4\n4 1\n5 6\n7 8\n8 7\n",
+              "expected": "3\n4",
+              "hidden": true
+            },
+            {
+              "input": "1 0\n",
+              "expected": "1\n1",
+              "hidden": true
+            },
+            {
+              "input": "10 9\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n7 8\n8 9\n9 10\n",
+              "expected": "1\n10",
+              "hidden": true
+            }
+          ],
+          "prism": "dfs"
+        }
+      ]
+    }
+  ]
+}

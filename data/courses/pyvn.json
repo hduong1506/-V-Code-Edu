@@ -1,0 +1,437 @@
+{
+  "id": "pyvn",
+  "version": 2,
+  "lang": "pyvn",
+  "title": "Python Tiếng Việt",
+  "subtitle": "Học tư duy lập trình bằng tiếng mẹ đẻ",
+  "level": "Nhập môn",
+  "description": "Dành cho học sinh mới bắt đầu: viết chương trình bằng từ khóa tiếng Việt (in_ra, neu, lap_voi, ham…), được dịch tự động sang Python thật. Mỗi bài đều chỉ rõ từ khóa Python tương ứng để em chuyển sang Python chuẩn thật dễ dàng.",
+  "track": "programming",
+  "accent": "green",
+  "tags": [
+    "python",
+    "tiếng việt",
+    "nhập môn",
+    "THCS"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Làm quen: in ra màn hình và nhập số",
+      "summary": "Các lệnh đầu tiên bằng tiếng Việt: in_ra(), nhap_chuoi(), nhap_so(), nhap_so_thuc() và phép tính.",
+      "lessons": [
+        {
+          "id": "pyvn-1-1",
+          "title": "Lệnh in_ra() và nhap_chuoi()",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Lập trình bằng tiếng Việt\n\n**Python Tiếng Việt** cho phép em viết chương trình bằng các từ khóa tiếng Việt quen thuộc. Khi bấm **Chạy**, hệ thống tự dịch sang Python chuẩn rồi mới thực thi — vì vậy mọi thứ em học ở đây đều dùng được với Python thật.\n\n| Python Tiếng Việt | Python | Ý nghĩa |\n|---|---|---|\n| `in_ra(...)` | `print(...)` | in ra màn hình |\n| `nhap_chuoi()` | `input()` | nhập một dòng chữ |\n\n```pyvn\nten = nhap_chuoi()\nin_ra(\"Xin chào,\", ten)\n```\n\nNếu em nhập `Lan`, máy in ra `Xin chào, Lan`. Khi `in_ra` nhận nhiều giá trị **cách nhau bởi dấu phẩy**, máy tự chèn **một dấu cách** giữa chúng.\n\nPhần chữ đặt trong dấu nháy `\"...\"` gọi là **chuỗi** — máy in y nguyên. Còn `ten` không có nháy là **biến**: một chiếc hộp đựng dữ liệu, ở đây là cái tên em vừa nhập.",
+          "task": "Nhập **tên** (một dòng). In ra dòng `Xin chào, <tên>` rồi đến dòng `Cùng học lập trình nhé!`\n\n**Ví dụ**\n\n```\nĐầu vào:\nLan\n\nĐầu ra:\nXin chào, Lan\nCùng học lập trình nhé!\n```",
+          "starter": "ten = nhap_chuoi()\n# Viết code của em ở đây bằng lệnh in_ra()",
+          "solution": "ten = nhap_chuoi()\nin_ra(\"Xin chào,\", ten)\nin_ra(\"Cùng học lập trình nhé!\")",
+          "hints": [
+            "Gọi in_ra hai lần cho hai dòng.",
+            "in_ra(\"Xin chào,\", ten) tự thêm dấu cách sau dấu phẩy."
+          ],
+          "tests": [
+            {
+              "input": "Lan\n",
+              "expected": "Xin chào, Lan\nCùng học lập trình nhé!",
+              "hidden": false
+            },
+            {
+              "input": "Minh\n",
+              "expected": "Xin chào, Minh\nCùng học lập trình nhé!",
+              "hidden": false
+            },
+            {
+              "input": "Ngọc Anh\n",
+              "expected": "Xin chào, Ngọc Anh\nCùng học lập trình nhé!",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-1-2",
+          "title": "Nhập số với nhap_so()",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Số khác chữ\n\n`nhap_chuoi()` luôn trả về **chữ**. Muốn làm toán, ta dùng `nhap_so()` để nhập **số nguyên**:\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `nhap_so()` | `int(input())` |\n\n```pyvn\na = nhap_so()\nb = nhap_so()\nin_ra(a + b)\n```\n\nCác phép toán dùng như trong toán học: `+` cộng, `-` trừ, `*` nhân, `/` chia. Mỗi lần gọi `nhap_so()` máy đọc **một dòng** dữ liệu.\n\nThử nghĩ xem: nếu dùng `nhap_chuoi()` cho cả hai số rồi cộng lại, với đầu vào `2` và `3` máy sẽ in `23` — vì cộng hai **chuỗi** nghĩa là ghép chúng lại!\n\nKhi chuyển sang Python thật, em chỉ cần nhớ `nhap_so()` chính là `int(input())`.",
+          "task": "Nhập hai số nguyên `a` và `b`, mỗi số trên một dòng. In ra ba dòng: tổng `a + b`, hiệu `a - b` và tích `a * b`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n7\n3\n\nĐầu ra:\n10\n4\n21\n```",
+          "starter": "a = nhap_so()\nb = nhap_so()\n# In tổng, hiệu, tích",
+          "solution": "a = nhap_so()\nb = nhap_so()\nin_ra(a + b)\nin_ra(a - b)\nin_ra(a * b)",
+          "hints": [
+            "Mỗi dòng kết quả là một lệnh in_ra.",
+            "Phép nhân dùng dấu *."
+          ],
+          "tests": [
+            {
+              "input": "7\n3\n",
+              "expected": "10\n4\n21",
+              "hidden": false
+            },
+            {
+              "input": "10\n12\n",
+              "expected": "22\n-2\n120",
+              "hidden": false
+            },
+            {
+              "input": "-4\n5\n",
+              "expected": "1\n-9\n-20",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-1-3",
+          "title": "Biến: chu vi và diện tích hình chữ nhật",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Đặt tên biến có nghĩa\n\nBiến giống chiếc hộp có dán nhãn. Hãy đặt tên gợi nhớ, viết **không dấu** và nối các từ bằng dấu gạch dưới:\n\n```pyvn\nchieu_dai = nhap_so()\nchieu_rong = nhap_so()\ndien_tich = chieu_dai * chieu_rong\nin_ra(dien_tich)\n```\n\nDấu `=` là **phép gán**: tính giá trị bên phải rồi cất vào biến bên trái.\n\nCông thức hình chữ nhật:\n\n- Chu vi $= (dài + rộng) \\times 2$\n- Diện tích $= dài \\times rộng$\n\nChú ý dấu ngoặc trong công thức chu vi: `(chieu_dai + chieu_rong) * 2`. Nếu thiếu ngoặc, máy sẽ nhân trước rồi mới cộng — giống quy tắc em học ở môn Toán.\n\nTên biến không được trùng với từ khóa (như `neu`, `lap_voi`) và không bắt đầu bằng chữ số.",
+          "task": "Nhập chiều dài và chiều rộng của hình chữ nhật (số nguyên, mỗi số một dòng). In ra hai dòng theo mẫu:\n\n```\nChu vi: <chu vi>\nDiện tích: <diện tích>\n```\n\n**Ví dụ**\n\n```\nĐầu vào:\n5\n3\n\nĐầu ra:\nChu vi: 16\nDiện tích: 15\n```",
+          "starter": "chieu_dai = nhap_so()\nchieu_rong = nhap_so()\n# Tính chu vi và diện tích rồi in theo mẫu",
+          "solution": "chieu_dai = nhap_so()\nchieu_rong = nhap_so()\nchu_vi = (chieu_dai + chieu_rong) * 2\ndien_tich = chieu_dai * chieu_rong\nin_ra(\"Chu vi:\", chu_vi)\nin_ra(\"Diện tích:\", dien_tich)",
+          "hints": [
+            "Chu vi = (chieu_dai + chieu_rong) * 2.",
+            "in_ra(\"Chu vi:\", chu_vi) tự chèn dấu cách sau dấu hai chấm."
+          ],
+          "tests": [
+            {
+              "input": "5\n3\n",
+              "expected": "Chu vi: 16\nDiện tích: 15",
+              "hidden": false
+            },
+            {
+              "input": "10\n10\n",
+              "expected": "Chu vi: 40\nDiện tích: 100",
+              "hidden": false
+            },
+            {
+              "input": "7\n2\n",
+              "expected": "Chu vi: 18\nDiện tích: 14",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-1-4",
+          "title": "Số thực: đổi độ C sang độ F",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Số có phần thập phân\n\nNhiệt độ có thể là `36.5` — không phải số nguyên. Ta dùng `nhap_so_thuc()`:\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `nhap_so_thuc()` | `float(input())` |\n| `lam_tron(x, k)` | `round(x, k)` |\n\nCông thức đổi nhiệt độ:\n\n$$F = C \\times 1.8 + 32$$\n\n```pyvn\nc = nhap_so_thuc()\nf = c * 1.8 + 32\nin_ra(lam_tron(f, 1))\n```\n\n`lam_tron(f, 1)` làm tròn tới **1 chữ số thập phân**. Ví dụ `98.60000000000001` thành `98.6`. Máy tính lưu số thực theo hệ nhị phân nên đôi khi có sai số rất nhỏ ở chữ số cuối, vì thế ta luôn làm tròn trước khi in.\n\nLưu ý: kết quả số thực luôn có phần thập phân, ví dụ `0` độ C đổi ra là `32.0`.",
+          "task": "Nhập nhiệt độ `C` (số thực). In nhiệt độ tương ứng theo độ F, **làm tròn 1 chữ số thập phân** bằng `lam_tron()`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n37\n\nĐầu ra:\n98.6\n```",
+          "starter": "c = nhap_so_thuc()\n# Đổi sang độ F và làm tròn 1 chữ số thập phân",
+          "solution": "c = nhap_so_thuc()\nf = c * 1.8 + 32\nin_ra(lam_tron(f, 1))",
+          "hints": [
+            "F = C * 1.8 + 32",
+            "In lam_tron(f, 1)."
+          ],
+          "tests": [
+            {
+              "input": "37\n",
+              "expected": "98.6",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "32.0",
+              "hidden": false
+            },
+            {
+              "input": "-40\n",
+              "expected": "-40.0",
+              "hidden": false
+            },
+            {
+              "input": "25.5\n",
+              "expected": "77.9",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Rẽ nhánh: neu, nguoc_lai_neu, nguoc_lai",
+      "summary": "Giúp chương trình ra quyết định và kết hợp điều kiện với va, hoac, khong_phai.",
+      "lessons": [
+        {
+          "id": "pyvn-2-1",
+          "title": "neu / nguoc_lai: số dương",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Chương trình biết lựa chọn\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `neu điều_kiện:` | `if điều_kiện:` |\n| `nguoc_lai:` | `else:` |\n\n```pyvn\nn = nhap_so()\nneu n > 0:\n    in_ra(\"DUONG\")\nnguoc_lai:\n    in_ra(\"KHONG DUONG\")\n```\n\nBa quy tắc vàng:\n\n1. Cuối dòng `neu ...` và `nguoc_lai` có dấu **hai chấm** `:`.\n2. Lệnh bên trong phải **thụt lề** 4 dấu cách (bấm phím Tab).\n3. So sánh bằng dùng **hai dấu bằng** `==`.\n\nCác phép so sánh: `>` lớn hơn, `<` nhỏ hơn, `>=` lớn hơn hoặc bằng, `<=` nhỏ hơn hoặc bằng, `==` bằng, `!=` khác.\n\nSố 0 không phải số dương, nên với `n = 0` máy sẽ đi vào nhánh `nguoc_lai`.",
+          "task": "Nhập số nguyên `n`. In `DUONG` nếu `n > 0`, ngược lại in `KHONG DUONG`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n0\n\nĐầu ra:\nKHONG DUONG\n```",
+          "starter": "n = nhap_so()\n# Dùng neu / nguoc_lai",
+          "solution": "n = nhap_so()\nneu n > 0:\n    in_ra(\"DUONG\")\nnguoc_lai:\n    in_ra(\"KHONG DUONG\")",
+          "hints": [
+            "Điều kiện số dương là n > 0.",
+            "Nhớ dấu hai chấm và thụt lề trong mỗi nhánh."
+          ],
+          "tests": [
+            {
+              "input": "5\n",
+              "expected": "DUONG",
+              "hidden": false
+            },
+            {
+              "input": "-2\n",
+              "expected": "KHONG DUONG",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "KHONG DUONG",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-2-2",
+          "title": "nguoc_lai_neu: so sánh hai số",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Ba khả năng\n\nKhi so sánh hai số `a` và `b`, có **ba** khả năng: lớn hơn, nhỏ hơn hoặc bằng nhau. Ta dùng `nguoc_lai_neu` cho nhánh ở giữa:\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `nguoc_lai_neu điều_kiện:` | `elif điều_kiện:` |\n\n```pyvn\nneu a > b:\n    in_ra(\"a > b\")\nnguoc_lai_neu a < b:\n    in_ra(\"a < b\")\nnguoc_lai:\n    in_ra(\"a = b\")\n```\n\nMáy kiểm tra **từ trên xuống**, gặp nhánh đầu tiên đúng thì chạy nhánh đó rồi **bỏ qua** các nhánh còn lại. Nhánh `nguoc_lai` cuối cùng bắt mọi trường hợp chưa được xét — ở đây chỉ còn trường hợp hai số bằng nhau.\n\nEm có thể viết bao nhiêu nhánh `nguoc_lai_neu` tùy ý.",
+          "task": "Nhập hai số nguyên `a` và `b` (mỗi số một dòng). In một trong ba dòng: `a > b`, `a < b` hoặc `a = b`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n4\n9\n\nĐầu ra:\na < b\n```",
+          "starter": "a = nhap_so()\nb = nhap_so()\n# Dùng neu / nguoc_lai_neu / nguoc_lai",
+          "solution": "a = nhap_so()\nb = nhap_so()\nneu a > b:\n    in_ra(\"a > b\")\nnguoc_lai_neu a < b:\n    in_ra(\"a < b\")\nnguoc_lai:\n    in_ra(\"a = b\")",
+          "hints": [
+            "Cần ba nhánh cho ba khả năng.",
+            "Nhánh nguoc_lai cuối cùng là trường hợp bằng nhau."
+          ],
+          "tests": [
+            {
+              "input": "4\n9\n",
+              "expected": "a < b",
+              "hidden": false
+            },
+            {
+              "input": "10\n2\n",
+              "expected": "a > b",
+              "hidden": false
+            },
+            {
+              "input": "7\n7\n",
+              "expected": "a = b",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-2-3",
+          "title": "va / hoac: kiểm tra tam giác",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Kết hợp nhiều điều kiện\n\n| Python Tiếng Việt | Python | Đúng khi |\n|---|---|---|\n| `A va B` | `A and B` | cả hai đều đúng |\n| `A hoac B` | `A or B` | ít nhất một cái đúng |\n| `khong_phai A` | `not A` | A sai |\n\n## Bất đẳng thức tam giác\n\nBa đoạn thẳng `a, b, c` tạo thành tam giác khi **mỗi cạnh nhỏ hơn tổng hai cạnh còn lại**:\n\n$$a + b > c, \\quad a + c > b, \\quad b + c > a$$\n\n```pyvn\nneu a + b > c va a + c > b va b + c > a:\n    in_ra(\"YES\")\nnguoc_lai:\n    in_ra(\"NO\")\n```\n\nVí dụ `1, 2, 3` **không** tạo thành tam giác vì $1 + 2 = 3$ (ba điểm thẳng hàng), còn `3, 4, 5` thì được.\n\nKhi điều kiện dài, hãy viết rõ ràng từng phần; nếu cần có thể thêm ngoặc để dễ đọc.",
+          "task": "Nhập ba số nguyên dương `a`, `b`, `c` (mỗi số một dòng). In `YES` nếu chúng là độ dài ba cạnh của một tam giác, ngược lại in `NO`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3\n4\n5\n\nĐầu ra:\nYES\n```",
+          "starter": "a = nhap_so()\nb = nhap_so()\nc = nhap_so()\n# Kiểm tra bất đẳng thức tam giác với va",
+          "solution": "a = nhap_so()\nb = nhap_so()\nc = nhap_so()\nneu a + b > c va a + c > b va b + c > a:\n    in_ra(\"YES\")\nnguoc_lai:\n    in_ra(\"NO\")",
+          "hints": [
+            "Cần cả ba điều kiện đúng cùng lúc → dùng va.",
+            "Lưu ý dùng dấu > (lớn hơn hẳn), không phải >=."
+          ],
+          "tests": [
+            {
+              "input": "3\n4\n5\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "1\n2\n3\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "5\n5\n5\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "10\n1\n1\n",
+              "expected": "NO",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-2-4",
+          "title": "Xếp loại điểm kiểm tra",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Nhiều mức xếp loại\n\nKhi có nhiều mức, ta xếp các nhánh từ **mức cao nhất** xuống:\n\n```pyvn\nneu diem >= 8:\n    in_ra(\"Gioi\")\nnguoc_lai_neu diem >= 6.5:\n    in_ra(\"Kha\")\nnguoc_lai_neu diem >= 5:\n    in_ra(\"Trung binh\")\nnguoc_lai:\n    in_ra(\"Yeu\")\n```\n\nVì sao phải xếp từ cao xuống? Nếu đặt `diem >= 5` lên đầu, một bạn được 9 điểm cũng khớp ngay nhánh đó và bị xếp \"Trung bình\"!\n\nNhờ cơ chế \"gặp nhánh đúng đầu tiên thì dừng\", khi máy xét đến `diem >= 6.5` thì chắc chắn điểm đã **nhỏ hơn 8**.\n\nBài này dùng `nhap_so_thuc()` vì điểm có thể là số thập phân như `7.5`.",
+          "task": "Nhập điểm (số thực từ 0 đến 10). In xếp loại (không dấu): `Gioi` (≥ 8), `Kha` (≥ 6.5), `Trung binh` (≥ 5), còn lại `Yeu`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n7.5\n\nĐầu ra:\nKha\n```",
+          "starter": "diem = nhap_so_thuc()\n# Xếp loại từ mức cao xuống mức thấp",
+          "solution": "diem = nhap_so_thuc()\nneu diem >= 8:\n    in_ra(\"Gioi\")\nnguoc_lai_neu diem >= 6.5:\n    in_ra(\"Kha\")\nnguoc_lai_neu diem >= 5:\n    in_ra(\"Trung binh\")\nnguoc_lai:\n    in_ra(\"Yeu\")",
+          "hints": [
+            "Xét từ điều kiện diem >= 8 trước.",
+            "Dùng nguoc_lai_neu cho các mức ở giữa."
+          ],
+          "tests": [
+            {
+              "input": "7.5\n",
+              "expected": "Kha",
+              "hidden": false
+            },
+            {
+              "input": "8\n",
+              "expected": "Gioi",
+              "hidden": false
+            },
+            {
+              "input": "5\n",
+              "expected": "Trung binh",
+              "hidden": false
+            },
+            {
+              "input": "3.5\n",
+              "expected": "Yeu",
+              "hidden": false
+            },
+            {
+              "input": "6.4\n",
+              "expected": "Trung binh",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "Vòng lặp & hàm",
+      "summary": "Lặp lại công việc với lap_voi và khi_ma, tự tạo hàm với ham / tra_ve — sẵn sàng chuyển sang Python chuẩn.",
+      "lessons": [
+        {
+          "id": "pyvn-3-1",
+          "title": "lap_voi … trong_khoang: bảng cửu chương",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Lặp lại một việc nhiều lần\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `lap_voi i trong_khoang(1, 11):` | `for i in range(1, 11):` |\n\n`trong_khoang(1, 11)` tạo dãy số **1, 2, …, 10** — bắt đầu từ số đầu và **dừng trước** số cuối.\n\n```pyvn\nlap_voi i trong_khoang(1, 4):\n    in_ra(\"Lần\", i)\n```\n\nKết quả:\n\n```\nLần 1\nLần 2\nLần 3\n```\n\nBiến `i` tự động nhận lần lượt từng giá trị trong dãy. Các lệnh thụt lề bên dưới sẽ chạy **một lần cho mỗi giá trị**.\n\nBảng cửu chương của `n` gồm 10 dòng `n x i = n*i` với `i` từ 1 đến 10 — thay vì gõ 10 lệnh `in_ra`, ta chỉ cần một vòng lặp.",
+          "task": "Nhập số nguyên `n`. In bảng cửu chương của `n` gồm 10 dòng theo mẫu `n x i = kết quả` với `i` từ 1 đến 10.\n\n**Ví dụ** (với `n = 3`, 3 dòng đầu)\n\n```\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n```",
+          "starter": "n = nhap_so()\n# Dùng lap_voi i trong_khoang(1, 11):",
+          "solution": "n = nhap_so()\nlap_voi i trong_khoang(1, 11):\n    in_ra(n, \"x\", i, \"=\", n * i)",
+          "hints": [
+            "trong_khoang(1, 11) cho i chạy từ 1 đến 10.",
+            "in_ra(n, \"x\", i, \"=\", n * i)"
+          ],
+          "tests": [
+            {
+              "input": "3\n",
+              "expected": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30",
+              "hidden": false
+            },
+            {
+              "input": "9\n",
+              "expected": "9 x 1 = 9\n9 x 2 = 18\n9 x 3 = 27\n9 x 4 = 36\n9 x 5 = 45\n9 x 6 = 54\n9 x 7 = 63\n9 x 8 = 72\n9 x 9 = 81\n9 x 10 = 90",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n1 x 4 = 4\n1 x 5 = 5\n1 x 6 = 6\n1 x 7 = 7\n1 x 8 = 8\n1 x 9 = 9\n1 x 10 = 10",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-3-2",
+          "title": "khi_ma: đếm ngược",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Lặp khi điều kiện còn đúng\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `khi_ma điều_kiện:` | `while điều_kiện:` |\n\n`khi_ma` lặp **chừng nào** điều kiện còn đúng. Bên trong vòng lặp phải có lệnh làm điều kiện **dần trở thành sai**, nếu không vòng lặp sẽ chạy mãi mãi (lặp vô hạn).\n\n```pyvn\nn = 3\nkhi_ma n > 0:\n    in_ra(n)\n    n = n - 1\nin_ra(\"Xong!\")\n```\n\nKết quả: `3`, `2`, `1`, `Xong!`. Mỗi vòng, `n` giảm đi 1; khi `n` bằng 0 thì điều kiện `n > 0` sai và vòng lặp dừng.\n\nCâu lệnh `in_ra(\"Xong!\")` **không thụt lề** nên nằm ngoài vòng lặp và chỉ chạy một lần.",
+          "task": "Nhập số nguyên dương `n`. In các số từ `n` giảm dần về `1`, mỗi số một dòng, cuối cùng in `PHONG!`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3\n\nĐầu ra:\n3\n2\n1\nPHONG!\n```",
+          "starter": "n = nhap_so()\n# Dùng khi_ma để đếm ngược",
+          "solution": "n = nhap_so()\nkhi_ma n > 0:\n    in_ra(n)\n    n = n - 1\nin_ra(\"PHONG!\")",
+          "hints": [
+            "Điều kiện lặp: n > 0.",
+            "Đừng quên giảm n trong vòng lặp; dòng PHONG! đặt ngoài vòng lặp."
+          ],
+          "tests": [
+            {
+              "input": "3\n",
+              "expected": "3\n2\n1\nPHONG!",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1\nPHONG!",
+              "hidden": false
+            },
+            {
+              "input": "6\n",
+              "expected": "6\n5\n4\n3\n2\n1\nPHONG!",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-3-3",
+          "title": "ham và tra_ve: tổng chữ số",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Tự tạo hàm\n\n| Python Tiếng Việt | Python |\n|---|---|\n| `ham ten_ham(tham_so):` | `def ten_ham(tham_so):` |\n| `tra_ve giá_trị` | `return giá_trị` |\n\nHàm là một \"cỗ máy nhỏ\": nhận nguyên liệu (tham số), xử lý và trả về kết quả.\n\n```pyvn\nham binh_phuong(x):\n    tra_ve x * x\n\nin_ra(binh_phuong(4))   # 16\n```\n\n## Tách chữ số\n\nVới số nguyên dương `n`: `n % 10` là chữ số hàng đơn vị, `n // 10` là phần còn lại sau khi bỏ chữ số cuối. Lặp lại cho tới khi `n` bằng 0:\n\n```pyvn\nham tong_chu_so(n):\n    s = 0\n    khi_ma n > 0:\n        s = s + n % 10\n        n = n // 10\n    tra_ve s\n```\n\nVới `n = 2024`: lấy 4, rồi 2, rồi 0, rồi 2 → tổng là 8.",
+          "task": "Viết hàm `tong_chu_so(n)` trả về tổng các chữ số của số nguyên dương `n`. Nhập `n`, in kết quả của hàm.\n\n**Ví dụ**\n\n```\nĐầu vào:\n2024\n\nĐầu ra:\n8\n```",
+          "starter": "ham tong_chu_so(n):\n    # Viết thân hàm ở đây\n    bo_qua\n\nn = nhap_so()\nin_ra(tong_chu_so(n))",
+          "solution": "ham tong_chu_so(n):\n    s = 0\n    khi_ma n > 0:\n        s = s + n % 10\n        n = n // 10\n    tra_ve s\n\nn = nhap_so()\nin_ra(tong_chu_so(n))",
+          "hints": [
+            "Lấy chữ số cuối bằng n % 10, bỏ chữ số cuối bằng n // 10.",
+            "Lặp khi_ma n > 0 rồi tra_ve tổng."
+          ],
+          "tests": [
+            {
+              "input": "2024\n",
+              "expected": "8",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "7",
+              "hidden": false
+            },
+            {
+              "input": "99999\n",
+              "expected": "45",
+              "hidden": false
+            },
+            {
+              "input": "1000\n",
+              "expected": "1",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "pyvn-3-4",
+          "title": "Tổng hợp: đếm số chẵn",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Kết hợp vòng lặp và rẽ nhánh\n\nNhiều bài toán cần **đếm** những phần tử thỏa mãn điều kiện. Ta dùng biến đếm bắt đầu từ 0, và mỗi khi gặp phần tử phù hợp thì tăng thêm 1:\n\n```pyvn\ndem = 0\nlap_voi i trong_khoang(n):\n    x = nhap_so()\n    neu x % 2 == 0:\n        dem = dem + 1\nin_ra(dem)\n```\n\n`trong_khoang(n)` với một số tạo dãy `0, 1, …, n-1` — đúng `n` lần lặp, vì thế ta nhập được đúng `n` số.\n\n## Sẵn sàng sang Python chuẩn!\n\nĐoạn code trên khi dịch sang Python sẽ là:\n\n```python\ndem = 0\nfor i in range(n):\n    x = int(input())\n    if x % 2 == 0:\n        dem = dem + 1\nprint(dem)\n```\n\nEm thấy không — chỉ là thay từ khóa! Hoàn thành chương này, em đã sẵn sàng học tiếp khóa **Python cơ bản**.",
+          "task": "Dòng đầu là số nguyên `n` (`n ≥ 1`), tiếp theo là `n` dòng, mỗi dòng một số nguyên. In ra hai dòng: **số lượng số chẵn** và **tổng các số chẵn**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n4\n3\n8\n10\n5\n\nĐầu ra:\n2\n18\n```",
+          "starter": "n = nhap_so()\ndem = 0\ntong_chan = 0\n# Nhập n số, đếm và cộng các số chẵn",
+          "solution": "n = nhap_so()\ndem = 0\ntong_chan = 0\nlap_voi i trong_khoang(n):\n    x = nhap_so()\n    neu x % 2 == 0:\n        dem = dem + 1\n        tong_chan = tong_chan + x\nin_ra(dem)\nin_ra(tong_chan)",
+          "hints": [
+            "Mỗi vòng lặp nhập một số x bằng nhap_so().",
+            "Khi x % 2 == 0 thì tăng dem và cộng x vào tong_chan."
+          ],
+          "tests": [
+            {
+              "input": "4\n3\n8\n10\n5\n",
+              "expected": "2\n18",
+              "hidden": false
+            },
+            {
+              "input": "1\n7\n",
+              "expected": "0\n0",
+              "hidden": false
+            },
+            {
+              "input": "5\n2\n-4\n6\n0\n1\n",
+              "expected": "4\n4",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

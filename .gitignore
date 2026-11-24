@@ -1,0 +1,26 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+
+# Secrets & local configuration
+.env
+.env.*
+!.env.example
+
+# Local databases (contain personal data) — never commit
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+archive/**/sqlite-export.json
+archive/**/*.db
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+tests/e2e/screenshots/

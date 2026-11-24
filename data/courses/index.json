@@ -1,0 +1,230 @@
+{
+  "version": 2,
+  "generated_at": "2026-11-24T05:30:52+00:00",
+  "courses": [
+    {
+      "id": "pyvn",
+      "title": "Python Tiếng Việt",
+      "subtitle": "Học tư duy lập trình bằng tiếng mẹ đẻ",
+      "lang": "pyvn",
+      "level": "Nhập môn",
+      "track": "programming",
+      "accent": "green",
+      "tags": [
+        "python",
+        "tiếng việt",
+        "nhập môn",
+        "THCS"
+      ],
+      "description": "Dành cho học sinh mới bắt đầu: viết chương trình bằng từ khóa tiếng Việt (in_ra, neu, lap_voi, ham…), được dịch tự động sang Python thật. Mỗi bài đều chỉ rõ từ khóa Python tương ứng để em chuyển sang Python chuẩn thật dễ dàng.",
+      "chapters_count": 3,
+      "lessons_count": 12,
+      "xp_total": 180
+    },
+    {
+      "id": "python",
+      "title": "Python cơ bản",
+      "subtitle": "Từ dòng lệnh đầu tiên đến tư duy thuật toán",
+      "lang": "python",
+      "level": "Cơ bản",
+      "track": "programming",
+      "accent": "blue",
+      "tags": [
+        "python",
+        "nhập môn",
+        "tư duy lập trình",
+        "Tin học THPT"
+      ],
+      "description": "Khóa học nền tảng cho học sinh THCS – THPT: nhập xuất, biến, toán tử, rẽ nhánh, vòng lặp, chuỗi, danh sách và hàm. Mỗi bài gồm lý thuyết ngắn gọn, ví dụ minh họa và bài tập được chấm tự động bằng Python thật ngay trên trình duyệt.",
+      "chapters_count": 5,
+      "lessons_count": 30,
+      "xp_total": 520
+    },
+    {
+      "id": "web",
+      "title": "HTML & CSS: Thiết kế web",
+      "subtitle": "Tự tay dựng trang web đầu tiên — đúng chuẩn, đẹp và dễ tiếp cận",
+      "lang": "web",
+      "level": "Cơ bản",
+      "track": "web",
+      "accent": "rose",
+      "tags": [
+        "html",
+        "css",
+        "web",
+        "responsive",
+        "flexbox"
+      ],
+      "description": "Học HTML ngữ nghĩa và CSS hiện đại qua 16 bài thực hành: cấu trúc trang, văn bản, liên kết, hình ảnh, biểu mẫu, màu sắc, box model, typography, Flexbox và responsive. Mỗi bài được kiểm tra tự động bằng cách phân tích trang em vừa tạo.",
+      "chapters_count": 4,
+      "lessons_count": 16,
+      "xp_total": 280
+    },
+    {
+      "id": "c",
+      "title": "Lập trình C",
+      "subtitle": "Nền tảng vững chắc từ biến, vòng lặp đến con trỏ",
+      "lang": "c",
+      "level": "Cơ bản",
+      "track": "programming",
+      "accent": "cyan",
+      "tags": [
+        "c",
+        "nhập môn",
+        "con trỏ",
+        "mảng",
+        "thi tin học"
+      ],
+      "description": "Khóa học C từ con số 0: cấu trúc chương trình, nhập xuất printf/scanf, rẽ nhánh và vòng lặp, mảng và chuỗi ký tự, hàm, đệ quy và con trỏ. Mỗi bài có lý thuyết ngắn gọn, ví dụ mẫu và bài tập được chấm tự động ngay trên trình duyệt.",
+      "chapters_count": 4,
+      "lessons_count": 16,
+      "xp_total": 270
+    },
+    {
+      "id": "cpp",
+      "title": "C++ & Thuật toán",
+      "subtitle": "Từ cin/cout đến quy hoạch động và đồ thị — nền tảng thi học sinh giỏi",
+      "lang": "cpp",
+      "level": "Trung cấp",
+      "track": "algorithms",
+      "accent": "amber",
+      "tags": [
+        "c++",
+        "thuật toán",
+        "học sinh giỏi",
+        "quy hoạch động",
+        "đồ thị"
+      ],
+      "description": "Khóa học C++ định hướng thuật toán: kiểu dữ liệu và tràn số, kỹ thuật trên mảng (tổng tiền tố, hai con trỏ, Kadane), tự cài đặt sắp xếp và tìm kiếm nhị phân, đệ quy và quy hoạch động, ngăn xếp, hàng đợi, BFS và DFS. Mỗi bài liên kết với Lăng kính thuật toán để xem trực quan từng bước.",
+      "chapters_count": 5,
+      "lessons_count": 20,
+      "xp_total": 410
+    },
+    {
+      "id": "ai",
+      "title": "Nhập môn AI & Khoa học dữ liệu",
+      "subtitle": "Hiểu AI từ bên trong — tự cài đặt thuật toán bằng Python thuần",
+      "lang": "python",
+      "level": "Trung cấp",
+      "track": "ai",
+      "accent": "violet",
+      "tags": [
+        "ai",
+        "machine learning",
+        "khoa học dữ liệu",
+        "python"
+      ],
+      "description": "Không dùng thư viện có sẵn: em sẽ tự viết thống kê mô tả, chuẩn hóa dữ liệu, hồi quy tuyến tính, k-NN, perceptron, túi từ và bộ lọc thư rác Naive Bayes, rồi đánh giá mô hình bằng accuracy/precision/recall/F1. Yêu cầu: đã hoàn thành khóa Python cơ bản.",
+      "chapters_count": 3,
+      "lessons_count": 10,
+      "xp_total": 240
+    }
+  ],
+  "tracks": [
+    {
+      "id": "programming",
+      "title": "Lập trình nền tảng",
+      "description": "Tư duy lập trình từ con số 0: bắt đầu bằng Python Tiếng Việt, tiến tới Python chuẩn và ngôn ngữ C.",
+      "status": "available",
+      "courses": [
+        "pyvn",
+        "python",
+        "c"
+      ]
+    },
+    {
+      "id": "web",
+      "title": "Phát triển web",
+      "description": "Tự xây dựng trang web với HTML ngữ nghĩa, CSS hiện đại, Flexbox và thiết kế responsive.",
+      "status": "available",
+      "courses": [
+        "web"
+      ]
+    },
+    {
+      "id": "algorithms",
+      "title": "Thuật toán & Cấu trúc dữ liệu",
+      "description": "Rèn tư duy thuật toán với C++ cho kỳ thi học sinh giỏi, kết hợp Lăng kính để xem trực quan từng bước.",
+      "status": "available",
+      "courses": [
+        "cpp"
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "Trí tuệ nhân tạo",
+      "description": "Hiểu AI từ bên trong: thống kê, học máy cơ bản và xử lý ngôn ngữ — tự cài đặt bằng Python thuần.",
+      "status": "available",
+      "courses": [
+        "ai"
+      ]
+    },
+    {
+      "id": "ml-dl",
+      "title": "Học máy & Học sâu",
+      "description": "Nối tiếp khóa Nhập môn AI: mạng nơ-ron nhiều lớp, lan truyền ngược và huấn luyện mô hình nhỏ ngay trên trình duyệt. Đang biên soạn.",
+      "status": "roadmap",
+      "topics": [
+        "Mạng nơ-ron nhiều lớp",
+        "Lan truyền ngược",
+        "Gradient descent",
+        "Phân loại ảnh chữ số",
+        "Đạo đức AI"
+      ],
+      "courses": []
+    },
+    {
+      "id": "data-science",
+      "title": "Khoa học dữ liệu nâng cao",
+      "description": "Thu thập, làm sạch và trực quan hóa dữ liệu thật, đặt câu hỏi và trả lời bằng số liệu. Đang lên kế hoạch.",
+      "status": "roadmap",
+      "topics": [
+        "Làm sạch dữ liệu",
+        "Trực quan hóa",
+        "Thống kê suy luận",
+        "Dự án dữ liệu trường học"
+      ],
+      "courses": []
+    },
+    {
+      "id": "cybersecurity",
+      "title": "An toàn thông tin",
+      "description": "Hiểu cách tấn công và phòng thủ để dùng Internet an toàn: mật khẩu, mã hóa, lừa đảo trực tuyến và lập trình an toàn. Đang lên kế hoạch.",
+      "status": "roadmap",
+      "topics": [
+        "Mật khẩu & xác thực",
+        "Mã hóa cơ bản",
+        "Nhận diện lừa đảo",
+        "Lập trình an toàn",
+        "CTF nhập môn"
+      ],
+      "courses": []
+    },
+    {
+      "id": "robotics-iot",
+      "title": "Robotics & IoT",
+      "description": "Lập trình cảm biến và thiết bị kết nối, mô phỏng mạch và robot trước khi làm với phần cứng thật. Đang lên kế hoạch.",
+      "status": "roadmap",
+      "topics": [
+        "Cảm biến & tín hiệu",
+        "Vi điều khiển",
+        "Giao thức IoT",
+        "Robot dò đường"
+      ],
+      "courses": []
+    },
+    {
+      "id": "automation",
+      "title": "Tự động hóa",
+      "description": "Dùng lập trình để tự động hóa công việc lặp lại: xử lý tệp, bảng tính, gửi thông báo. Đang lên kế hoạch.",
+      "status": "roadmap",
+      "topics": [
+        "Xử lý tệp & thư mục",
+        "Tự động hóa bảng tính",
+        "Lập lịch tác vụ",
+        "Gọi API"
+      ],
+      "courses": []
+    }
+  ]
+}

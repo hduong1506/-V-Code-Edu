@@ -1,0 +1,749 @@
+{
+  "id": "web",
+  "version": 2,
+  "lang": "web",
+  "title": "HTML & CSS: Thiết kế web",
+  "subtitle": "Tự tay dựng trang web đầu tiên — đúng chuẩn, đẹp và dễ tiếp cận",
+  "level": "Cơ bản",
+  "description": "Học HTML ngữ nghĩa và CSS hiện đại qua 16 bài thực hành: cấu trúc trang, văn bản, liên kết, hình ảnh, biểu mẫu, màu sắc, box model, typography, Flexbox và responsive. Mỗi bài được kiểm tra tự động bằng cách phân tích trang em vừa tạo.",
+  "track": "web",
+  "accent": "rose",
+  "tags": [
+    "html",
+    "css",
+    "web",
+    "responsive",
+    "flexbox"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Cấu trúc trang HTML",
+      "summary": "Khung một trang HTML5, tiêu đề, đoạn văn, danh sách và bảng.",
+      "lessons": [
+        {
+          "id": "web-1-1",
+          "title": "Khung trang HTML5",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## HTML là bộ khung của trang web\n\nHTML (HyperText Markup Language) mô tả **cấu trúc** nội dung bằng các **thẻ** (tag). Hầu hết thẻ đi theo cặp: thẻ mở `<p>` và thẻ đóng `</p>`.\n\nMọi trang HTML5 đều có khung chuẩn:\n\n```html\n<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Tên hiển thị trên tab</title>\n</head>\n<body>\n  <h1>Tiêu đề chính</h1>\n  <p>Một đoạn văn.</p>\n</body>\n</html>\n```\n\n| Thành phần | Vai trò |\n|---|---|\n| `<!DOCTYPE html>` | báo cho trình duyệt đây là HTML5 |\n| `<html lang=\"vi\">` | gốc của trang, khai báo ngôn ngữ tiếng Việt |\n| `<head>` | thông tin về trang (không hiển thị): bảng mã, tiêu đề tab, CSS |\n| `<body>` | mọi nội dung người xem nhìn thấy |\n\n`<meta charset=\"UTF-8\">` giúp hiển thị đúng chữ tiếng Việt có dấu. Thẻ `<h1>` là tiêu đề quan trọng nhất của trang — mỗi trang nên có **một** thẻ `<h1>`.",
+          "task": "Hoàn thiện trang web:\n\n1. Tiêu đề tab (`<title>`) là **Trang đầu tiên**.\n2. Trong `<body>` có thẻ `<h1>` với nội dung **Xin chào thế giới**.\n3. Bên dưới là ít nhất **một đoạn văn** `<p>` giới thiệu bất kỳ.\n\nBấm **Chạy** để xem trước, rồi **Nộp bài** để hệ thống kiểm tra cấu trúc trang.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title></title>\n</head>\n<body>\n  <!-- Viết thẻ h1 và một đoạn văn ở đây -->\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Trang đầu tiên</title>\n</head>\n<body>\n  <h1>Xin chào thế giới</h1>\n  <p>Đây là trang web đầu tiên của em trên V-Code Edu.</p>\n</body>\n</html>",
+          "hints": [
+            "Nội dung tiêu đề tab đặt giữa <title> và </title>.",
+            "Thẻ h1 và p đặt bên trong <body>."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "js",
+              "expr": "document.doctype !== null && document.doctype.name === 'html'",
+              "message": "Cần khai báo <!DOCTYPE html> ở dòng đầu tiên"
+            },
+            {
+              "type": "attr",
+              "selector": "html",
+              "name": "lang",
+              "equals": "vi",
+              "message": "Thẻ <html> cần thuộc tính lang=\"vi\""
+            },
+            {
+              "type": "text",
+              "selector": "title",
+              "equals": "Trang đầu tiên",
+              "message": "Tiêu đề tab (<title>) phải là \"Trang đầu tiên\""
+            },
+            {
+              "type": "text",
+              "selector": "body h1",
+              "equals": "Xin chào thế giới",
+              "message": "Cần thẻ <h1> với nội dung \"Xin chào thế giới\""
+            },
+            {
+              "type": "exists",
+              "selector": "body p",
+              "message": "Cần ít nhất một đoạn văn <p>"
+            }
+          ]
+        },
+        {
+          "id": "web-1-2",
+          "title": "Tiêu đề và đoạn văn",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Sáu cấp tiêu đề\n\nHTML có 6 cấp tiêu đề từ `<h1>` (quan trọng nhất) đến `<h6>`. Hãy dùng chúng như **mục lục** của một bài văn:\n\n```html\n<h1>Nguyễn Minh An</h1>\n<h2>Sở thích</h2>\n<p>Em thích chơi cờ vua và đọc truyện khoa học viễn tưởng.</p>\n<h2>Ước mơ</h2>\n<p>Em muốn trở thành kỹ sư trí tuệ nhân tạo.</p>\n```\n\nNguyên tắc:\n\n- Mỗi trang **một** `<h1>` — tên chủ đề chính.\n- `<h2>` cho các mục lớn, `<h3>` cho mục con bên trong `<h2>`… **không nhảy cóc** cấp.\n- Đừng chọn thẻ tiêu đề chỉ vì \"chữ to\"; kích thước chữ là việc của CSS.\n\nThẻ `<p>` tạo đoạn văn. Trình duyệt tự gộp nhiều dấu cách và xuống dòng trong mã nguồn thành **một** dấu cách, vì vậy muốn tách đoạn hãy dùng nhiều thẻ `<p>`.\n\nCấu trúc tiêu đề rõ ràng giúp công cụ tìm kiếm hiểu trang và giúp người khiếm thị dùng trình đọc màn hình di chuyển nhanh giữa các mục.",
+          "task": "Tạo trang **giới thiệu bản thân**:\n\n- Đúng **một** thẻ `<h1>` ghi tên em.\n- Hai thẻ `<h2>`: một thẻ chứa chữ **Sở thích**, một thẻ chứa chữ **Ước mơ**.\n- Mỗi mục có ít nhất một đoạn văn `<p>` (tổng cộng ít nhất 2 đoạn).",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Giới thiệu bản thân</title>\n</head>\n<body>\n  <h1>Tên của em</h1>\n  <!-- Thêm mục Sở thích và Ước mơ -->\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Giới thiệu bản thân</title>\n</head>\n<body>\n  <h1>Nguyễn Minh An</h1>\n  <h2>Sở thích</h2>\n  <p>Em thích chơi cờ vua và đọc truyện khoa học viễn tưởng.</p>\n  <h2>Ước mơ</h2>\n  <p>Em muốn trở thành kỹ sư trí tuệ nhân tạo.</p>\n</body>\n</html>",
+          "hints": [
+            "Dùng <h2>Sở thích</h2> và <h2>Ước mơ</h2>.",
+            "Sau mỗi thẻ h2 là một thẻ <p>."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "count",
+              "selector": "h1",
+              "min": 1,
+              "max": 1,
+              "message": "Trang cần đúng một thẻ <h1>"
+            },
+            {
+              "type": "count",
+              "selector": "h2",
+              "min": 2,
+              "message": "Cần ít nhất hai thẻ <h2>"
+            },
+            {
+              "type": "text",
+              "selector": "h2",
+              "includes": "Sở thích",
+              "message": "Cần một thẻ <h2> chứa \"Sở thích\""
+            },
+            {
+              "type": "text",
+              "selector": "h2",
+              "includes": "Ước mơ",
+              "message": "Cần một thẻ <h2> chứa \"Ước mơ\""
+            },
+            {
+              "type": "count",
+              "selector": "p",
+              "min": 2,
+              "message": "Cần ít nhất hai đoạn văn <p>"
+            }
+          ]
+        },
+        {
+          "id": "web-1-3",
+          "title": "Danh sách có thứ tự và không thứ tự",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Hai loại danh sách\n\n| Thẻ | Loại | Hiển thị |\n|---|---|---|\n| `<ul>` | không thứ tự (unordered) | dấu chấm tròn • |\n| `<ol>` | có thứ tự (ordered) | 1, 2, 3… |\n| `<li>` | một mục (list item) | nằm bên trong `ul` hoặc `ol` |\n\n```html\n<h2>Món ăn yêu thích</h2>\n<ul>\n  <li>Phở bò</li>\n  <li>Bánh mì</li>\n</ul>\n\n<h2>Các bước pha trà</h2>\n<ol>\n  <li>Đun sôi nước</li>\n  <li>Tráng ấm bằng nước nóng</li>\n  <li>Cho trà vào và hãm 3 phút</li>\n</ol>\n```\n\nChọn loại nào? Nếu **thứ tự có ý nghĩa** (các bước, bảng xếp hạng) thì dùng `<ol>`; nếu không (danh sách mua sắm, sở thích) thì dùng `<ul>`.\n\nDanh sách có thể **lồng nhau**: đặt một `<ul>` bên trong một `<li>` để tạo mục con. Thực tế, thanh menu của hầu hết các trang web đều được xây từ `<ul>` và `<li>`.",
+          "task": "Tạo trang gồm:\n\n- Một tiêu đề `<h2>` và một danh sách **không thứ tự** (`<ul>`) có ít nhất **3** món ăn em thích.\n- Một tiêu đề `<h2>` và một danh sách **có thứ tự** (`<ol>`) có ít nhất **3** bước để làm một việc (ví dụ: pha trà, đánh răng…).",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Danh sách</title>\n</head>\n<body>\n  <h2>Món ăn yêu thích</h2>\n  <ul>\n    <li>Phở bò</li>\n  </ul>\n  <!-- Thêm món ăn và danh sách các bước -->\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Danh sách</title>\n</head>\n<body>\n  <h2>Món ăn yêu thích</h2>\n  <ul>\n    <li>Phở bò</li>\n    <li>Bánh mì</li>\n    <li>Bún chả</li>\n  </ul>\n  <h2>Các bước pha trà</h2>\n  <ol>\n    <li>Đun sôi nước</li>\n    <li>Tráng ấm bằng nước nóng</li>\n    <li>Cho trà vào và hãm 3 phút</li>\n  </ol>\n</body>\n</html>",
+          "hints": [
+            "Mỗi mục là một thẻ <li> nằm trong <ul> hoặc <ol>.",
+            "Danh sách các bước dùng <ol> để tự đánh số."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "count",
+              "selector": "ul > li",
+              "min": 3,
+              "message": "Danh sách <ul> cần ít nhất 3 mục <li>"
+            },
+            {
+              "type": "count",
+              "selector": "ol > li",
+              "min": 3,
+              "message": "Danh sách <ol> cần ít nhất 3 mục <li>"
+            },
+            {
+              "type": "count",
+              "selector": "h2",
+              "min": 2,
+              "message": "Mỗi danh sách cần một tiêu đề <h2>"
+            }
+          ]
+        },
+        {
+          "id": "web-1-4",
+          "title": "Bảng dữ liệu",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Trình bày dữ liệu dạng bảng\n\n```html\n<table>\n  <caption>Thời khóa biểu thứ Hai</caption>\n  <thead>\n    <tr><th>Tiết</th><th>Môn</th><th>Giáo viên</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>1</td><td>Toán</td><td>Cô Lan</td></tr>\n    <tr><td>2</td><td>Tin học</td><td>Thầy Hùng</td></tr>\n  </tbody>\n</table>\n```\n\n| Thẻ | Ý nghĩa |\n|---|---|\n| `<table>` | toàn bộ bảng |\n| `<caption>` | tiêu đề của bảng |\n| `<thead>` / `<tbody>` | phần đầu / phần thân bảng |\n| `<tr>` | một hàng (table row) |\n| `<th>` | ô tiêu đề cột (in đậm, căn giữa) |\n| `<td>` | ô dữ liệu (table data) |\n\nMỗi hàng trong `<tbody>` nên có **số ô bằng số cột** của hàng tiêu đề. Chỉ dùng bảng cho **dữ liệu dạng bảng** (thời khóa biểu, bảng điểm), không dùng bảng để dàn trang — việc đó đã có CSS Flexbox mà em sẽ học ở chương 4.",
+          "task": "Tạo **bảng điểm** gồm:\n\n- Một `<caption>` làm tiêu đề bảng.\n- Phần `<thead>` có ít nhất **3** cột tiêu đề `<th>` (ví dụ: Họ tên, Toán, Tin học).\n- Phần `<tbody>` có ít nhất **3** hàng; mỗi hàng có **số ô `<td>` bằng số cột** tiêu đề.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Bảng điểm</title>\n</head>\n<body>\n  <table>\n    <thead>\n      <tr><th>Họ tên</th><th>Toán</th><th>Tin học</th></tr>\n    </thead>\n    <!-- Thêm caption và phần tbody -->\n  </table>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Bảng điểm</title>\n</head>\n<body>\n  <table>\n    <caption>Bảng điểm lớp 10A1</caption>\n    <thead>\n      <tr><th>Họ tên</th><th>Toán</th><th>Tin học</th></tr>\n    </thead>\n    <tbody>\n      <tr><td>Minh An</td><td>8.5</td><td>9.0</td></tr>\n      <tr><td>Bảo Ngọc</td><td>9.0</td><td>9.5</td></tr>\n      <tr><td>Gia Huy</td><td>7.5</td><td>10</td></tr>\n    </tbody>\n  </table>\n</body>\n</html>",
+          "hints": [
+            "<caption> đặt ngay sau thẻ mở <table>.",
+            "Mỗi hàng <tr> trong <tbody> có đúng 3 ô <td> nếu có 3 cột tiêu đề."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "table caption",
+              "message": "Bảng cần thẻ <caption>"
+            },
+            {
+              "type": "count",
+              "selector": "thead th",
+              "min": 3,
+              "message": "Phần <thead> cần ít nhất 3 ô <th>"
+            },
+            {
+              "type": "count",
+              "selector": "tbody tr",
+              "min": 3,
+              "message": "Phần <tbody> cần ít nhất 3 hàng <tr>"
+            },
+            {
+              "type": "js",
+              "expr": "document.querySelectorAll('tbody tr').length > 0 && Array.from(document.querySelectorAll('tbody tr')).every(function (r) { return r.querySelectorAll('td').length === document.querySelectorAll('thead th').length; })",
+              "message": "Mỗi hàng trong <tbody> cần có số ô <td> bằng số cột tiêu đề"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Văn bản, liên kết & hình ảnh",
+      "summary": "Định dạng văn bản có ngữ nghĩa, siêu liên kết, hình ảnh với văn bản thay thế và biểu mẫu.",
+      "lessons": [
+        {
+          "id": "web-2-1",
+          "title": "Nhấn mạnh văn bản có ngữ nghĩa",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Thẻ có ý nghĩa, không chỉ là hình thức\n\n| Thẻ | Ý nghĩa | Hiển thị mặc định |\n|---|---|---|\n| `<strong>` | rất quan trọng | **in đậm** |\n| `<em>` | nhấn giọng | *in nghiêng* |\n| `<code>` | đoạn mã máy tính | phông chữ đơn cách |\n| `<blockquote>` | trích dẫn dài | thụt lề |\n| `<br>` | xuống dòng (thẻ đơn, không có thẻ đóng) | |\n\n```html\n<p>Lệnh <code>print()</code> dùng để in ra màn hình.\n   Đây là điều <strong>rất quan trọng</strong>, hãy <em>nhớ kỹ</em>!</p>\n<blockquote>Học, học nữa, học mãi.</blockquote>\n```\n\nVì sao không dùng `<b>`, `<i>`? Các thẻ đó chỉ nói về **hình thức**. `<strong>` và `<em>` mang **ngữ nghĩa** — trình đọc màn hình sẽ đọc nhấn mạnh, công cụ tìm kiếm hiểu đâu là ý chính.\n\nĐây là tư tưởng của **HTML ngữ nghĩa** (semantic HTML): HTML mô tả *nội dung là gì*, còn CSS lo việc *trông như thế nào*.",
+          "task": "Viết một đoạn giới thiệu về ngôn ngữ lập trình em thích, trong đó:\n\n- Có ít nhất một cụm từ **quan trọng** đặt trong `<strong>` (nằm trong `<p>`).\n- Có ít nhất một cụm từ **nhấn giọng** đặt trong `<em>` (nằm trong `<p>`).\n- Có một tên lệnh hoặc hàm đặt trong `<code>`.\n- Có một câu trích dẫn trong `<blockquote>`.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Định dạng văn bản</title>\n</head>\n<body>\n  <h1>Ngôn ngữ em thích</h1>\n  <p>Python là ngôn ngữ dễ học. Lệnh print() dùng để in ra màn hình.</p>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Định dạng văn bản</title>\n</head>\n<body>\n  <h1>Ngôn ngữ em thích</h1>\n  <p>Python là ngôn ngữ <strong>dễ học</strong> và <em>rất mạnh mẽ</em>. Lệnh <code>print()</code> dùng để in ra màn hình.</p>\n  <blockquote>Code đơn giản tốt hơn code phức tạp. — The Zen of Python</blockquote>\n</body>\n</html>",
+          "hints": [
+            "Bọc cụm từ cần nhấn mạnh: <strong>dễ học</strong>.",
+            "Câu trích dẫn đặt trong <blockquote>...</blockquote>."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "p strong",
+              "message": "Cần thẻ <strong> bên trong một đoạn <p>"
+            },
+            {
+              "type": "exists",
+              "selector": "p em",
+              "message": "Cần thẻ <em> bên trong một đoạn <p>"
+            },
+            {
+              "type": "exists",
+              "selector": "code",
+              "message": "Cần ít nhất một thẻ <code>"
+            },
+            {
+              "type": "exists",
+              "selector": "blockquote",
+              "message": "Cần một câu trích dẫn trong <blockquote>"
+            }
+          ]
+        },
+        {
+          "id": "web-2-2",
+          "title": "Siêu liên kết",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Thẻ `<a>` — linh hồn của web\n\n```html\n<a href=\"https://vi.wikipedia.org\">Wikipedia tiếng Việt</a>\n```\n\nThuộc tính `href` là địa chỉ đích. Có nhiều loại liên kết:\n\n| Loại | Ví dụ `href` |\n|---|---|\n| trang web khác | `https://example.com` |\n| trang trong cùng website | `gioi-thieu.html` |\n| một mục trong cùng trang | `#lien-he` |\n| gửi thư | `mailto:ban@example.com` |\n\n**Liên kết tới một mục trong trang**: đặt `id` cho phần tử đích, rồi trỏ `href=\"#id\"`:\n\n```html\n<a href=\"#lien-he\">Đi tới phần Liên hệ</a>\n...\n<h2 id=\"lien-he\">Liên hệ</h2>\n```\n\n**Mở trong tab mới** an toàn:\n\n```html\n<a href=\"https://example.com\" target=\"_blank\" rel=\"noopener noreferrer\">Mở tab mới</a>\n```\n\n`rel=\"noopener\"` ngăn trang mới can thiệp vào trang của em — một thói quen bảo mật nên có. Hãy viết chữ liên kết **có nghĩa** (\"Xem thời khóa biểu\") thay vì \"bấm vào đây\".",
+          "task": "Tạo trang có:\n\n1. Một liên kết tới trang web bên ngoài (địa chỉ bắt đầu bằng `https://`) mở trong **tab mới** (`target=\"_blank\"`) và có `rel` chứa `noopener`.\n2. Một liên kết nội bộ với `href=\"#lien-he\"`.\n3. Một phần tử (ví dụ `<h2>`) có `id=\"lien-he\"` để liên kết nội bộ trỏ tới.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Liên kết</title>\n</head>\n<body>\n  <h1>Trang của em</h1>\n  <p>Tìm hiểu thêm trên Wikipedia.</p>\n  <!-- Thêm các liên kết và mục Liên hệ -->\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Liên kết</title>\n</head>\n<body>\n  <h1>Trang của em</h1>\n  <p>Tìm hiểu thêm trên <a href=\"https://vi.wikipedia.org\" target=\"_blank\" rel=\"noopener noreferrer\">Wikipedia tiếng Việt</a>.</p>\n  <p><a href=\"#lien-he\">Đi tới phần Liên hệ</a></p>\n  <h2 id=\"lien-he\">Liên hệ</h2>\n  <p>Email: <a href=\"mailto:hocsinh@example.com\">hocsinh@example.com</a></p>\n</body>\n</html>",
+          "hints": [
+            "Liên kết ngoài: <a href=\"https://...\" target=\"_blank\" rel=\"noopener\">",
+            "Đặt id=\"lien-he\" cho thẻ h2 của mục Liên hệ."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "attr",
+              "selector": "a[target=\"_blank\"]",
+              "name": "href",
+              "includes": "https://",
+              "message": "Cần một liên kết https:// mở trong tab mới (target=\"_blank\")"
+            },
+            {
+              "type": "attr",
+              "selector": "a[target=\"_blank\"]",
+              "name": "rel",
+              "includes": "noopener",
+              "message": "Liên kết mở tab mới cần rel chứa \"noopener\""
+            },
+            {
+              "type": "attr",
+              "selector": "a",
+              "name": "href",
+              "equals": "#lien-he",
+              "message": "Cần một liên kết nội bộ href=\"#lien-he\""
+            },
+            {
+              "type": "exists",
+              "selector": "#lien-he",
+              "message": "Cần một phần tử có id=\"lien-he\""
+            }
+          ]
+        },
+        {
+          "id": "web-2-3",
+          "title": "Hình ảnh và văn bản thay thế",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Thẻ `<img>`\n\n```html\n<img src=\"ho-guom.jpg\" alt=\"Tháp Rùa giữa hồ Hoàn Kiếm\" width=\"320\">\n```\n\n- `src`: đường dẫn tới ảnh.\n- `alt`: **văn bản thay thế** — mô tả nội dung ảnh.\n- `<img>` là thẻ đơn, không có thẻ đóng.\n\n## Vì sao `alt` quan trọng?\n\n1. Người khiếm thị dùng trình đọc màn hình sẽ **nghe** nội dung của `alt`.\n2. Khi ảnh lỗi hoặc mạng chậm, trình duyệt hiển thị `alt` thay cho ảnh.\n3. Công cụ tìm kiếm dựa vào `alt` để hiểu hình ảnh.\n\nViết `alt` mô tả **nội dung và ý nghĩa** của ảnh, ví dụ \"Biểu đồ điểm trung bình tăng dần qua 3 học kỳ\", chứ không ghi \"ảnh 1\".\n\n## Ảnh có chú thích\n\n```html\n<figure>\n  <img src=\"ho-guom.jpg\" alt=\"Tháp Rùa giữa hồ Hoàn Kiếm\">\n  <figcaption>Hồ Hoàn Kiếm, Hà Nội</figcaption>\n</figure>\n```\n\nTrong khung xem trước, ảnh có thể không tải được vì tệp không tồn tại — khi đó em sẽ thấy ngay văn bản `alt` hiển thị thay thế!",
+          "task": "Tạo một `<figure>` chứa:\n\n- Một ảnh `<img>` có thuộc tính `src` và thuộc tính `alt` mô tả nội dung (không được để trống).\n- Một chú thích `<figcaption>`.\n\n**Mọi** ảnh trên trang đều phải có `alt` không rỗng.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Hình ảnh</title>\n</head>\n<body>\n  <h1>Danh lam thắng cảnh</h1>\n  <img src=\"ho-guom.jpg\">\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Hình ảnh</title>\n</head>\n<body>\n  <h1>Danh lam thắng cảnh</h1>\n  <figure>\n    <img src=\"ho-guom.jpg\" alt=\"Tháp Rùa giữa hồ Hoàn Kiếm vào buổi sáng\" width=\"320\">\n    <figcaption>Hồ Hoàn Kiếm, Hà Nội</figcaption>\n  </figure>\n</body>\n</html>",
+          "hints": [
+            "Đặt <img> và <figcaption> bên trong <figure>.",
+            "Thêm alt=\"mô tả nội dung ảnh\" cho thẻ img."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "figure img",
+              "message": "Cần một thẻ <img> nằm trong <figure>"
+            },
+            {
+              "type": "exists",
+              "selector": "figure figcaption",
+              "message": "Cần chú thích <figcaption> trong <figure>"
+            },
+            {
+              "type": "attr",
+              "selector": "img",
+              "name": "src",
+              "present": true,
+              "message": "Ảnh cần thuộc tính src"
+            },
+            {
+              "type": "js",
+              "expr": "document.images.length > 0 && Array.from(document.images).every(function (i) { return (i.getAttribute('alt') || '').trim().length > 0; })",
+              "message": "Mọi thẻ <img> cần thuộc tính alt mô tả nội dung (không để trống)"
+            }
+          ]
+        },
+        {
+          "id": "web-2-4",
+          "title": "Biểu mẫu đăng ký",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Thu thập thông tin với `<form>`\n\n```html\n<form>\n  <label for=\"email\">Email</label>\n  <input id=\"email\" name=\"email\" type=\"email\" required>\n\n  <label for=\"mat-khau\">Mật khẩu</label>\n  <input id=\"mat-khau\" name=\"mat_khau\" type=\"password\" minlength=\"6\" required>\n\n  <button type=\"submit\">Đăng ký</button>\n</form>\n```\n\n| Kiểu `type` | Dùng cho | Trình duyệt hỗ trợ |\n|---|---|---|\n| `text` | chữ thường | — |\n| `email` | địa chỉ email | kiểm tra có `@`, bàn phím điện thoại có sẵn `@` |\n| `password` | mật khẩu | che ký tự |\n| `number` | số | nút tăng/giảm |\n| `date` | ngày | bảng chọn ngày |\n\n**`<label for=\"...\">` phải trùng với `id` của ô nhập.** Nhờ vậy khi bấm vào nhãn, con trỏ nhảy vào ô; trình đọc màn hình cũng đọc đúng tên ô.\n\nThuộc tính `required` bắt buộc phải nhập; `minlength=\"6\"` yêu cầu tối thiểu 6 ký tự. Đây là kiểm tra **phía trình duyệt** cho tiện người dùng — máy chủ vẫn phải kiểm tra lại, vì người dùng có thể vượt qua kiểm tra ở trình duyệt.",
+          "task": "Tạo biểu mẫu đăng ký `<form>` gồm:\n\n1. Ô nhập **email** (`type=\"email\"`) có thuộc tính `required`.\n2. Ô nhập **mật khẩu** (`type=\"password\"`).\n3. Nút gửi `type=\"submit\"`.\n4. **Mọi** ô `<input>` (trừ nút) đều có `id` và một `<label for=\"...\">` tương ứng.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Biểu mẫu</title>\n</head>\n<body>\n  <h1>Đăng ký tài khoản</h1>\n  <form>\n    Tên: <input type=\"text\">\n  </form>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Biểu mẫu</title>\n</head>\n<body>\n  <h1>Đăng ký tài khoản</h1>\n  <form>\n    <label for=\"ho-ten\">Họ tên</label>\n    <input id=\"ho-ten\" name=\"ho_ten\" type=\"text\">\n    <label for=\"email\">Email</label>\n    <input id=\"email\" name=\"email\" type=\"email\" required>\n    <label for=\"mat-khau\">Mật khẩu</label>\n    <input id=\"mat-khau\" name=\"mat_khau\" type=\"password\" minlength=\"6\" required>\n    <button type=\"submit\">Đăng ký</button>\n  </form>\n</body>\n</html>",
+          "hints": [
+            "Mỗi ô nhập cần id riêng, ví dụ id=\"email\", và <label for=\"email\">.",
+            "Ô email: <input id=\"email\" type=\"email\" required>",
+            "Nút gửi: <button type=\"submit\">Đăng ký</button>"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "form",
+              "message": "Cần thẻ <form>"
+            },
+            {
+              "type": "attr",
+              "selector": "form input[type=\"email\"]",
+              "name": "required",
+              "present": true,
+              "message": "Cần ô email (type=\"email\") có thuộc tính required"
+            },
+            {
+              "type": "exists",
+              "selector": "form input[type=\"password\"]",
+              "message": "Cần ô mật khẩu (type=\"password\")"
+            },
+            {
+              "type": "exists",
+              "selector": "form button[type=\"submit\"], form input[type=\"submit\"]",
+              "message": "Cần nút gửi type=\"submit\""
+            },
+            {
+              "type": "js",
+              "expr": "Array.from(document.querySelectorAll('form input:not([type=submit]):not([type=button]):not([type=hidden])')).every(function (i) { return i.id && document.querySelector('label[for=\"' + i.id + '\"]'); })",
+              "message": "Mọi ô <input> cần id và một <label for> trùng với id đó"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "CSS cơ bản",
+      "summary": "Tô màu, bộ chọn class/id, mô hình hộp và định dạng chữ với CSS.",
+      "lessons": [
+        {
+          "id": "web-3-1",
+          "title": "Màu chữ và màu nền",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## CSS — trang phục cho HTML\n\nCSS (Cascading Style Sheets) quyết định trang web **trông như thế nào**. Một quy tắc CSS gồm **bộ chọn** và các **khai báo**:\n\n```css\nh1 {\n  color: #2f49d1;            /* màu chữ */\n  background-color: #ffffff; /* màu nền */\n}\n```\n\nCách đơn giản nhất là viết CSS trong thẻ `<style>` ở phần `<head>`.\n\n## Các cách viết màu\n\n| Cách viết | Ví dụ |\n|---|---|\n| tên màu | `red`, `navy` |\n| mã HEX | `#2f49d1` (đỏ 2f, lục 49, lam d1) |\n| `rgb()` | `rgb(47, 73, 209)` |\n\nMã HEX gồm 3 cặp số hệ 16 ứng với **đỏ – lục – lam**, mỗi cặp từ `00` đến `ff` (0 – 255). `#2f49d1` và `rgb(47, 73, 209)` là **cùng một màu**.\n\nHãy chọn màu chữ **tương phản đủ** với màu nền để ai cũng đọc được, kể cả người có thị lực kém.",
+          "task": "Viết CSS trong thẻ `<style>` để:\n\n- Nền của `body` có màu `#f6f5f1`.\n- Chữ của `h1` có màu `#2f49d1`.\n- Chữ của các đoạn `p` có màu `#3d4566`.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Màu sắc</title>\n  <style>\n    /* Viết CSS của em ở đây */\n  </style>\n</head>\n<body>\n  <h1>Góc học tập</h1>\n  <p>Mỗi ngày một dòng code.</p>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Màu sắc</title>\n  <style>\n    body { background-color: #f6f5f1; }\n    h1 { color: #2f49d1; }\n    p { color: #3d4566; }\n  </style>\n</head>\n<body>\n  <h1>Góc học tập</h1>\n  <p>Mỗi ngày một dòng code.</p>\n</body>\n</html>",
+          "hints": [
+            "Bộ chọn body, h1, p; thuộc tính background-color và color.",
+            "Ví dụ: h1 { color: #2f49d1; }"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "style",
+              "message": "Cần viết CSS trong thẻ <style>"
+            },
+            {
+              "type": "style",
+              "selector": "body",
+              "property": "background-color",
+              "equals": "rgb(246, 245, 241)",
+              "message": "Nền body cần màu #f6f5f1"
+            },
+            {
+              "type": "style",
+              "selector": "h1",
+              "property": "color",
+              "equals": "rgb(47, 73, 209)",
+              "message": "Chữ h1 cần màu #2f49d1"
+            },
+            {
+              "type": "style",
+              "selector": "p",
+              "property": "color",
+              "equals": "rgb(61, 69, 102)",
+              "message": "Chữ p cần màu #3d4566"
+            }
+          ]
+        },
+        {
+          "id": "web-3-2",
+          "title": "Bộ chọn class và id",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Chọn đúng phần tử cần trang trí\n\n| Bộ chọn | Cú pháp | Chọn |\n|---|---|---|\n| thẻ | `p` | mọi thẻ `<p>` |\n| class | `.ghi-chu` | mọi phần tử có `class=\"ghi-chu\"` |\n| id | `#tieu-de` | **duy nhất** phần tử có `id=\"tieu-de\"` |\n| con cháu | `.the p` | thẻ `p` nằm trong phần tử có class `the` |\n\n```html\n<h1 id=\"tieu-de\">Sổ tay lập trình</h1>\n<p class=\"ghi-chu\">Nhớ lưu file thường xuyên!</p>\n```\n\n```css\n#tieu-de { font-size: 32px; }\n.ghi-chu { background-color: #fff4cc; }\n```\n\n- **class** dùng cho nhóm phần tử giống nhau — nhiều phần tử có thể dùng chung một class, và một phần tử có thể có nhiều class: `class=\"ghi-chu quan-trong\"`.\n- **id** phải là duy nhất trong trang; thường dùng cho liên kết nội bộ (`#id`) hoặc JavaScript.\n\nKhi nhiều quy tắc cùng áp dụng, quy tắc **cụ thể hơn** thắng: id > class > thẻ.",
+          "task": "- Gán `id=\"tieu-de\"` cho thẻ `<h1>` và đặt cỡ chữ `32px` cho nó bằng bộ chọn id.\n- Gán `class=\"note\"` cho **ít nhất hai** đoạn văn và tô nền `#fff4cc` cho chúng bằng bộ chọn class.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Bộ chọn</title>\n  <style>\n    /* Viết CSS của em ở đây */\n  </style>\n</head>\n<body>\n  <h1>Sổ tay lập trình</h1>\n  <p>Nhớ lưu file thường xuyên!</p>\n  <p>Đặt tên biến có nghĩa.</p>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Bộ chọn</title>\n  <style>\n    #tieu-de { font-size: 32px; }\n    .note { background-color: #fff4cc; }\n  </style>\n</head>\n<body>\n  <h1 id=\"tieu-de\">Sổ tay lập trình</h1>\n  <p class=\"note\">Nhớ lưu file thường xuyên!</p>\n  <p class=\"note\">Đặt tên biến có nghĩa.</p>\n</body>\n</html>",
+          "hints": [
+            "Thêm id=\"tieu-de\" vào thẻ h1 và class=\"note\" vào các thẻ p.",
+            "CSS: #tieu-de { font-size: 32px; } .note { background-color: #fff4cc; }"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "exists",
+              "selector": "h1#tieu-de",
+              "message": "Thẻ h1 cần id=\"tieu-de\""
+            },
+            {
+              "type": "style",
+              "selector": "#tieu-de",
+              "property": "font-size",
+              "equals": "32px",
+              "message": "#tieu-de cần font-size: 32px"
+            },
+            {
+              "type": "count",
+              "selector": ".note",
+              "min": 2,
+              "message": "Cần ít nhất hai phần tử có class=\"note\""
+            },
+            {
+              "type": "style",
+              "selector": ".note",
+              "property": "background-color",
+              "equals": "rgb(255, 244, 204)",
+              "message": ".note cần màu nền #fff4cc"
+            }
+          ]
+        },
+        {
+          "id": "web-3-3",
+          "title": "Mô hình hộp (Box model)",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Mọi phần tử đều là một chiếc hộp\n\nTừ trong ra ngoài, mỗi phần tử gồm 4 lớp:\n\n```\n┌────────── margin (lề ngoài) ──────────┐\n│ ┌─────── border (viền) ─────────────┐ │\n│ │ ┌──── padding (đệm trong) ──────┐ │ │\n│ │ │          content              │ │ │\n│ │ └───────────────────────────────┘ │ │\n│ └───────────────────────────────────┘ │\n└───────────────────────────────────────┘\n```\n\n```css\n.the {\n  padding: 16px;                 /* khoảng cách từ nội dung tới viền */\n  border: 2px solid #2f49d1;     /* độ dày, kiểu, màu viền */\n  border-radius: 12px;           /* bo góc */\n  margin-bottom: 24px;           /* khoảng cách với phần tử bên dưới */\n}\n```\n\n- `padding: 16px` đặt đệm cả 4 phía; có thể viết riêng `padding-top`, `padding-left`…\n- Kiểu viền thường dùng: `solid` (liền), `dashed` (gạch), `dotted` (chấm).\n- `margin` tạo khoảng trống **bên ngoài** viền, còn `padding` ở **bên trong** — padding có màu nền của phần tử, margin thì không.\n\nMẹo: thêm `box-sizing: border-box;` để chiều rộng đã bao gồm cả padding và border, giúp tính toán bố cục dễ hơn.",
+          "task": "Trang có các thẻ `<div class=\"card\">`. Viết CSS cho `.card`:\n\n- Đệm trong `16px` ở cả 4 phía.\n- Viền `2px`, kiểu `solid`, màu tùy chọn.\n- Bo góc `12px`.\n- Lề dưới (`margin-bottom`) `24px`.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Box model</title>\n  <style>\n    .card {\n      /* Viết CSS của em ở đây */\n    }\n  </style>\n</head>\n<body>\n  <div class=\"card\"><h2>Python</h2><p>Ngôn ngữ dễ học.</p></div>\n  <div class=\"card\"><h2>C++</h2><p>Ngôn ngữ của thi học sinh giỏi.</p></div>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Box model</title>\n  <style>\n    .card {\n      padding: 16px;\n      border: 2px solid #2f49d1;\n      border-radius: 12px;\n      margin-bottom: 24px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"card\"><h2>Python</h2><p>Ngôn ngữ dễ học.</p></div>\n  <div class=\"card\"><h2>C++</h2><p>Ngôn ngữ của thi học sinh giỏi.</p></div>\n</body>\n</html>",
+          "hints": [
+            "padding: 16px; đặt đệm cho cả 4 phía.",
+            "border: 2px solid #2f49d1; border-radius: 12px; margin-bottom: 24px;"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "padding-top",
+              "equals": "16px",
+              "message": ".card cần padding 16px"
+            },
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "padding-left",
+              "equals": "16px",
+              "message": ".card cần padding 16px ở cả bên trái"
+            },
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "border-top-width",
+              "equals": "2px",
+              "message": ".card cần viền dày 2px"
+            },
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "border-top-style",
+              "equals": "solid",
+              "message": "Viền của .card cần kiểu solid"
+            },
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "border-top-left-radius",
+              "equals": "12px",
+              "message": ".card cần bo góc 12px"
+            },
+            {
+              "type": "style",
+              "selector": ".card",
+              "property": "margin-bottom",
+              "equals": "24px",
+              "message": ".card cần margin-bottom: 24px"
+            }
+          ]
+        },
+        {
+          "id": "web-3-4",
+          "title": "Định dạng chữ và căn lề",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Typography — nghệ thuật trình bày chữ\n\n| Thuộc tính | Ví dụ | Tác dụng |\n|---|---|---|\n| `font-size` | `16px` | cỡ chữ |\n| `font-weight` | `700` hoặc `bold` | độ đậm (400 thường, 700 đậm) |\n| `line-height` | `1.6` | khoảng cách dòng = 1.6 × cỡ chữ |\n| `text-align` | `center` | căn lề: `left`, `center`, `right`, `justify` |\n| `text-transform` | `uppercase` | chuyển chữ in hoa khi hiển thị |\n| `font-family` | `Arial, sans-serif` | phông chữ (kèm phông dự phòng) |\n\n```css\nh1 { text-align: center; text-transform: uppercase; }\np  { font-size: 16px; line-height: 1.6; }\n.noi-bat { font-weight: 700; }\n```\n\n`line-height` khoảng **1.5 – 1.7** giúp đoạn văn dễ đọc hơn hẳn. Khi viết `line-height: 1.6` với chữ 16px, khoảng cách dòng thực tế là $16 \\times 1.6 = 25.6$px.\n\n`text-transform: uppercase` chỉ thay đổi **cách hiển thị** — nội dung HTML vẫn giữ nguyên, nên trình đọc màn hình vẫn đọc tự nhiên.",
+          "task": "Viết CSS để:\n\n- `h1` được **căn giữa** và hiển thị **in hoa** (`text-transform`).\n- Đoạn văn `p` có cỡ chữ `16px` và `line-height: 1.6`.\n- Phần tử có class `highlight` được in **đậm** (`font-weight: 700`).",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Typography</title>\n  <style>\n    /* Viết CSS của em ở đây */\n  </style>\n</head>\n<body>\n  <h1>Bí kíp học tốt</h1>\n  <p>Học đều mỗi ngày quan trọng hơn học dồn. <span class=\"highlight\">Thực hành là chìa khóa.</span></p>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Typography</title>\n  <style>\n    h1 { text-align: center; text-transform: uppercase; }\n    p { font-size: 16px; line-height: 1.6; }\n    .highlight { font-weight: 700; }\n  </style>\n</head>\n<body>\n  <h1>Bí kíp học tốt</h1>\n  <p>Học đều mỗi ngày quan trọng hơn học dồn. <span class=\"highlight\">Thực hành là chìa khóa.</span></p>\n</body>\n</html>",
+          "hints": [
+            "h1 { text-align: center; text-transform: uppercase; }",
+            "p { font-size: 16px; line-height: 1.6; } và .highlight { font-weight: 700; }"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "style",
+              "selector": "h1",
+              "property": "text-align",
+              "equals": "center",
+              "message": "h1 cần text-align: center"
+            },
+            {
+              "type": "style",
+              "selector": "h1",
+              "property": "text-transform",
+              "equals": "uppercase",
+              "message": "h1 cần text-transform: uppercase"
+            },
+            {
+              "type": "style",
+              "selector": "p",
+              "property": "font-size",
+              "equals": "16px",
+              "message": "p cần font-size: 16px"
+            },
+            {
+              "type": "style",
+              "selector": "p",
+              "property": "line-height",
+              "equals": "25.6px",
+              "message": "p cần line-height: 1.6"
+            },
+            {
+              "type": "style",
+              "selector": ".highlight",
+              "property": "font-weight",
+              "equals": "700",
+              "message": ".highlight cần font-weight: 700"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "Bố cục Flexbox & Responsive",
+      "summary": "Dàn trang hiện đại với Flexbox và làm trang hiển thị đẹp trên mọi màn hình.",
+      "lessons": [
+        {
+          "id": "web-4-1",
+          "title": "display: flex và gap",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Flexbox: xếp phần tử theo hàng\n\nMặc định các thẻ `<div>` xếp **chồng dọc**. Đặt `display: flex` cho phần tử cha, các con sẽ xếp **thành hàng ngang**:\n\n```html\n<div class=\"hang\">\n  <div class=\"o\">1</div>\n  <div class=\"o\">2</div>\n  <div class=\"o\">3</div>\n</div>\n```\n\n```css\n.hang {\n  display: flex;\n  gap: 16px;      /* khoảng cách giữa các ô */\n}\n```\n\nThuật ngữ:\n\n- **Flex container**: phần tử cha có `display: flex`.\n- **Flex item**: các phần tử con trực tiếp.\n- **Trục chính** (main axis): mặc định nằm ngang. Đổi bằng `flex-direction: column` để xếp dọc.\n\n`gap` tạo khoảng cách **giữa** các phần tử mà không cần margin — không thừa khoảng trống ở hai đầu. Flexbox là công cụ dàn trang được dùng nhiều nhất trong web hiện đại: thanh menu, hàng nút, thẻ sản phẩm…",
+          "task": "Phần tử `.hang` chứa ít nhất 3 ô `.o`. Viết CSS để `.hang` dùng **Flexbox** (`display: flex`) với khoảng cách `16px` giữa các ô (`gap`).",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Flexbox</title>\n  <style>\n    .o { padding: 12px; background-color: #e8ebfb; }\n    .hang {\n      /* Viết CSS của em ở đây */\n    }\n  </style>\n</head>\n<body>\n  <div class=\"hang\">\n    <div class=\"o\">HTML</div>\n    <div class=\"o\">CSS</div>\n    <div class=\"o\">JavaScript</div>\n  </div>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Flexbox</title>\n  <style>\n    .o { padding: 12px; background-color: #e8ebfb; }\n    .hang {\n      display: flex;\n      gap: 16px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"hang\">\n    <div class=\"o\">HTML</div>\n    <div class=\"o\">CSS</div>\n    <div class=\"o\">JavaScript</div>\n  </div>\n</body>\n</html>",
+          "hints": [
+            "display: flex; đặt cho phần tử cha .hang.",
+            "gap: 16px; tạo khoảng cách giữa các ô."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "style",
+              "selector": ".hang",
+              "property": "display",
+              "equals": "flex",
+              "message": ".hang cần display: flex"
+            },
+            {
+              "type": "style",
+              "selector": ".hang",
+              "property": "column-gap",
+              "equals": "16px",
+              "message": ".hang cần gap: 16px"
+            },
+            {
+              "type": "count",
+              "selector": ".hang > .o",
+              "min": 3,
+              "message": ".hang cần ít nhất 3 ô .o"
+            }
+          ]
+        },
+        {
+          "id": "web-4-2",
+          "title": "Căn chỉnh: thanh điều hướng",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## justify-content và align-items\n\nTrong Flexbox, hai thuộc tính căn chỉnh quan trọng nhất là:\n\n| Thuộc tính | Căn theo | Giá trị thường dùng |\n|---|---|---|\n| `justify-content` | trục chính (ngang) | `flex-start`, `center`, `flex-end`, `space-between`, `space-around` |\n| `align-items` | trục phụ (dọc) | `stretch`, `center`, `flex-start`, `flex-end` |\n\n## Thanh điều hướng kinh điển\n\nLogo nằm bên trái, menu bên phải, mọi thứ căn giữa theo chiều dọc:\n\n```css\nnav {\n  display: flex;\n  justify-content: space-between;  /* đẩy hai nhóm ra hai đầu */\n  align-items: center;             /* căn giữa theo chiều dọc */\n}\n```\n\n`space-between` chia đều khoảng trống **giữa** các phần tử: phần tử đầu sát mép trái, phần tử cuối sát mép phải.\n\nMuốn căn **chính giữa** một phần tử theo cả hai chiều — bài toán \"khó nhằn\" của CSS ngày xưa — giờ chỉ cần:\n\n```css\n.khung { display: flex; justify-content: center; align-items: center; }\n```",
+          "task": "Thanh `<nav>` gồm logo và ít nhất 3 liên kết. Viết CSS cho `nav`:\n\n- `display: flex`\n- `justify-content: space-between`\n- `align-items: center`",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Thanh điều hướng</title>\n  <style>\n    nav {\n      display: flex;\n      /* Căn chỉnh các phần tử ở đây */\n    }\n  </style>\n</head>\n<body>\n  <nav>\n    <strong>V-Code</strong>\n    <a href=\"#hoc\">Học</a>\n    <a href=\"#luyen\">Luyện</a>\n    <a href=\"#lop\">Lớp học</a>\n  </nav>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Thanh điều hướng</title>\n  <style>\n    nav {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n    }\n  </style>\n</head>\n<body>\n  <nav>\n    <strong>V-Code</strong>\n    <a href=\"#hoc\">Học</a>\n    <a href=\"#luyen\">Luyện</a>\n    <a href=\"#lop\">Lớp học</a>\n  </nav>\n</body>\n</html>",
+          "hints": [
+            "justify-content căn theo chiều ngang.",
+            "align-items: center căn giữa theo chiều dọc."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "style",
+              "selector": "nav",
+              "property": "display",
+              "equals": "flex",
+              "message": "nav cần display: flex"
+            },
+            {
+              "type": "style",
+              "selector": "nav",
+              "property": "justify-content",
+              "equals": "space-between",
+              "message": "nav cần justify-content: space-between"
+            },
+            {
+              "type": "style",
+              "selector": "nav",
+              "property": "align-items",
+              "equals": "center",
+              "message": "nav cần align-items: center"
+            },
+            {
+              "type": "count",
+              "selector": "nav a",
+              "min": 3,
+              "message": "nav cần ít nhất 3 liên kết"
+            }
+          ]
+        },
+        {
+          "id": "web-4-3",
+          "title": "flex-wrap và flex: lưới thẻ",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Khi hàng không đủ chỗ\n\nMặc định Flexbox cố nhét mọi phần tử trên **một hàng**, kể cả khi bị bóp méo. `flex-wrap: wrap` cho phép phần tử **xuống hàng**:\n\n```css\n.luoi {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 12px;\n}\n.the {\n  flex: 1 1 200px;\n}\n```\n\n## Thuộc tính viết tắt `flex`\n\n`flex: 1 1 200px` là viết tắt của ba thuộc tính:\n\n| Thành phần | Giá trị | Ý nghĩa |\n|---|---|---|\n| `flex-grow` | `1` | được **giãn** ra để lấp khoảng trống |\n| `flex-shrink` | `1` | được **co** lại khi thiếu chỗ |\n| `flex-basis` | `200px` | kích thước \"mong muốn\" ban đầu |\n\nKết quả: mỗi thẻ rộng khoảng 200px; trên màn hình rộng, nhiều thẻ xếp cùng hàng và giãn đều ra; trên điện thoại, thẻ tự xuống hàng. Đây là cách làm lưới thẻ **tự thích ứng mà chưa cần media query**.",
+          "task": "Phần tử `.luoi` chứa ít nhất 4 thẻ `.the`. Viết CSS:\n\n- `.luoi`: `display: flex` và `flex-wrap: wrap`.\n- `.the`: `flex: 1 1 200px` (giãn được, kích thước cơ sở 200px).",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Lưới thẻ</title>\n  <style>\n    .the { padding: 16px; border: 1px solid #cfcbbf; }\n    .luoi {\n      display: flex;\n      /* Cho phép xuống hàng */\n    }\n  </style>\n</head>\n<body>\n  <div class=\"luoi\">\n    <div class=\"the\">Python</div>\n    <div class=\"the\">C++</div>\n    <div class=\"the\">HTML</div>\n    <div class=\"the\">AI</div>\n  </div>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Lưới thẻ</title>\n  <style>\n    .the { padding: 16px; border: 1px solid #cfcbbf; flex: 1 1 200px; }\n    .luoi {\n      display: flex;\n      flex-wrap: wrap;\n      gap: 12px;\n    }\n  </style>\n</head>\n<body>\n  <div class=\"luoi\">\n    <div class=\"the\">Python</div>\n    <div class=\"the\">C++</div>\n    <div class=\"the\">HTML</div>\n    <div class=\"the\">AI</div>\n  </div>\n</body>\n</html>",
+          "hints": [
+            "Thêm flex-wrap: wrap; cho .luoi.",
+            "Thêm flex: 1 1 200px; cho .the."
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "style",
+              "selector": ".luoi",
+              "property": "display",
+              "equals": "flex",
+              "message": ".luoi cần display: flex"
+            },
+            {
+              "type": "style",
+              "selector": ".luoi",
+              "property": "flex-wrap",
+              "equals": "wrap",
+              "message": ".luoi cần flex-wrap: wrap"
+            },
+            {
+              "type": "style",
+              "selector": ".the",
+              "property": "flex-grow",
+              "equals": "1",
+              "message": ".the cần được giãn (flex-grow: 1)"
+            },
+            {
+              "type": "style",
+              "selector": ".the",
+              "property": "flex-basis",
+              "equals": "200px",
+              "message": ".the cần kích thước cơ sở 200px (flex-basis)"
+            },
+            {
+              "type": "count",
+              "selector": ".luoi > .the",
+              "min": 4,
+              "message": ".luoi cần ít nhất 4 thẻ .the"
+            }
+          ]
+        },
+        {
+          "id": "web-4-4",
+          "title": "Responsive với media query",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Một trang, mọi màn hình\n\nHơn một nửa lượt truy cập web là từ điện thoại. Trang **responsive** tự điều chỉnh bố cục theo kích thước màn hình.\n\n**Bước 1 — thẻ viewport** (trong `<head>`), để điện thoại không thu nhỏ cả trang:\n\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n```\n\n**Bước 2 — media query**: chỉ áp dụng CSS khi thỏa điều kiện.\n\n```css\n.hang { display: flex; gap: 16px; }\n\n@media (max-width: 600px) {\n  .hang { flex-direction: column; }   /* màn hình hẹp: xếp dọc */\n}\n```\n\nĐọc là: *\"khi chiều rộng màn hình **tối đa** 600px thì các ô trong `.hang` xếp theo cột\"*.\n\nHai cách tiếp cận:\n\n- **Desktop-first**: viết cho màn hình lớn rồi dùng `max-width` cho màn hình nhỏ.\n- **Mobile-first**: viết cho điện thoại trước rồi dùng `min-width` để mở rộng — thường gọn và nhẹ hơn.\n\nHãy thử thu hẹp khung xem trước để thấy bố cục tự thay đổi!",
+          "task": "Làm trang **responsive**:\n\n1. Thêm thẻ `<meta name=\"viewport\">` với `content` chứa `width=device-width`.\n2. `.hang` dùng `display: flex`.\n3. Viết một media query `@media (max-width: ...)` trong đó `.hang` chuyển sang `flex-direction: column`.",
+          "starter": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Responsive</title>\n  <style>\n    .o { flex: 1; padding: 16px; background-color: #e8ebfb; }\n    .hang { display: flex; gap: 16px; }\n    /* Thêm media query cho màn hình hẹp */\n  </style>\n</head>\n<body>\n  <div class=\"hang\">\n    <div class=\"o\">Học</div>\n    <div class=\"o\">Luyện</div>\n    <div class=\"o\">Sáng tạo</div>\n  </div>\n</body>\n</html>",
+          "solution": "<!DOCTYPE html>\n<html lang=\"vi\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <title>Responsive</title>\n  <style>\n    .o { flex: 1; padding: 16px; background-color: #e8ebfb; }\n    .hang { display: flex; gap: 16px; }\n    @media (max-width: 600px) {\n      .hang { flex-direction: column; }\n    }\n  </style>\n</head>\n<body>\n  <div class=\"hang\">\n    <div class=\"o\">Học</div>\n    <div class=\"o\">Luyện</div>\n    <div class=\"o\">Sáng tạo</div>\n  </div>\n</body>\n</html>",
+          "hints": [
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> đặt trong <head>.",
+            "@media (max-width: 600px) { .hang { flex-direction: column; } }"
+          ],
+          "tests": [],
+          "checks": [
+            {
+              "type": "attr",
+              "selector": "meta[name=\"viewport\"]",
+              "name": "content",
+              "includes": "width=device-width",
+              "message": "Cần thẻ <meta name=\"viewport\" content=\"width=device-width, ...\">"
+            },
+            {
+              "type": "style",
+              "selector": ".hang",
+              "property": "display",
+              "equals": "flex",
+              "message": ".hang cần display: flex"
+            },
+            {
+              "type": "js",
+              "expr": "Array.from(document.styleSheets).some(function (s) { return Array.from(s.cssRules).some(function (r) { return r.media && /max-width/.test(r.media.mediaText); }); })",
+              "message": "Cần một media query dùng max-width"
+            },
+            {
+              "type": "js",
+              "expr": "Array.from(document.styleSheets).some(function (s) { return Array.from(s.cssRules).some(function (r) { return r.media && /max-width/.test(r.media.mediaText) && /\\.hang[^{]*\\{[^}]*flex-direction:\\s*column/.test(r.cssText); }); })",
+              "message": "Trong media query, .hang cần flex-direction: column"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

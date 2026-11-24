@@ -1,0 +1,224 @@
+/* ==========================================================================
+   V-Code Edu — Design tokens
+   Palette derived from the brand mark: navy ink, royal blue, violet orbit, cyan spark.
+   Light theme = "paper" (warm neutral, editorial). Dark theme = "night ink".
+   Every component reads ONLY these variables, so theme switching is global.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Typography */
+  --font-sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md: 1.0625rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.625rem;
+  --fs-2xl: 2.125rem;
+  --fs-3xl: clamp(2.25rem, 4.6vw, 3.75rem);
+  --fs-display: clamp(2.6rem, 6.4vw, 5.25rem);
+  --lh-tight: 1.15;
+  --lh-snug: 1.35;
+  --lh-body: 1.6;
+
+  /* Spacing scale (4px base) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+
+  /* Shape */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --nav-h: 64px;
+  --container: 1200px;
+  --container-wide: 1440px;
+  --gutter: clamp(16px, 4vw, 32px);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 420ms;
+
+  /* ---------- Light theme (paper) ---------- */
+  --bg: #f6f5f1;
+  --bg-elev: #ffffff;
+  --bg-sunken: #efede7;
+  --surface-2: #f1f0eb;
+  --overlay: rgba(11, 20, 51, 0.42);
+  --border: #e3e0d7;
+  --border-strong: #cfcbbf;
+  --text: #0b1433;
+  --text-2: #3d4566;
+  --text-3: #6b7290;
+  --text-inverse: #ffffff;
+
+  --brand: #2f49d1;
+  --brand-hover: #263db5;
+  --brand-ink: #ffffff;
+  --brand-soft: #e8ebfb;
+  --brand-line: #c3cbf3;
+
+  --accent-ai: #6a4ff0;          /* AI / chat — violet orbit */
+  --accent-ai-soft: #efebfe;
+  --accent-live: #0b9fc2;        /* realtime / Prism — cyan spark */
+  --accent-live-soft: #e2f6fb;
+  --accent-amber: #c27a06;       /* challenges */
+  --accent-amber-soft: #fbf1dd;
+  --accent-green: #15835b;       /* classroom */
+  --accent-green-soft: #e0f3ea;
+  --accent-rose: #c4325a;
+  --accent-rose-soft: #fbe6ec;
+
+  --success: #15835b;
+  --success-soft: #e0f3ea;
+  --warning: #b86e00;
+  --warning-soft: #fbf0d9;
+  --danger: #c42b3c;
+  --danger-soft: #fbe5e8;
+  --info: #2f49d1;
+  --info-soft: #e8ebfb;
+
+  --focus: 0 0 0 3px rgba(47, 73, 209, 0.35);
+  --shadow-1: 0 1px 2px rgba(11, 20, 51, 0.06), 0 1px 1px rgba(11, 20, 51, 0.04);
+  --shadow-2: 0 6px 24px -8px rgba(11, 20, 51, 0.18), 0 2px 6px rgba(11, 20, 51, 0.06);
+  --shadow-3: 0 24px 64px -20px rgba(11, 20, 51, 0.32);
+
+  /* Code / editor */
+  --code-bg: #fbfaf7;
+  --code-gutter: #f1efe9;
+  --code-text: #1c2340;
+  --code-line: rgba(47, 73, 209, 0.07);
+  --code-selection: rgba(47, 73, 209, 0.18);
+  --tok-keyword: #6a2fd1;
+  --tok-string: #0f7a4f;
+  --tok-number: #b04a00;
+  --tok-comment: #8a8f9f;
+  --tok-function: #1f50c8;
+  --tok-type: #0a7f95;
+  --tok-builtin: #a0337a;
+  --tok-operator: #4b5170;
+  --tok-tag: #b0254f;
+  --tok-attr: #8a5a00;
+  --tok-punct: #6b7290;
+
+  /* Terminal (always dark-ish for contrast in both themes) */
+  --term-bg: #0d1428;
+  --term-text: #d8def0;
+  --term-muted: #7f89a8;
+  --term-ok: #4cd99a;
+  --term-err: #ff7b8a;
+  --term-warn: #ffc566;
+  --term-in: #7fd3ff;
+
+  /* Visualization (Prism) */
+  --viz-base: #c9cfe6;
+  --viz-base-ink: #0b1433;
+  --viz-compare: #f2b233;
+  --viz-swap: #e5484d;
+  --viz-done: #22a06b;
+  --viz-pivot: #6a4ff0;
+  --viz-active: #2f49d1;
+  --viz-visited: #8fd6e8;
+  --viz-path: #0b9fc2;
+  --viz-edge: #b7bdd4;
+  --viz-grid: rgba(11, 20, 51, 0.06);
+}
+
+/* ---------- Dark theme (night ink) ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0f1f;
+  --bg-elev: #111a31;
+  --bg-sunken: #0d1427;
+  --surface-2: #16203b;
+  --overlay: rgba(2, 5, 14, 0.66);
+  --border: #222d4d;
+  --border-strong: #33406a;
+  --text: #e8ebf5;
+  --text-2: #b4bbd3;
+  --text-3: #8790ad;
+  --text-inverse: #0a0f1f;
+
+  --brand: #6f86ff;
+  --brand-hover: #8a9cff;
+  --brand-ink: #0a0f1f;
+  --brand-soft: #1a2550;
+  --brand-line: #2f3f85;
+
+  --accent-ai: #a593ff;
+  --accent-ai-soft: #231d4d;
+  --accent-live: #45d3f2;
+  --accent-live-soft: #0f2c3d;
+  --accent-amber: #f4b545;
+  --accent-amber-soft: #33270f;
+  --accent-green: #4cd49a;
+  --accent-green-soft: #0f2e24;
+  --accent-rose: #ff7a9a;
+  --accent-rose-soft: #3a1626;
+
+  --success: #4cd49a;
+  --success-soft: #0f2e24;
+  --warning: #f4b545;
+  --warning-soft: #33270f;
+  --danger: #ff6b7d;
+  --danger-soft: #3a1520;
+  --info: #6f86ff;
+  --info-soft: #1a2550;
+
+  --focus: 0 0 0 3px rgba(111, 134, 255, 0.45);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 28px -10px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-3: 0 28px 70px -24px rgba(0, 0, 0, 0.75);
+
+  --code-bg: #0c1326;
+  --code-gutter: #0f1730;
+  --code-text: #dfe4f3;
+  --code-line: rgba(111, 134, 255, 0.08);
+  --code-selection: rgba(111, 134, 255, 0.28);
+  --tok-keyword: #c3a6ff;
+  --tok-string: #8be3b0;
+  --tok-number: #ffb27a;
+  --tok-comment: #6c7695;
+  --tok-function: #8fb3ff;
+  --tok-type: #6fe0f0;
+  --tok-builtin: #ff9bd2;
+  --tok-operator: #aab3cf;
+  --tok-tag: #ff8fa8;
+  --tok-attr: #ffd27a;
+  --tok-punct: #8790ad;
+
+  --term-bg: #070b17;
+
+  --viz-base: #34416e;
+  --viz-base-ink: #e8ebf5;
+  --viz-compare: #f4b545;
+  --viz-swap: #ff6b7d;
+  --viz-done: #4cd49a;
+  --viz-pivot: #a593ff;
+  --viz-active: #6f86ff;
+  --viz-visited: #1f6a80;
+  --viz-path: #45d3f2;
+  --viz-edge: #3a4772;
+  --viz-grid: rgba(232, 235, 245, 0.05);
+}

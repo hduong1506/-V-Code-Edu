@@ -1,0 +1,180 @@
+/* ==========================================================================
+   V-Code Edu — V-Bot: floating, draggable V-Mentor robot + quick-chat panel (every page)
+   ========================================================================== */
+
+.vbot {
+  --tilt: 0deg;
+  position: fixed; left: 0; top: 0; z-index: 45;
+  width: 68px; height: 68px; padding: 0; border: 0; background: transparent; cursor: grab;
+  touch-action: none; -webkit-tap-highlight-color: transparent; user-select: none;
+  opacity: 0; transition: opacity 400ms var(--ease);
+  filter: drop-shadow(0 14px 18px rgba(49, 46, 129, 0.35));
+}
+.vbot.is-ready { opacity: 1; }
+html.has-intro:not(.intro-done) .vbot, html.has-intro:not(.intro-done) .vbot-bubble { opacity: 0; pointer-events: none; }
+.vbot:focus-visible { outline: none; box-shadow: none; }
+.vbot:focus-visible .vbot__halo { opacity: 1; box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--brand); }
+.vbot__svg { width: 100%; height: 100%; overflow: visible; transform: rotate(var(--tilt)); transition: transform 180ms var(--ease-out); animation: vbot-float 4.2s ease-in-out infinite; transform-origin: 50% 90%; }
+.vbot__halo {
+  position: absolute; inset: 6px; border-radius: 50%; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.45), transparent 70%);
+  transition: opacity 260ms var(--ease);
+}
+.vbot:hover .vbot__halo { opacity: 1; }
+.vbot:hover .vbot__arm--r { animation: vbot-wave 900ms ease-in-out 1; }
+.vbot.is-wave .vbot__arm--r { animation: vbot-wave 700ms ease-in-out 2; }
+.vbot__arm { transform-box: fill-box; }
+.vbot__arm--r { transform-origin: 0% 0%; }
+.vbot__arm--l { transform-origin: 100% 0%; }
+.vbot__shadow { fill: rgba(15, 23, 42, 0.18); transform-box: fill-box; transform-origin: center; animation: vbot-shadow 4.2s ease-in-out infinite; }
+.vbot__eye { transform-box: fill-box; transform-origin: center; animation: vbot-blink 5.5s infinite; }
+.vbot__eyes { transition: transform 120ms linear; }
+.vbot__bulb { transform-box: fill-box; transform-origin: center; animation: vbot-bulb 2.4s ease-in-out infinite; }
+.vbot__heart { animation: vbot-heart 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.vbot__badge {
+  position: absolute; top: 2px; right: 2px; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 11px; font-weight: 800; color: #fff; background: #e11d48;
+  box-shadow: 0 0 0 2px #fff; animation: vbot-pop 400ms var(--ease-out);
+}
+
+/* states */
+.vbot.is-dragging { cursor: grabbing; filter: drop-shadow(0 26px 26px rgba(49, 46, 129, 0.45)); }
+.vbot.is-dragging .vbot__svg { animation: none; scale: 1.08; }
+.vbot.is-dragging .vbot__arm--l { transform: rotate(-28deg); }
+.vbot.is-dragging .vbot__arm--r { transform: rotate(28deg); }
+.vbot.is-landing .vbot__svg { animation: vbot-land 480ms var(--ease-out); }
+.vbot.is-hop .vbot__svg { animation: vbot-hop 600ms var(--ease-out), vbot-float 4.2s 600ms ease-in-out infinite; }
+.vbot.is-thinking .vbot__bulb { animation: vbot-bulb 0.5s ease-in-out infinite; }
+.vbot.is-thinking .vbot__eye { animation: vbot-think 1.2s ease-in-out infinite; }
+.vbot.is-loading .vbot__bulb { animation: vbot-bulb 0.4s ease-in-out infinite; }
+.vbot.is-offline .vbot__heart { fill: #f59e0b; }
+.vbot.has-news .vbot__halo { opacity: 1; animation: vbot-news 1.4s ease-in-out infinite; }
+.vbot[aria-expanded="true"] .vbot__halo { opacity: 1; background: radial-gradient(circle, rgba(94, 234, 212, 0.45), transparent 70%); }
+
+@keyframes vbot-float { 50% { transform: rotate(var(--tilt)) translateY(-6px); } }
+@keyframes vbot-shadow { 50% { transform: scale(0.8); opacity: 0.6; } }
+@keyframes vbot-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes vbot-think { 50% { transform: translateY(-2px) scaleY(0.7); } }
+@keyframes vbot-bulb { 50% { opacity: 0.55; transform: scale(0.85); } }
+@keyframes vbot-heart { 50% { transform: scale(1.3); opacity: 0.7; } }
+@keyframes vbot-wave { 25% { transform: rotate(-38deg); } 75% { transform: rotate(-12deg); } }
+@keyframes vbot-land { 30% { transform: scale(1.12, 0.88) translateY(4px); } 60% { transform: scale(0.95, 1.06) translateY(-4px); } }
+@keyframes vbot-hop { 35% { transform: translateY(-14px) rotate(-6deg); } 70% { transform: translateY(0) scale(1.06, 0.94); } }
+@keyframes vbot-pop { from { transform: scale(0); } }
+@keyframes vbot-news { 50% { transform: scale(1.25); opacity: 0.5; } }
+
+/* greeting bubble */
+.vbot-bubble {
+  position: fixed; left: 0; top: 0; z-index: 46; max-width: 250px; padding: 11px 14px; border-radius: 16px;
+  font-size: 13px; line-height: 1.45; font-weight: 600; color: #1e1b4b; background: #fff; cursor: pointer;
+  box-shadow: 0 18px 40px -16px rgba(30, 27, 75, 0.45), 0 0 0 1px rgba(99, 102, 241, 0.18);
+  animation: vbot-bubble-in 360ms var(--ease-out);
+}
+.vbot-bubble[data-side="right"] { border-bottom-right-radius: 4px; }
+.vbot-bubble[data-side="left"] { border-bottom-left-radius: 4px; }
+html[data-theme="dark"] .vbot-bubble { background: #1e1b4b; color: #eef2ff; box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(165, 180, 252, 0.25); }
+@keyframes vbot-bubble-in { from { opacity: 0; transform: translateY(8px) scale(0.95); } }
+
+/* ---------- quick-chat panel ---------- */
+.vbot-panel {
+  --vp-bg: rgba(255, 255, 255, 0.9);
+  --vp-line: rgba(99, 102, 241, 0.16);
+  --vp-text: #1e1b4b;
+  --vp-text-2: #4c4f7a;
+  --vp-user: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --vp-ai: #f4f3ff;
+  position: fixed; left: 0; top: 0; z-index: 47;
+  width: min(410px, calc(100vw - 20px)); height: min(600px, calc(100vh - 90px));
+  display: flex; flex-direction: column; overflow: hidden; border-radius: 24px;
+  color: var(--vp-text); background: var(--vp-bg); backdrop-filter: blur(22px) saturate(1.4); -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid var(--vp-line);
+  box-shadow: 0 40px 90px -30px rgba(49, 46, 129, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
+  opacity: 0; visibility: hidden; scale: 0.92; pointer-events: none;
+  transition: opacity 260ms var(--ease), scale 360ms var(--ease-out), visibility 0s 360ms;
+}
+html[data-theme="dark"] .vbot-panel {
+  --vp-bg: rgba(17, 15, 46, 0.92); --vp-line: rgba(165, 180, 252, 0.18); --vp-text: #eef2ff; --vp-text-2: #b8bce6; --vp-ai: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+.vbot-panel.is-open { opacity: 1; visibility: visible; scale: 1; pointer-events: auto; transition: opacity 260ms var(--ease), scale 420ms cubic-bezier(0.2, 1.3, 0.3, 1), visibility 0s; }
+.vbot-panel.is-sheet { left: 8px; right: 8px; top: auto; bottom: 8px; width: auto; height: min(78vh, 640px); transform: none !important; transform-origin: 50% 100% !important; }
+
+.vbot-panel__head {
+  display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 14px; color: #fff;
+  background: linear-gradient(120deg, #4338ca 0%, #6d28d9 60%, #a21caf 100%);
+}
+.vbot-panel__avatar { width: 40px; height: 44px; flex-shrink: 0; }
+.vbot-panel__avatar .vbot__svg { animation: vbot-float 3.6s ease-in-out infinite; }
+.vbot-panel.is-streaming .vbot-panel__avatar .vbot__bulb { animation: vbot-bulb 0.5s infinite; }
+.vbot-panel__title { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.vbot-panel__title strong { font-size: 15.5px; font-weight: 800; letter-spacing: -0.01em; }
+.vbot-panel__status { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; opacity: 0.9; }
+.vbot-panel__status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #fbbf24; }
+.vbot-panel__status[data-state="ok"]::before { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+.vbot-panel__status[data-state="off"]::before { background: #fb7185; }
+.vbot-panel__tools { display: flex; gap: 2px; }
+.vbot-icon-btn { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; border: 0; background: transparent; color: rgba(255, 255, 255, 0.9); transition: background-color 160ms; }
+.vbot-icon-btn:hover { background: rgba(255, 255, 255, 0.16); }
+.vbot-icon-btn .icon { width: 17px; height: 17px; }
+
+.vbot-panel__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--vp-line); }
+.vbot-panel__mode {
+  height: 32px; padding: 0 28px 0 10px; border-radius: 10px; border: 1px solid var(--vp-line); background: transparent; color: var(--vp-text);
+  font-size: 12.5px; font-weight: 700; appearance: none; -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) 14px, calc(100% - 9px) 14px; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.vbot-panel__mode option { color: #1e1b4b; }
+.vbot-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--vp-line);
+  background: transparent; color: var(--vp-text-2); font-size: 12px; font-weight: 600; text-align: left; line-height: 1.35;
+  transition: border-color 160ms, background-color 160ms, color 160ms;
+}
+.vbot-chip:hover { border-color: #8b5cf6; color: var(--vp-text); }
+.vbot-chip.is-on { background: rgba(139, 92, 246, 0.14); border-color: #8b5cf6; color: var(--vp-text); }
+.vbot-chip .icon { width: 13px; height: 13px; }
+
+.vbot-panel__list { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 12px; overscroll-behavior: contain; }
+.vbot-welcome { margin: auto 0; display: grid; gap: 8px; text-align: center; padding: 8px; }
+.vbot-welcome__hi { font-size: 17px; font-weight: 800; }
+.vbot-welcome p { font-size: 13px; color: var(--vp-text-2); line-height: 1.5; }
+.vbot-welcome__chips { display: grid; gap: 6px; margin-top: 6px; }
+.vbot-welcome__chips .vbot-chip { justify-content: flex-start; border-radius: 12px; padding: 9px 12px; }
+
+.vbot-msg { display: flex; gap: 8px; animation: vbot-bubble-in 280ms var(--ease-out); }
+.vbot-msg--user { justify-content: flex-end; }
+.vbot-msg__bubble { max-width: 86%; padding: 10px 13px; border-radius: 16px; font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.vbot-msg--user .vbot-msg__bubble { color: #fff; background: var(--vp-user); border-bottom-right-radius: 5px; white-space: pre-wrap; }
+.vbot-msg--ai .vbot-msg__bubble { background: var(--vp-ai); border: 1px solid var(--vp-line); border-bottom-left-radius: 5px; color: var(--vp-text); }
+.vbot-msg--ai .vbot-msg__bubble.prose { font-size: 13.5px; }
+.vbot-msg__bubble pre { max-width: 100%; overflow-x: auto; font-size: 12px; }
+.vbot-msg__bubble .callout { margin: 0; }
+.vbot-msg__avatar { width: 28px; height: 31px; flex-shrink: 0; margin-top: 2px; }
+.vbot-msg__avatar .vbot__svg { animation: none; }
+.vbot-typing { display: inline-flex; gap: 4px; padding: 4px 0; }
+.vbot-typing i { width: 7px; height: 7px; border-radius: 50%; background: #8b5cf6; animation: vbot-dot 1s ease-in-out infinite; }
+.vbot-typing i:nth-child(2) { animation-delay: 0.15s; }
+.vbot-typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes vbot-dot { 50% { transform: translateY(-5px); opacity: 0.5; } }
+
+.vbot-panel__composer { display: flex; align-items: flex-end; gap: 8px; margin: 0 12px; padding: 8px 8px 8px 14px; border-radius: 18px; border: 1.5px solid var(--vp-line); background: color-mix(in srgb, var(--vp-bg) 60%, transparent); transition: border-color 200ms, box-shadow 200ms; }
+.vbot-panel__composer:focus-within { border-color: #8b5cf6; box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.18); }
+.vbot-panel__input { flex: 1; min-width: 0; max-height: 140px; padding: 7px 0; border: 0; outline: none; resize: none; background: transparent; color: var(--vp-text); font-size: 14px; line-height: 1.45; }
+.vbot-panel__input:focus-visible { box-shadow: none; }
+.vbot-panel__send { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; border: 0; border-radius: 12px; color: #fff; background: linear-gradient(135deg, #6366f1, #a855f7); box-shadow: 0 8px 18px -8px #a855f7; transition: transform 200ms var(--ease-out); }
+.vbot-panel__send:hover { transform: scale(1.06) rotate(-6deg); }
+.vbot-panel__send--stop { background: #e11d48; box-shadow: none; }
+.vbot-panel__send .icon { width: 17px; height: 17px; }
+.vbot-panel__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 14px 10px; font-size: 11px; color: var(--vp-text-2); }
+.vbot-panel__foot span { display: inline-flex; align-items: center; gap: 5px; }
+.vbot-panel__foot .icon { width: 12px; height: 12px; }
+.vbot-link { border: 0; background: none; padding: 0; color: #7c3aed; font-weight: 700; font-size: 11px; }
+html[data-theme="dark"] .vbot-link { color: #c4b5fd; }
+.vbot-link:hover { text-decoration: underline; }
+
+.is-vbot-focus { box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.45) !important; transition: box-shadow 200ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vbot__svg, .vbot__shadow, .vbot__eye, .vbot__bulb, .vbot__heart, .vbot-panel__avatar .vbot__svg { animation: none !important; }
+}
+@media print { .vbot, .vbot-bubble, .vbot-panel { display: none !important; } }

@@ -1,0 +1,17 @@
+/* V-Code Edu — Account */
+.account-layout { display: grid; grid-template-columns: 220px 1fr; gap: var(--sp-8); align-items: start; }
+.account-nav { position: sticky; top: calc(var(--nav-h) + 16px); display: flex; flex-direction: column; gap: 2px; }
+.account-nav__item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-2); font-weight: 600; font-size: var(--fs-sm); text-align: left; }
+.account-nav__item:hover { background: var(--surface-2); color: var(--text); }
+.account-nav__item.is-active { background: var(--brand-soft); color: var(--brand); }
+.account-nav__item .icon { width: 16px; height: 16px; }
+.account-body { min-width: 0; }
+.offline-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: var(--radius-sm); background: var(--surface-2); }
+.offline-row__icon { color: var(--text-3); margin-top: 1px; }
+.offline-row__icon.is-ok { color: var(--success); }
+.offline-row__icon.is-warn { color: var(--warning); }
+@media (max-width: 820px) {
+  .account-layout { grid-template-columns: 1fr; }
+  .account-nav { position: static; flex-direction: row; overflow-x: auto; }
+  .account-nav__item { white-space: nowrap; }
+}

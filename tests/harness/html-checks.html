@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harness · HTML checks</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; }
+    iframe { width: 900px; height: 600px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>HTML checks harness</h1>
+  <p>Dùng bởi <code>tests/e2e/test_web_lessons.py</code>. Gọi <code>window.evaluateLesson(html, checks, mode)</code> với mode = <code>"same-origin"</code> hoặc <code>"sandbox"</code>.</p>
+  <div id="stage"></div>
+  <script type="module">
+    import { runChecks } from '../../js/runtime/html-checks.js';
+
+    const stage = document.getElementById('stage');
+
+    function loadFrame(frame) {
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error('iframe load timeout')), 10000);
+        frame.addEventListener('load', () => { clearTimeout(timer); resolve(); }, { once: true });
+      });
+    }
+
+    // Same-origin evaluation: parent calls runChecks on the iframe's document directly.
+    async function evaluateSameOrigin(html, checks) {
+      const frame = document.createElement('iframe');
+      frame.srcdoc = html;
+      const loaded = loadFrame(frame);
+      stage.appendChild(frame);
+      await loaded;
+      try {
+        return runChecks(frame.contentDocument, checks).map((r) => ({ ok: r.ok, message: r.message }));
+      } finally {
+        frame.remove();
+      }
+    }
+
+    // Sandboxed evaluation (mirrors the in-app grader): the iframe has sandbox="allow-scripts"
+    // (opaque origin), runChecks' source is injected and results come back via postMessage.
+    async function evaluateSandbox(html, checks) {
+      const token = Math.random().toString(36).slice(2);
+      const script = `<script>(function(){var runChecks=${runChecks.toString()};` +
+        `window.addEventListener('load',function(){var res;try{res=runChecks(document,${JSON.stringify(checks).replace(/</g, '\\u003c')}).map(function(r){return {ok:r.ok,message:r.message};});}` +
+        `catch(e){res={error:String(e)};}parent.postMessage({token:${JSON.stringify(token)},results:res},'*');});})();<\/script>`;
+      const frame = document.createElement('iframe');
+      frame.setAttribute('sandbox', 'allow-scripts');
+      frame.srcdoc = html + script;
+      const result = new Promise((resolve, reject) => {
+        const timer = setTimeout(() => { window.removeEventListener('message', onMsg); reject(new Error('sandbox timeout')); }, 10000);
+        function onMsg(ev) {
+          if (!ev.data || ev.data.token !== token) return;
+          clearTimeout(timer);
+          window.removeEventListener('message', onMsg);
+          if (ev.data.results && ev.data.results.error) reject(new Error(ev.data.results.error));
+          else resolve(ev.data.results);
+        }
+        window.addEventListener('message', onMsg);
+      });
+      stage.appendChild(frame);
+      try {
+        return await result;
+      } finally {
+        frame.remove();
+      }
+    }
+
+    window.evaluateLesson = (html, checks, mode = 'same-origin') =>
+      (mode === 'sandbox' ? evaluateSandbox(html, checks) : evaluateSameOrigin(html, checks));
+    window.harnessReady = true;
+  </script>
+</body>
+</html>

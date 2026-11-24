@@ -1,0 +1,1127 @@
+{
+  "id": "python",
+  "version": 2,
+  "lang": "python",
+  "title": "Python cơ bản",
+  "subtitle": "Từ dòng lệnh đầu tiên đến tư duy thuật toán",
+  "level": "Cơ bản",
+  "description": "Khóa học nền tảng cho học sinh THCS – THPT: nhập xuất, biến, toán tử, rẽ nhánh, vòng lặp, chuỗi, danh sách và hàm. Mỗi bài gồm lý thuyết ngắn gọn, ví dụ minh họa và bài tập được chấm tự động bằng Python thật ngay trên trình duyệt.",
+  "track": "programming",
+  "accent": "blue",
+  "tags": [
+    "python",
+    "nhập môn",
+    "tư duy lập trình",
+    "Tin học THPT"
+  ],
+  "chapters": [
+    {
+      "id": "ch1",
+      "title": "Nhập xuất & biến",
+      "summary": "Làm quen với print(), input(), biến và các kiểu dữ liệu cơ bản: số nguyên, số thực, chuỗi.",
+      "lessons": [
+        {
+          "id": "python-1-1",
+          "title": "Chào bạn mới: print() và input()",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Chương trình đầu tiên\n\nMọi chương trình đều làm ba việc: **nhận dữ liệu → xử lý → đưa ra kết quả**. Trong Python:\n\n- `input()` đọc **một dòng** người dùng gõ vào và trả về một **chuỗi** (string).\n- `print(...)` in giá trị ra màn hình rồi tự xuống dòng.\n\n```python\nten = input()               # đọc một dòng, ví dụ: Lan\nprint(\"Xin chào, \" + ten)   # Xin chào, Lan\nprint(\"Hẹn gặp lại!\")\n```\n\nDấu `+` giữa hai chuỗi gọi là **nối chuỗi**: `\"Xin chào, \" + \"Lan\"` cho ra `\"Xin chào, Lan\"`. Hãy để ý khoảng trắng — máy tính in **chính xác** những gì em viết, kể cả dấu cách và dấu chấm câu.\n\n> Mẹo: chuỗi đặt trong cặp nháy `\"...\"` hoặc `'...'`. Tên biến (như `ten`) thì **không** có nháy.\n\nKhi chấm bài, hệ thống so sánh từng ký tự kết quả của em với đáp án, nên hãy đọc kỹ mẫu đầu ra.",
+          "task": "Nhập **tên** của một bạn mới (một dòng). In ra đúng **hai dòng**:\n\n1. `Xin chào, <tên>!`\n2. `Chào mừng đến với V-Code Edu.`\n\n**Ví dụ**\n\n| Đầu vào | Đầu ra |\n|---|---|\n| `An` | `Xin chào, An!`<br>`Chào mừng đến với V-Code Edu.` |",
+          "starter": "ten = input()\n# Viết code của em ở đây: in ra hai dòng theo mẫu",
+          "solution": "ten = input()\nprint(\"Xin chào, \" + ten + \"!\")\nprint(\"Chào mừng đến với V-Code Edu.\")",
+          "hints": [
+            "Dùng print() hai lần, mỗi lần in một dòng.",
+            "Nối chuỗi: \"Xin chào, \" + ten + \"!\" — nhớ dấu cách sau dấu phẩy."
+          ],
+          "tests": [
+            {
+              "input": "An\n",
+              "expected": "Xin chào, An!\nChào mừng đến với V-Code Edu.",
+              "hidden": false
+            },
+            {
+              "input": "Minh Anh\n",
+              "expected": "Xin chào, Minh Anh!\nChào mừng đến với V-Code Edu.",
+              "hidden": false
+            },
+            {
+              "input": "Bảo Ngọc\n",
+              "expected": "Xin chào, Bảo Ngọc!\nChào mừng đến với V-Code Edu.",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-1-2",
+          "title": "Biến và phép gán",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Biến là \"chiếc hộp có nhãn\"\n\nBiến giúp ta **ghi nhớ** dữ liệu để dùng lại. Câu lệnh `tuoi = 12` nghĩa là: *tạo hộp tên `tuoi` và cất số 12 vào đó*. Dấu `=` là **phép gán**, không phải \"bằng nhau\" như trong toán.\n\nVì `input()` luôn trả về chuỗi, muốn làm toán ta phải **chuyển sang số nguyên** bằng `int()`:\n\n```python\nten = input()            # \"Lan\"\ntuoi = int(input())      # \"12\" -> 12\nprint(ten, \"năm nay\", tuoi, \"tuổi.\")\nprint(\"Năm sau\", ten, \"sẽ\", tuoi + 1, \"tuổi.\")\n```\n\nKhi `print` nhận nhiều giá trị **ngăn cách bởi dấu phẩy**, Python tự chèn **một dấu cách** giữa chúng và tự đổi số thành chữ. Vì vậy kết quả là `Lan năm nay 12 tuổi.`\n\nQuy tắc đặt tên biến: chỉ dùng chữ cái không dấu, chữ số và `_`, không bắt đầu bằng chữ số, phân biệt hoa/thường (`Tuoi` khác `tuoi`). Nên đặt tên có nghĩa: `diem_toan` dễ hiểu hơn `x`.",
+          "task": "Dòng 1 là **tên**, dòng 2 là **tuổi** (số nguyên). In ra hai dòng:\n\n1. `<tên> năm nay <tuổi> tuổi.`\n2. `Năm sau <tên> sẽ <tuổi + 1> tuổi.`\n\n**Ví dụ**\n\n```\nĐầu vào:\nLan\n12\n\nĐầu ra:\nLan năm nay 12 tuổi.\nNăm sau Lan sẽ 13 tuổi.\n```",
+          "starter": "ten = input()\ntuoi = int(input())\n# Viết code của em ở đây",
+          "solution": "ten = input()\ntuoi = int(input())\nprint(ten, \"năm nay\", tuoi, \"tuổi.\")\nprint(\"Năm sau\", ten, \"sẽ\", tuoi + 1, \"tuổi.\")",
+          "hints": [
+            "print(a, b, c) tự chèn dấu cách giữa các giá trị.",
+            "Tuổi năm sau là tuoi + 1 — chỉ làm được vì đã dùng int()."
+          ],
+          "tests": [
+            {
+              "input": "Lan\n12\n",
+              "expected": "Lan năm nay 12 tuổi.\nNăm sau Lan sẽ 13 tuổi.",
+              "hidden": false
+            },
+            {
+              "input": "Khoa\n9\n",
+              "expected": "Khoa năm nay 9 tuổi.\nNăm sau Khoa sẽ 10 tuổi.",
+              "hidden": false
+            },
+            {
+              "input": "Minh Thư\n15\n",
+              "expected": "Minh Thư năm nay 15 tuổi.\nNăm sau Minh Thư sẽ 16 tuổi.",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-1-3",
+          "title": "Kiểu dữ liệu: số và chuỗi",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Cùng là \"5\" nhưng khác nhau!\n\nPython phân biệt rõ **kiểu dữ liệu**:\n\n| Kiểu | Ví dụ | Ý nghĩa |\n|---|---|---|\n| `int` | `5`, `-12` | số nguyên |\n| `float` | `3.14`, `2.0` | số thực |\n| `str` | `\"5\"`, `\"Lan\"` | chuỗi ký tự |\n| `bool` | `True`, `False` | đúng / sai |\n\nPhép `+` hoạt động **khác nhau** tùy kiểu: với số là phép cộng, với chuỗi là phép nối.\n\n```python\nprint(5 + 7)        # 12\nprint(\"5\" + \"7\")    # 57\nprint(type(5), type(\"5\"))   # <class 'int'> <class 'str'>\n```\n\nTa chuyển đổi qua lại bằng `int()`, `float()`, `str()` — gọi là **ép kiểu**:\n\n```python\na = int(\"5\")     # 5\ns = str(42)      # \"42\"\n```\n\nLỗi rất hay gặp của người mới: quên `int()` khi nhập số, khiến `input() + input()` thành phép nối chuỗi.",
+          "task": "Nhập hai số nguyên `a` và `b`, mỗi số trên một dòng. In ra hai dòng:\n\n1. Tổng `a + b` (phép cộng số).\n2. Chuỗi ghép của `a` và `b` (viết `a` rồi viết liền `b`).\n\n**Ví dụ**\n\n```\nĐầu vào:\n5\n7\n\nĐầu ra:\n12\n57\n```",
+          "starter": "a = int(input())\nb = int(input())\n# Dòng 1: tổng hai số\n# Dòng 2: ghép hai số thành chuỗi",
+          "solution": "a = int(input())\nb = int(input())\nprint(a + b)\nprint(str(a) + str(b))",
+          "hints": [
+            "Dòng 1 dùng phép cộng hai số nguyên.",
+            "Dòng 2: đổi từng số sang chuỗi bằng str() rồi nối bằng +."
+          ],
+          "tests": [
+            {
+              "input": "5\n7\n",
+              "expected": "12\n57",
+              "hidden": false
+            },
+            {
+              "input": "10\n20\n",
+              "expected": "30\n1020",
+              "hidden": false
+            },
+            {
+              "input": "0\n9\n",
+              "expected": "9\n09",
+              "hidden": false
+            },
+            {
+              "input": "123\n4\n",
+              "expected": "127\n1234",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-1-4",
+          "title": "Nhập nhiều số trên một dòng",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## split() và map()\n\nĐề bài thường cho nhiều số **trên cùng một dòng**, ví dụ `3 5 8`. Khi đó:\n\n1. `input()` đọc cả dòng: `\"3 5 8\"`.\n2. `.split()` tách theo khoảng trắng thành danh sách chuỗi: `[\"3\", \"5\", \"8\"]`.\n3. `map(int, ...)` áp dụng `int` cho từng phần tử.\n4. Gán cho nhiều biến cùng lúc (**unpacking**).\n\n```python\na, b, c = map(int, input().split())\nprint(a + b + c)\n```\n\nSố biến bên trái phải **bằng** số giá trị trên dòng, nếu không Python báo lỗi `ValueError: too many values to unpack`.\n\nVới số thực, thay `int` bằng `float`:\n\n```python\nx, y = map(float, input().split())\n```\n\nĐây là kỹ thuật được dùng trong hầu hết bài thi lập trình, hãy luyện cho thật quen tay nhé!",
+          "task": "Một dòng gồm **ba số nguyên** `a b c` cách nhau bởi dấu cách. In ra:\n\n1. Tổng `a + b + c`.\n2. Tích `a * b * c`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n1 2 3\n\nĐầu ra:\n6\n6\n```",
+          "starter": "# Đọc ba số trên cùng một dòng\n# Viết code của em ở đây",
+          "solution": "a, b, c = map(int, input().split())\nprint(a + b + c)\nprint(a * b * c)",
+          "hints": [
+            "a, b, c = map(int, input().split())",
+            "Tích dùng toán tử *."
+          ],
+          "tests": [
+            {
+              "input": "1 2 3\n",
+              "expected": "6\n6",
+              "hidden": false
+            },
+            {
+              "input": "10 -2 5\n",
+              "expected": "13\n-100",
+              "hidden": false
+            },
+            {
+              "input": "0 100 7\n",
+              "expected": "107\n0",
+              "hidden": false
+            },
+            {
+              "input": "4 4 4\n",
+              "expected": "12\n64",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-1-5",
+          "title": "Định dạng đầu ra với f-string",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## f-string: chèn biến vào chuỗi\n\nThay vì nối chuỗi rườm rà, Python có **f-string**: đặt chữ `f` trước dấu nháy, rồi viết biến trong cặp ngoặc nhọn `{}`.\n\n```python\nten = \"Lan\"\ndiem = 8.256\nprint(f\"Bạn {ten} được {diem} điểm\")       # Bạn Lan được 8.256 điểm\nprint(f\"Làm tròn: {diem:.1f}\")              # Làm tròn: 8.3\nprint(f\"Hai chữ số: {diem:.2f}\")            # Hai chữ số: 8.26\n```\n\nPhần sau dấu hai chấm là **định dạng**:\n\n| Định dạng | Ý nghĩa | `{3.14159:...}` |\n|---|---|---|\n| `.1f` | 1 chữ số thập phân | `3.1` |\n| `.2f` | 2 chữ số thập phân | `3.14` |\n| `05d` (số nguyên) | đủ 5 chữ số, thêm 0 phía trước | `{42:05d}` → `00042` |\n\nf-string giúp kết quả luôn đúng định dạng đề yêu cầu — kỹ năng cực kỳ quan trọng khi bài được chấm tự động.",
+          "task": "Dòng 1 là **tên** học sinh, dòng 2 là **điểm** (số thực). In ra một dòng theo mẫu:\n\n`Học sinh: <tên> | Điểm: <điểm với đúng 1 chữ số thập phân>`\n\n**Ví dụ**\n\n```\nĐầu vào:\nAn\n8.26\n\nĐầu ra:\nHọc sinh: An | Điểm: 8.3\n```",
+          "starter": "ten = input()\ndiem = float(input())\n# In theo mẫu bằng f-string",
+          "solution": "ten = input()\ndiem = float(input())\nprint(f\"Học sinh: {ten} | Điểm: {diem:.1f}\")",
+          "hints": [
+            "Dùng f\"...{ten}...\" để chèn biến.",
+            "Định dạng 1 chữ số thập phân: {diem:.1f}"
+          ],
+          "tests": [
+            {
+              "input": "An\n8.26\n",
+              "expected": "Học sinh: An | Điểm: 8.3",
+              "hidden": false
+            },
+            {
+              "input": "Bình\n10\n",
+              "expected": "Học sinh: Bình | Điểm: 10.0",
+              "hidden": false
+            },
+            {
+              "input": "Chi\n6.94\n",
+              "expected": "Học sinh: Chi | Điểm: 6.9",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-1-6",
+          "title": "Hoán đổi giá trị hai biến",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Đổi chỗ hai chiếc cốc\n\nMuốn đổi nước giữa cốc A và cốc B, ta cần **cốc thứ ba** làm trung gian. Lập trình cũng vậy:\n\n```python\ntam = a     # cất a vào biến tạm\na = b       # a nhận giá trị của b\nb = tam     # b nhận giá trị cũ của a\n```\n\nNếu viết `a = b` rồi `b = a` thì **cả hai đều bằng b** — giá trị cũ của `a` đã mất!\n\nPython có cách viết gọn nhờ **gán đồng thời** (tuple unpacking):\n\n```python\na, b = b, a\n```\n\nVế phải được tính xong **trước** rồi mới gán, nên không cần biến tạm. Tuy vậy, hiểu cách dùng biến tạm vẫn rất quan trọng vì nhiều ngôn ngữ (C, C++…) không có cú pháp này, và đó cũng là thao tác cốt lõi của các thuật toán sắp xếp.",
+          "task": "Một dòng gồm hai số nguyên `a b`. Hãy **hoán đổi** giá trị của hai biến rồi in ra theo mẫu:\n\n`a = <a mới>, b = <b mới>`\n\n**Ví dụ**\n\n```\nĐầu vào:\n3 7\n\nĐầu ra:\na = 7, b = 3\n```",
+          "starter": "a, b = map(int, input().split())\n# Hoán đổi a và b ở đây\n\nprint(f\"a = {a}, b = {b}\")",
+          "solution": "a, b = map(int, input().split())\na, b = b, a\nprint(f\"a = {a}, b = {b}\")",
+          "hints": [
+            "Có thể dùng một biến tạm: tam = a; a = b; b = tam",
+            "Hoặc viết gọn: a, b = b, a"
+          ],
+          "tests": [
+            {
+              "input": "3 7\n",
+              "expected": "a = 7, b = 3",
+              "hidden": false
+            },
+            {
+              "input": "-1 10\n",
+              "expected": "a = 10, b = -1",
+              "hidden": false
+            },
+            {
+              "input": "5 5\n",
+              "expected": "a = 5, b = 5",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2",
+      "title": "Toán tử & biểu thức",
+      "summary": "Các phép toán số học, chia nguyên, chia dư, lũy thừa, so sánh và thứ tự ưu tiên.",
+      "lessons": [
+        {
+          "id": "python-2-1",
+          "title": "Phép toán số học",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Bảy phép toán cần nhớ\n\n| Toán tử | Ý nghĩa | Ví dụ | Kết quả |\n|---|---|---|---|\n| `+` | cộng | `7 + 2` | `9` |\n| `-` | trừ | `7 - 2` | `5` |\n| `*` | nhân | `7 * 2` | `14` |\n| `/` | chia (luôn ra số thực) | `7 / 2` | `3.5` |\n| `//` | chia lấy phần nguyên | `7 // 2` | `3` |\n| `%` | chia lấy dư | `7 % 2` | `1` |\n| `**` | lũy thừa | `7 ** 2` | `49` |\n\nLưu ý: phép `/` **luôn** cho số thực, kể cả khi chia hết: `6 / 3` là `2.0`.\n\nKhi in số thực, nên định dạng để có số chữ số thập phân cố định:\n\n```python\na, b = 1, 3\nprint(a / b)            # 0.3333333333333333\nprint(f\"{a / b:.2f}\")   # 0.33\n```\n\nChia cho 0 gây lỗi `ZeroDivisionError` — luôn để ý mẫu số!",
+          "task": "Một dòng gồm hai số nguyên `a b` (`b ≠ 0`). In ra **4 dòng**:\n\n1. `a + b`\n2. `a - b`\n3. `a * b`\n4. `a / b` làm tròn **2 chữ số thập phân**\n\n**Ví dụ**\n\n```\nĐầu vào:\n7 2\n\nĐầu ra:\n9\n5\n14\n3.50\n```",
+          "starter": "a, b = map(int, input().split())\n# In 4 dòng kết quả",
+          "solution": "a, b = map(int, input().split())\nprint(a + b)\nprint(a - b)\nprint(a * b)\nprint(f\"{a / b:.2f}\")",
+          "hints": [
+            "Ba dòng đầu in trực tiếp kết quả phép toán.",
+            "Dòng cuối: print(f\"{a / b:.2f}\")"
+          ],
+          "tests": [
+            {
+              "input": "7 2\n",
+              "expected": "9\n5\n14\n3.50",
+              "hidden": false
+            },
+            {
+              "input": "10 4\n",
+              "expected": "14\n6\n40\n2.50",
+              "hidden": false
+            },
+            {
+              "input": "-9 3\n",
+              "expected": "-6\n-12\n-27\n-3.00",
+              "hidden": false
+            },
+            {
+              "input": "1 3\n",
+              "expected": "4\n-2\n3\n0.33",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-2-2",
+          "title": "Chia nguyên // và chia dư %: đổi giờ",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Hai phép toán \"thần thánh\"\n\n`//` cho biết **chia được bao nhiêu lần trọn vẹn**, còn `%` cho biết **còn dư bao nhiêu**.\n\nVí dụ đổi 125 phút ra giờ và phút:\n\n```python\nphut = 125\ngio = phut // 60      # 2\ncon_lai = phut % 60   # 5\nprint(gio, \"giờ\", con_lai, \"phút\")\n```\n\nỨng dụng của `%`:\n\n- Kiểm tra chẵn lẻ: `n % 2 == 0`.\n- Lấy chữ số hàng đơn vị: `n % 10`.\n- Quay vòng: thứ trong tuần `(thu + k) % 7`.\n\nĐể in số **đủ 2 chữ số** (như đồng hồ `07:05`), dùng định dạng `02d`:\n\n```python\nprint(f\"{7:02d}:{5:02d}\")   # 07:05\n```\n\nVới tổng số giây `t`: số giờ là `t // 3600`; phần giây còn lại `t % 3600` lại được chia tiếp cho 60 để ra phút và giây.",
+          "task": "Nhập tổng số giây `t` (`0 ≤ t < 86400`). In thời gian dưới dạng `HH:MM:SS`, mỗi phần **đủ 2 chữ số**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3661\n\nĐầu ra:\n01:01:01\n```",
+          "starter": "t = int(input())\n# Tính giờ, phút, giây rồi in theo dạng HH:MM:SS",
+          "solution": "t = int(input())\nh = t // 3600\nm = t % 3600 // 60\ns = t % 60\nprint(f\"{h:02d}:{m:02d}:{s:02d}\")",
+          "hints": [
+            "Giờ = t // 3600.",
+            "Phút = (t % 3600) // 60, giây = t % 60.",
+            "Định dạng đủ 2 chữ số: {h:02d}"
+          ],
+          "tests": [
+            {
+              "input": "3661\n",
+              "expected": "01:01:01",
+              "hidden": false
+            },
+            {
+              "input": "59\n",
+              "expected": "00:00:59",
+              "hidden": false
+            },
+            {
+              "input": "86399\n",
+              "expected": "23:59:59",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "00:00:00",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-2-3",
+          "title": "Lũy thừa và căn bậc hai: định lý Pythagore",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Lũy thừa `**`\n\n`a ** b` là $a^b$. Căn bậc hai chính là lũy thừa $\\frac{1}{2}$:\n\n```python\nprint(2 ** 10)      # 1024\nprint(9 ** 0.5)     # 3.0\n```\n\nHoặc dùng thư viện `math`:\n\n```python\nimport math\nprint(math.sqrt(16))   # 4.0\n```\n\n## Định lý Pythagore\n\nTrong tam giác vuông có hai cạnh góc vuông $a$, $b$, cạnh huyền là:\n\n$$c = \\sqrt{a^2 + b^2}$$\n\nVí dụ với $a = 3$, $b = 4$ thì $c = \\sqrt{9 + 16} = 5$.\n\nChú ý dấu ngoặc: `(a**2 + b**2) ** 0.5` khác hoàn toàn `a**2 + b**2 ** 0.5` vì `**` được ưu tiên tính trước phép cộng.",
+          "task": "Một dòng gồm hai số thực `a b` là độ dài hai cạnh góc vuông. In độ dài **cạnh huyền**, làm tròn **2 chữ số thập phân**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3 4\n\nĐầu ra:\n5.00\n```",
+          "starter": "a, b = map(float, input().split())\n# Tính cạnh huyền c",
+          "solution": "a, b = map(float, input().split())\nc = (a ** 2 + b ** 2) ** 0.5\nprint(f\"{c:.2f}\")",
+          "hints": [
+            "c = (a ** 2 + b ** 2) ** 0.5",
+            "In bằng f\"{c:.2f}\""
+          ],
+          "tests": [
+            {
+              "input": "3 4\n",
+              "expected": "5.00",
+              "hidden": false
+            },
+            {
+              "input": "1 1\n",
+              "expected": "1.41",
+              "hidden": false
+            },
+            {
+              "input": "5.5 2\n",
+              "expected": "5.85",
+              "hidden": false
+            },
+            {
+              "input": "6 8\n",
+              "expected": "10.00",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-2-4",
+          "title": "So sánh và giá trị logic",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Kết quả của phép so sánh là True/False\n\n| Toán tử | Ý nghĩa |\n|---|---|\n| `==` | bằng (hai dấu bằng!) |\n| `!=` | khác |\n| `<`, `>` | nhỏ hơn, lớn hơn |\n| `<=`, `>=` | nhỏ hơn hoặc bằng, lớn hơn hoặc bằng |\n\n```python\nprint(5 > 3)      # True\nprint(5 == 3)     # False\n```\n\nPython cho phép **so sánh nối chuỗi** giống toán học:\n\n```python\nx = 15\nprint(10 <= x <= 99)   # True — x nằm trong đoạn [10, 99]\n```\n\nKết hợp điều kiện với `and` (và), `or` (hoặc), `not` (phủ định). Hàm `abs(x)` trả về giá trị tuyệt đối, rất tiện để xét số âm: `abs(-35)` là `35`.\n\nMột số có hai chữ số khi phần giá trị tuyệt đối của nó nằm trong đoạn từ 10 đến 99.",
+          "task": "Nhập số nguyên `n`. In `True` nếu `n` là số có **đúng hai chữ số** (kể cả số âm như `-35`), ngược lại in `False`.\n\nGợi ý: bài này có thể giải **không cần** câu lệnh `if`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n42\n\nĐầu ra:\nTrue\n```",
+          "starter": "n = int(input())\n# In True/False",
+          "solution": "n = int(input())\nprint(10 <= abs(n) <= 99)",
+          "hints": [
+            "Bỏ dấu âm bằng abs(n).",
+            "print(10 <= abs(n) <= 99) in luôn True/False."
+          ],
+          "tests": [
+            {
+              "input": "42\n",
+              "expected": "True",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "False",
+              "hidden": false
+            },
+            {
+              "input": "-35\n",
+              "expected": "True",
+              "hidden": false
+            },
+            {
+              "input": "100\n",
+              "expected": "False",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-2-5",
+          "title": "Thứ tự ưu tiên: chỉ số BMI",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Thứ tự ưu tiên toán tử\n\nGiống toán học, Python tính theo thứ tự (từ cao xuống thấp):\n\n1. Ngoặc `( )`\n2. Lũy thừa `**`\n3. Đổi dấu `-x`\n4. `*`, `/`, `//`, `%` (từ trái sang phải)\n5. `+`, `-`\n6. So sánh `<`, `==`, …\n7. `not`, rồi `and`, rồi `or`\n\n```python\nprint(2 + 3 * 4)     # 14, không phải 20\nprint((2 + 3) * 4)   # 20\nprint(-2 ** 2)       # -4 vì ** tính trước dấu trừ\n```\n\n## Chỉ số khối cơ thể (BMI)\n\n$$BMI = \\frac{\\text{cân nặng (kg)}}{\\text{chiều cao (m)}^2}$$\n\nLỗi thường gặp là viết `w / h * h` — biểu thức này bằng `(w / h) * h = w`! Cách đúng là `w / h ** 2` hoặc `w / (h * h)`. Khi không chắc, **hãy thêm ngoặc** để chương trình dễ đọc hơn.",
+          "task": "Dòng 1 là cân nặng (kg), dòng 2 là chiều cao (m), đều là số thực. In chỉ số **BMI** làm tròn **1 chữ số thập phân**.\n\n**Ví dụ**\n\n```\nĐầu vào:\n50\n1.6\n\nĐầu ra:\n19.5\n```",
+          "starter": "w = float(input())\nh = float(input())\n# Tính BMI — cẩn thận thứ tự ưu tiên!",
+          "solution": "w = float(input())\nh = float(input())\nbmi = w / h ** 2\nprint(f\"{bmi:.1f}\")",
+          "hints": [
+            "BMI = w / h ** 2 (lũy thừa được tính trước phép chia).",
+            "In bằng f\"{bmi:.1f}\""
+          ],
+          "tests": [
+            {
+              "input": "50\n1.6\n",
+              "expected": "19.5",
+              "hidden": false
+            },
+            {
+              "input": "72.5\n1.75\n",
+              "expected": "23.7",
+              "hidden": false
+            },
+            {
+              "input": "45\n1.52\n",
+              "expected": "19.5",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-2-6",
+          "title": "Tách chữ số bằng // và %",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Bóc tách từng chữ số\n\nVới số có 3 chữ số `n = 507`:\n\n| Chữ số | Công thức | Giá trị |\n|---|---|---|\n| hàng trăm | `n // 100` | `5` |\n| hàng chục | `n // 10 % 10` | `0` |\n| hàng đơn vị | `n % 10` | `7` |\n\n```python\nn = 507\ntram = n // 100\nchuc = n // 10 % 10\ndonvi = n % 10\nprint(tram, chuc, donvi)   # 5 0 7\n```\n\nĐể tạo số **đảo ngược**, ta ghép lại theo thứ tự ngược: `donvi * 100 + chuc * 10 + tram`. Với `507` ta được `705`; với `120` ta được `21` (số 0 ở đầu không được viết).\n\nKỹ thuật `% 10` và `// 10` là nền tảng của rất nhiều bài toán về chữ số. Ở chương Vòng lặp, em sẽ dùng nó để xử lý số có bao nhiêu chữ số cũng được.",
+          "task": "Nhập một số nguyên dương `n` có **đúng 3 chữ số**. In ra hai dòng:\n\n1. Tổng ba chữ số của `n`.\n2. Số đảo ngược của `n` (viết như một số nguyên, không có chữ số 0 ở đầu).\n\n**Ví dụ**\n\n```\nĐầu vào:\n120\n\nĐầu ra:\n3\n21\n```",
+          "starter": "n = int(input())\n# Tách chữ số hàng trăm, chục, đơn vị",
+          "solution": "n = int(input())\ntram = n // 100\nchuc = n // 10 % 10\ndonvi = n % 10\nprint(tram + chuc + donvi)\nprint(donvi * 100 + chuc * 10 + tram)",
+          "hints": [
+            "Hàng trăm: n // 100; hàng chục: n // 10 % 10; hàng đơn vị: n % 10.",
+            "Số đảo ngược = donvi * 100 + chuc * 10 + tram — phép tính số tự bỏ số 0 ở đầu."
+          ],
+          "tests": [
+            {
+              "input": "123\n",
+              "expected": "6\n321",
+              "hidden": false
+            },
+            {
+              "input": "907\n",
+              "expected": "16\n709",
+              "hidden": false
+            },
+            {
+              "input": "120\n",
+              "expected": "3\n21",
+              "hidden": false
+            },
+            {
+              "input": "555\n",
+              "expected": "15\n555",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3",
+      "title": "Cấu trúc rẽ nhánh",
+      "summary": "Ra quyết định với if, elif, else; kết hợp điều kiện và xử lý các trường hợp đặc biệt.",
+      "lessons": [
+        {
+          "id": "python-3-1",
+          "title": "if / else: chẵn hay lẻ",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Chương trình biết \"chọn đường\"\n\nCâu lệnh `if` cho phép chạy một khối lệnh **chỉ khi** điều kiện đúng:\n\n```python\nn = int(input())\nif n % 2 == 0:\n    print(\"CHAN\")\nelse:\n    print(\"LE\")\n```\n\nBa điều cần nhớ:\n\n1. Cuối dòng `if ...` và `else` có dấu **hai chấm** `:`.\n2. Các lệnh bên trong phải **thụt lề** (thường là 4 dấu cách). Python dùng thụt lề để biết lệnh nào thuộc khối nào.\n3. So sánh bằng dùng `==`, còn `=` là phép gán.\n\nSố `0` là số chẵn vì `0 % 2 == 0`. Với số âm, Python vẫn cho kết quả đúng: `-3 % 2` bằng `1`, nên `-3` là số lẻ.\n\nLỗi `IndentationError` xuất hiện khi thụt lề không đều — hãy để trình soạn thảo tự thụt lề bằng phím Tab.",
+          "task": "Nhập số nguyên `n`. In `CHAN` nếu `n` chẵn, ngược lại in `LE` (viết hoa, không dấu).\n\n**Ví dụ**\n\n```\nĐầu vào:\n7\n\nĐầu ra:\nLE\n```",
+          "starter": "n = int(input())\n# Dùng if / else",
+          "solution": "n = int(input())\nif n % 2 == 0:\n    print(\"CHAN\")\nelse:\n    print(\"LE\")",
+          "hints": [
+            "Số chẵn khi n % 2 == 0.",
+            "Nhớ dấu hai chấm sau if/else và thụt lề 4 dấu cách."
+          ],
+          "tests": [
+            {
+              "input": "4\n",
+              "expected": "CHAN",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "LE",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "CHAN",
+              "hidden": false
+            },
+            {
+              "input": "-3\n",
+              "expected": "LE",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-3-2",
+          "title": "if / elif / else: số lớn nhất",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Nhiều nhánh với elif\n\nKhi có hơn hai khả năng, dùng `elif` (viết tắt của *else if*). Python kiểm tra **lần lượt từ trên xuống** và chỉ chạy nhánh **đầu tiên** đúng:\n\n```python\nif diem >= 8:\n    print(\"Giỏi\")\nelif diem >= 5:\n    print(\"Đạt\")\nelse:\n    print(\"Chưa đạt\")\n```\n\n## Tìm số lớn nhất của ba số\n\nÝ tưởng \"nhà vô địch\": giả sử số đầu tiên lớn nhất, rồi so sánh với từng số còn lại.\n\n```python\nlon_nhat = a\nif b > lon_nhat:\n    lon_nhat = b\nif c > lon_nhat:\n    lon_nhat = c\n```\n\nCách này mở rộng được cho bao nhiêu số cũng được — đây chính là thuật toán tìm giá trị lớn nhất trong mảng mà em sẽ gặp lại sau. Python có sẵn hàm `max()`, nhưng bài này yêu cầu tự viết để hiểu bản chất.",
+          "task": "Một dòng gồm ba số nguyên `a b c`. In ra số **lớn nhất** — **không** dùng hàm `max()`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3 9 5\n\nĐầu ra:\n9\n```",
+          "starter": "a, b, c = map(int, input().split())\n# Tìm số lớn nhất bằng if (không dùng max)",
+          "solution": "a, b, c = map(int, input().split())\nlon_nhat = a\nif b > lon_nhat:\n    lon_nhat = b\nif c > lon_nhat:\n    lon_nhat = c\nprint(lon_nhat)",
+          "hints": [
+            "Giả sử a lớn nhất, rồi so sánh lần lượt với b và c.",
+            "Mỗi lần gặp số lớn hơn thì cập nhật biến lon_nhat."
+          ],
+          "tests": [
+            {
+              "input": "3 9 5\n",
+              "expected": "9",
+              "hidden": false
+            },
+            {
+              "input": "-1 -7 -3\n",
+              "expected": "-1",
+              "hidden": false
+            },
+            {
+              "input": "4 4 2\n",
+              "expected": "4",
+              "hidden": false
+            },
+            {
+              "input": "1 2 3\n",
+              "expected": "3",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-3-3",
+          "title": "Xếp loại học lực",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Thứ tự các nhánh rất quan trọng\n\nXét quy tắc xếp loại: từ 8.0 là Giỏi, từ 6.5 là Khá, từ 5.0 là Trung bình, còn lại là Yếu.\n\nNếu viết điều kiện **nhỏ trước**:\n\n```python\nif diem >= 5.0:\n    print(\"Trung binh\")   # 9.0 cũng rơi vào đây — SAI!\nelif diem >= 8.0:\n    print(\"Gioi\")\n```\n\nthì điểm 9.0 đã khớp nhánh đầu tiên và các nhánh sau không bao giờ được xét. Vì vậy, hãy sắp xếp từ **điều kiện chặt nhất** xuống:\n\n```python\nif diem >= 8.0:\n    loai = \"Gioi\"\nelif diem >= 6.5:\n    loai = \"Kha\"\nelif diem >= 5.0:\n    loai = \"Trung binh\"\nelse:\n    loai = \"Yeu\"\nprint(loai)\n```\n\nNhờ `elif`, khi xét `diem >= 6.5` ta đã **biết chắc** `diem < 8.0`, nên không cần viết `6.5 <= diem < 8.0`.",
+          "task": "Nhập điểm trung bình (số thực từ 0 đến 10). In xếp loại (không dấu):\n\n- `Gioi` nếu điểm ≥ 8.0\n- `Kha` nếu điểm ≥ 6.5\n- `Trung binh` nếu điểm ≥ 5.0\n- `Yeu` trong các trường hợp còn lại\n\n**Ví dụ**\n\n```\nĐầu vào:\n6.5\n\nĐầu ra:\nKha\n```",
+          "starter": "diem = float(input())\n# Xếp loại bằng if / elif / else",
+          "solution": "diem = float(input())\nif diem >= 8.0:\n    print(\"Gioi\")\nelif diem >= 6.5:\n    print(\"Kha\")\nelif diem >= 5.0:\n    print(\"Trung binh\")\nelse:\n    print(\"Yeu\")",
+          "hints": [
+            "Kiểm tra từ mức cao nhất (8.0) xuống thấp.",
+            "Dùng >= để điểm đúng bằng mốc vẫn được tính vào loại cao hơn."
+          ],
+          "tests": [
+            {
+              "input": "8.5\n",
+              "expected": "Gioi",
+              "hidden": false
+            },
+            {
+              "input": "6.5\n",
+              "expected": "Kha",
+              "hidden": false
+            },
+            {
+              "input": "5\n",
+              "expected": "Trung binh",
+              "hidden": false
+            },
+            {
+              "input": "4.9\n",
+              "expected": "Yeu",
+              "hidden": false
+            },
+            {
+              "input": "10\n",
+              "expected": "Gioi",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-3-4",
+          "title": "Kết hợp điều kiện: năm nhuận",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## and, or, not\n\n| Biểu thức | Đúng khi |\n|---|---|\n| `A and B` | cả A và B đều đúng |\n| `A or B` | ít nhất một trong hai đúng |\n| `not A` | A sai |\n\n## Quy tắc năm nhuận (lịch Gregory)\n\nMột năm là năm nhuận nếu:\n\n- chia hết cho 4 **và không** chia hết cho 100, **hoặc**\n- chia hết cho 400.\n\n```python\nnhuan = (nam % 4 == 0 and nam % 100 != 0) or nam % 400 == 0\n```\n\nKiểm tra vài ví dụ:\n\n| Năm | %4 | %100 | %400 | Nhuận? |\n|---|---|---|---|---|\n| 2024 | 0 | 24 | 24 | Có |\n| 1900 | 0 | 0 | 300 | Không |\n| 2000 | 0 | 0 | 0 | Có |\n\nDấu ngoặc giúp diễn đạt đúng ý \"(A và B) hoặc C\". Vì `and` được ưu tiên hơn `or`, kết quả không đổi nếu bỏ ngoặc, nhưng có ngoặc thì người đọc hiểu ngay.",
+          "task": "Nhập một năm (số nguyên dương). In `YES` nếu đó là năm nhuận, ngược lại in `NO`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n1900\n\nĐầu ra:\nNO\n```",
+          "starter": "nam = int(input())\n# Kiểm tra năm nhuận",
+          "solution": "nam = int(input())\nif (nam % 4 == 0 and nam % 100 != 0) or nam % 400 == 0:\n    print(\"YES\")\nelse:\n    print(\"NO\")",
+          "hints": [
+            "Năm nhuận: chia hết cho 4 và không chia hết cho 100, hoặc chia hết cho 400.",
+            "Kết hợp bằng and / or trong một điều kiện if."
+          ],
+          "tests": [
+            {
+              "input": "2024\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "1900\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "2000\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "2023\n",
+              "expected": "NO",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-3-5",
+          "title": "Giải phương trình bậc nhất",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Xét đủ mọi trường hợp\n\nPhương trình $ax + b = 0$ có ba khả năng:\n\n| Điều kiện | Kết luận |\n|---|---|\n| $a \\ne 0$ | một nghiệm $x = -\\dfrac{b}{a}$ |\n| $a = 0$, $b = 0$ | vô số nghiệm ($0 = 0$ luôn đúng) |\n| $a = 0$, $b \\ne 0$ | vô nghiệm ($b = 0$ là vô lý) |\n\nMột lập trình viên giỏi luôn tự hỏi: *\"Còn trường hợp nào mình chưa xét?\"* Nếu quên trường hợp $a = 0$, chương trình sẽ gặp lỗi chia cho 0.\n\n```python\nif a == 0:\n    if b == 0:\n        print(\"VO SO NGHIEM\")\n    else:\n        print(\"VO NGHIEM\")\nelse:\n    x = -b / a\n```\n\nỞ đây `if` lồng bên trong `if` — gọi là **rẽ nhánh lồng nhau**.\n\n**Bẫy số thực:** khi $b = 0$, `-b / a` có thể cho ra `-0.0`, và `f\"{-0.0:.2f}\"` in thành `-0.00`. Hãy xử lý riêng: nếu `x == 0` thì gán `x = 0.0`.",
+          "task": "Một dòng gồm hai số thực `a b`. Giải phương trình `ax + b = 0`:\n\n- Nếu vô số nghiệm: in `VO SO NGHIEM`\n- Nếu vô nghiệm: in `VO NGHIEM`\n- Nếu có một nghiệm: in nghiệm làm tròn **2 chữ số thập phân**. Nếu nghiệm bằng 0, in `0.00` (không in `-0.00`).\n\n**Ví dụ**\n\n```\nĐầu vào:\n2 -4\n\nĐầu ra:\n2.00\n```",
+          "starter": "a, b = map(float, input().split())\n# Xét các trường hợp của a và b",
+          "solution": "a, b = map(float, input().split())\nif a == 0:\n    if b == 0:\n        print(\"VO SO NGHIEM\")\n    else:\n        print(\"VO NGHIEM\")\nelse:\n    x = -b / a\n    if x == 0:\n        x = 0.0\n    print(f\"{x:.2f}\")",
+          "hints": [
+            "Xét a == 0 trước để tránh chia cho 0.",
+            "Trong nhánh a == 0, xét tiếp b == 0 hay không.",
+            "Nếu x == 0 thì gán x = 0.0 để không in ra -0.00."
+          ],
+          "tests": [
+            {
+              "input": "2 -4\n",
+              "expected": "2.00",
+              "hidden": false
+            },
+            {
+              "input": "0 0\n",
+              "expected": "VO SO NGHIEM",
+              "hidden": false
+            },
+            {
+              "input": "0 5\n",
+              "expected": "VO NGHIEM",
+              "hidden": false
+            },
+            {
+              "input": "3 0\n",
+              "expected": "0.00",
+              "hidden": false
+            },
+            {
+              "input": "-4 1\n",
+              "expected": "0.25",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-3-6",
+          "title": "Tiền điện bậc thang",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Bài toán thực tế: tính lũy tiến\n\nGiá điện sinh hoạt thường tính **bậc thang**: mỗi khoảng số điện có một đơn giá riêng, và **chỉ phần vượt** mới tính theo giá cao hơn.\n\nVí dụ với bảng giá:\n\n| Bậc | Số kWh | Đơn giá |\n|---|---|---|\n| 1 | 0 – 50 | 1 800 đ |\n| 2 | 51 – 100 | 2 000 đ |\n| 3 | trên 100 | 2 500 đ |\n\nDùng 80 kWh thì tiền là $50 \\times 1800 + 30 \\times 2000 = 150\\,000$ đ, **không phải** $80 \\times 2000$.\n\n```python\nif k <= 50:\n    tien = k * 1800\nelif k <= 100:\n    tien = 50 * 1800 + (k - 50) * 2000\nelse:\n    tien = 50 * 1800 + 50 * 2000 + (k - 100) * 2500\n```\n\nCách tiếp cận: với mỗi nhánh, hãy tự hỏi *\"các bậc phía dưới đã dùng hết chưa?\"* — nếu rồi thì cộng trọn tiền của các bậc đó, rồi tính phần vượt theo giá của bậc hiện tại.",
+          "task": "Nhập số điện tiêu thụ `k` (số nguyên, `k ≥ 0`, đơn vị kWh). Tính tiền điện theo bảng giá bậc thang ở phần lý thuyết và in ra **số nguyên** (đồng).\n\n**Ví dụ**\n\n```\nĐầu vào:\n80\n\nĐầu ra:\n150000\n```",
+          "starter": "k = int(input())\n# Tính tiền theo 3 bậc",
+          "solution": "k = int(input())\nif k <= 50:\n    tien = k * 1800\nelif k <= 100:\n    tien = 50 * 1800 + (k - 50) * 2000\nelse:\n    tien = 50 * 1800 + 50 * 2000 + (k - 100) * 2500\nprint(tien)",
+          "hints": [
+            "Chia làm 3 trường hợp: k ≤ 50, 50 < k ≤ 100, k > 100.",
+            "Ở bậc 2: 50 số đầu giá 1800, phần (k - 50) giá 2000."
+          ],
+          "tests": [
+            {
+              "input": "30\n",
+              "expected": "54000",
+              "hidden": false
+            },
+            {
+              "input": "50\n",
+              "expected": "90000",
+              "hidden": false
+            },
+            {
+              "input": "80\n",
+              "expected": "150000",
+              "hidden": false
+            },
+            {
+              "input": "150\n",
+              "expected": "315000",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "0",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch4",
+      "title": "Vòng lặp",
+      "summary": "Lặp với for và while, cộng dồn, đếm, thuật toán Euclid, số nguyên tố và vòng lặp lồng nhau.",
+      "lessons": [
+        {
+          "id": "python-4-1",
+          "title": "Vòng lặp for và range()",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Lặp lại mà không cần viết lại\n\n`for` giúp chạy một khối lệnh nhiều lần. `range()` tạo ra dãy số:\n\n| Lời gọi | Dãy số |\n|---|---|\n| `range(5)` | 0, 1, 2, 3, 4 |\n| `range(1, 6)` | 1, 2, 3, 4, 5 |\n| `range(1, 10, 2)` | 1, 3, 5, 7, 9 |\n\nLưu ý: `range(a, b)` **không bao gồm** `b`.\n\n```python\nfor i in range(1, 4):\n    print(\"Lần thứ\", i)\n```\n\nMuốn in trên **cùng một dòng**, đổi ký tự kết thúc của `print`:\n\n```python\nfor i in range(1, 6):\n    print(i, end=\" \")    # 1 2 3 4 5\n```\n\nHoặc gọn hơn bằng toán tử \"giải nén\" `*`: `print(*range(1, 6))` in các phần tử cách nhau bởi dấu cách.",
+          "task": "Nhập số nguyên dương `n`. In các số từ `1` đến `n` trên **một dòng**, cách nhau bởi một dấu cách.\n\n**Ví dụ**\n\n```\nĐầu vào:\n5\n\nĐầu ra:\n1 2 3 4 5\n```",
+          "starter": "n = int(input())\n# Dùng for và range()",
+          "solution": "n = int(input())\nfor i in range(1, n + 1):\n    print(i, end=\" \")\nprint()",
+          "hints": [
+            "range(1, n + 1) tạo dãy 1, 2, ..., n.",
+            "print(i, end=\" \") để in trên cùng một dòng."
+          ],
+          "tests": [
+            {
+              "input": "5\n",
+              "expected": "1 2 3 4 5",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "12\n",
+              "expected": "1 2 3 4 5 6 7 8 9 10 11 12",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-4-2",
+          "title": "Cộng dồn với vòng lặp",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Mẫu \"biến tích lũy\"\n\nĐể tính tổng nhiều số, ta dùng một biến bắt đầu từ 0 và **cộng dồn** qua từng vòng lặp:\n\n```python\ntong = 0\nfor i in range(1, n + 1):\n    tong += i        # viết tắt của: tong = tong + i\nprint(tong)\n```\n\nTheo dõi từng bước với `n = 4`:\n\n| i | tong sau vòng lặp |\n|---|---|\n| 1 | 1 |\n| 2 | 3 |\n| 3 | 6 |\n| 4 | 10 |\n\nMuốn chỉ cộng **số chẵn**, thêm điều kiện bên trong vòng lặp, hoặc dùng bước nhảy: `range(2, n + 1, 2)`.\n\nMẫu tích lũy này xuất hiện ở khắp nơi: tính tổng, đếm số lượng (`dem += 1`), tính tích (bắt đầu từ 1), tìm lớn nhất… Hãy nhớ **khởi tạo biến trước vòng lặp**, nếu đặt bên trong thì nó sẽ bị đặt lại ở mỗi vòng.",
+          "task": "Nhập số nguyên dương `n`. In ra hai dòng:\n\n1. Tổng `1 + 2 + ... + n`.\n2. Tổng các số **chẵn** từ 1 đến `n`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n10\n\nĐầu ra:\n55\n30\n```",
+          "starter": "n = int(input())\ntong = 0\ntong_chan = 0\n# Dùng vòng lặp để cộng dồn",
+          "solution": "n = int(input())\ntong = 0\ntong_chan = 0\nfor i in range(1, n + 1):\n    tong += i\n    if i % 2 == 0:\n        tong_chan += i\nprint(tong)\nprint(tong_chan)",
+          "hints": [
+            "Khởi tạo tong = 0 trước vòng lặp, mỗi vòng cộng thêm i.",
+            "Chỉ cộng vào tong_chan khi i % 2 == 0."
+          ],
+          "tests": [
+            {
+              "input": "10\n",
+              "expected": "55\n30",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1\n0",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "28\n12",
+              "hidden": false
+            },
+            {
+              "input": "100\n",
+              "expected": "5050\n2550",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-4-3",
+          "title": "Giai thừa",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Tích lũy bằng phép nhân\n\nGiai thừa của $n$ là tích các số từ 1 đến $n$:\n\n$$n! = 1 \\times 2 \\times \\dots \\times n, \\qquad 0! = 1$$\n\nKhác với tính tổng, biến tích lũy của phép nhân phải bắt đầu từ **1** (nếu bắt đầu từ 0 thì mọi tích đều bằng 0).\n\n```python\ngt = 1\nfor i in range(2, n + 1):\n    gt *= i\n```\n\nVới `n = 0`, vòng lặp không chạy lần nào và `gt` vẫn bằng 1 — đúng với định nghĩa $0! = 1$.\n\nGiai thừa tăng **rất nhanh**: $20! = 2\\,432\\,902\\,008\\,176\\,640\\,000$. Python tự xử lý số nguyên lớn, nhưng trong C/C++ em sẽ phải dùng kiểu `long long`.\n\nGiai thừa còn có định nghĩa **đệ quy**: $n! = n \\times (n-1)!$. Hãy mở mục Lăng kính → Đệ quy để xem từng lời gọi hàm được xếp chồng như thế nào.",
+          "task": "Nhập số nguyên `n` (`0 ≤ n ≤ 20`). In ra `n!`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n5\n\nĐầu ra:\n120\n```",
+          "starter": "n = int(input())\n# Tính n! bằng vòng lặp",
+          "solution": "n = int(input())\ngt = 1\nfor i in range(2, n + 1):\n    gt *= i\nprint(gt)",
+          "hints": [
+            "Biến tích lũy phép nhân bắt đầu từ 1.",
+            "Nhân dồn i từ 2 đến n; với n = 0 kết quả là 1."
+          ],
+          "tests": [
+            {
+              "input": "5\n",
+              "expected": "120",
+              "hidden": false
+            },
+            {
+              "input": "0\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "20\n",
+              "expected": "2432902008176640000",
+              "hidden": true
+            }
+          ],
+          "prism": "recursion"
+        },
+        {
+          "id": "python-4-4",
+          "title": "Vòng lặp while: thuật toán Euclid",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## while: lặp khi điều kiện còn đúng\n\n`for` phù hợp khi biết trước số lần lặp; `while` dùng khi chỉ biết **điều kiện dừng**.\n\n```python\nwhile dieu_kien:\n    # các lệnh lặp lại\n```\n\n## Thuật toán Euclid tìm ước chung lớn nhất\n\nÝ tưởng cổ xưa (khoảng 300 TCN): $\\gcd(a, b) = \\gcd(b, a \\bmod b)$, và $\\gcd(a, 0) = a$.\n\n```python\nwhile b != 0:\n    a, b = b, a % b\nprint(a)   # UCLN\n```\n\nVí dụ với 12 và 18:\n\n| a | b | a % b |\n|---|---|---|\n| 12 | 18 | 12 |\n| 18 | 12 | 6 |\n| 12 | 6 | 0 |\n| 6 | 0 | — |\n\nKết quả UCLN = 6. Bội chung nhỏ nhất tính qua công thức $\\text{BCNN} = \\dfrac{a \\times b}{\\text{UCLN}}$ — nhớ lưu lại $a, b$ ban đầu vì vòng lặp đã làm thay đổi chúng!",
+          "task": "Một dòng gồm hai số nguyên dương `a b`. In ra hai dòng: **ước chung lớn nhất** và **bội chung nhỏ nhất** của chúng.\n\n**Ví dụ**\n\n```\nĐầu vào:\n12 18\n\nĐầu ra:\n6\n36\n```",
+          "starter": "a, b = map(int, input().split())\n# Dùng while để tìm UCLN, sau đó tính BCNN",
+          "solution": "a, b = map(int, input().split())\nx, y = a, b\nwhile y != 0:\n    x, y = y, x % y\nucln = x\nprint(ucln)\nprint(a * b // ucln)",
+          "hints": [
+            "Lặp while b != 0: a, b = b, a % b.",
+            "Sao lưu a, b ban đầu để tính BCNN = a * b // UCLN."
+          ],
+          "tests": [
+            {
+              "input": "12 18\n",
+              "expected": "6\n36",
+              "hidden": false
+            },
+            {
+              "input": "7 5\n",
+              "expected": "1\n35",
+              "hidden": false
+            },
+            {
+              "input": "100 75\n",
+              "expected": "25\n300",
+              "hidden": false
+            },
+            {
+              "input": "6 6\n",
+              "expected": "6\n6",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-4-5",
+          "title": "Kiểm tra số nguyên tố",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## break: thoát vòng lặp sớm\n\nSố nguyên tố là số lớn hơn 1 và chỉ chia hết cho 1 và chính nó. Để kiểm tra $n$, ta thử chia cho các số từ 2 trở đi; **chỉ cần tìm được một ước** là kết luận ngay, không cần thử tiếp — dùng `break`.\n\n## Chỉ cần thử đến $\\sqrt{n}$\n\nNếu $n = a \\times b$ với $a \\le b$ thì $a \\le \\sqrt{n}$. Vậy nếu không có ước nào $\\le \\sqrt{n}$ thì $n$ là số nguyên tố. Điều kiện `i * i <= n` tránh phải tính căn:\n\n```python\nla_nt = n >= 2\ni = 2\nwhile i * i <= n:\n    if n % i == 0:\n        la_nt = False\n        break\n    i += 1\n```\n\nVới $n = 10^9$, cách thử đến $\\sqrt{n}$ chỉ cần khoảng 31 623 phép chia thay vì gần một tỷ — đây là ví dụ đầu tiên về việc **tối ưu thuật toán**.\n\nĐừng quên các trường hợp biên: 0 và 1 **không** phải số nguyên tố, còn 2 là số nguyên tố chẵn duy nhất.",
+          "task": "Nhập số nguyên `n` (`0 ≤ n ≤ 10^9`). In `YES` nếu `n` là số nguyên tố, ngược lại in `NO`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n91\n\nĐầu ra:\nNO\n```\n\n(91 = 7 × 13)",
+          "starter": "n = int(input())\n# Thử chia n cho các số từ 2 đến căn bậc hai của n",
+          "solution": "n = int(input())\nla_nt = n >= 2\ni = 2\nwhile i * i <= n:\n    if n % i == 0:\n        la_nt = False\n        break\n    i += 1\nprint(\"YES\" if la_nt else \"NO\")",
+          "hints": [
+            "Số nhỏ hơn 2 không phải số nguyên tố.",
+            "Chỉ cần thử i trong khi i * i <= n; gặp ước thì break."
+          ],
+          "tests": [
+            {
+              "input": "7\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "2\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "91\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "999999937\n",
+              "expected": "YES",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-4-6",
+          "title": "Vòng lặp lồng nhau: tam giác số",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Vòng lặp trong vòng lặp\n\nĐặt một vòng lặp bên trong vòng lặp khác, vòng **trong** sẽ chạy trọn vẹn ở **mỗi** lần lặp của vòng **ngoài**. Hình dung như kim giờ và kim phút: kim giờ nhích 1, kim phút quay đủ một vòng.\n\n```python\nfor dong in range(1, 4):\n    for cot in range(1, 4):\n        print(dong * cot, end=\" \")\n    print()   # xuống dòng sau mỗi hàng\n```\n\nKết quả là bảng nhân 3 × 3:\n\n```\n1 2 3\n2 4 6\n3 6 9\n```\n\nĐể vẽ **tam giác**, cho số phần tử của mỗi dòng phụ thuộc vào biến vòng ngoài: dòng thứ `i` có `i` phần tử, tức là vòng trong chạy `range(1, i + 1)`.\n\nSố thao tác của hai vòng lồng nhau tỉ lệ với $n^2$ — gọi là độ phức tạp $O(n^2)$. Khi $n$ lớn, em cần cân nhắc kỹ trước khi lồng vòng lặp.",
+          "task": "Nhập số nguyên dương `n`. In ra `n` dòng; dòng thứ `i` gồm các số từ `1` đến `i`, cách nhau bởi một dấu cách.\n\n**Ví dụ**\n\n```\nĐầu vào:\n3\n\nĐầu ra:\n1\n1 2\n1 2 3\n```",
+          "starter": "n = int(input())\n# Vòng ngoài duyệt dòng, vòng trong in các số của dòng",
+          "solution": "n = int(input())\nfor i in range(1, n + 1):\n    for j in range(1, i + 1):\n        print(j, end=\" \")\n    print()",
+          "hints": [
+            "Vòng ngoài: i từ 1 đến n; vòng trong: j từ 1 đến i.",
+            "Sau vòng trong, gọi print() để xuống dòng."
+          ],
+          "tests": [
+            {
+              "input": "3\n",
+              "expected": "1\n1 2\n1 2 3",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "5\n",
+              "expected": "1\n1 2\n1 2 3\n1 2 3 4\n1 2 3 4 5",
+              "hidden": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch5",
+      "title": "Chuỗi, danh sách & hàm",
+      "summary": "Xử lý chuỗi, danh sách, tìm kiếm, sắp xếp và tự viết hàm để tái sử dụng code.",
+      "lessons": [
+        {
+          "id": "python-5-1",
+          "title": "Xử lý chuỗi cơ bản",
+          "difficulty": "easy",
+          "xp": 10,
+          "theory": "## Chuỗi là dãy ký tự\n\nChuỗi có rất nhiều công cụ dựng sẵn:\n\n| Cách dùng | Kết quả với `s = \"Xin chao\"` |\n|---|---|\n| `len(s)` | `8` (đếm cả dấu cách) |\n| `s.upper()` | `\"XIN CHAO\"` |\n| `s.lower()` | `\"xin chao\"` |\n| `s[0]`, `s[-1]` | `\"X\"`, `\"o\"` |\n| `s[0:3]` | `\"Xin\"` |\n| `s.split()` | `[\"Xin\", \"chao\"]` |\n\n```python\ncau = input()\ntu = cau.split()        # tách theo khoảng trắng\nprint(len(tu), \"từ\")\n```\n\n`split()` không tham số tự bỏ qua các khoảng trắng thừa, nên `\"a   b\"` vẫn cho ra 2 từ.\n\nChuỗi trong Python là **bất biến**: `s.upper()` không sửa `s` mà trả về một chuỗi mới. Muốn giữ kết quả, hãy gán lại: `s = s.upper()`.",
+          "task": "Nhập một câu (một dòng). In ra ba dòng:\n\n1. Số ký tự của câu (kể cả dấu cách).\n2. Câu đã chuyển thành **chữ in hoa**.\n3. Số **từ** trong câu.\n\n**Ví dụ**\n\n```\nĐầu vào:\nxin chao V-Code Edu\n\nĐầu ra:\n19\nXIN CHAO V-CODE EDU\n4\n```",
+          "starter": "cau = input()\n# In độ dài, chữ in hoa, số từ",
+          "solution": "cau = input()\nprint(len(cau))\nprint(cau.upper())\nprint(len(cau.split()))",
+          "hints": [
+            "len(cau) đếm số ký tự.",
+            "Số từ = len(cau.split())."
+          ],
+          "tests": [
+            {
+              "input": "xin chao V-Code Edu\n",
+              "expected": "19\nXIN CHAO V-CODE EDU\n4",
+              "hidden": false
+            },
+            {
+              "input": "Python\n",
+              "expected": "6\nPYTHON\n1",
+              "hidden": false
+            },
+            {
+              "input": "học lập trình thật vui\n",
+              "expected": "22\nHỌC LẬP TRÌNH THẬT VUI\n5",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-5-2",
+          "title": "Chuỗi đối xứng (palindrome)",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Đọc xuôi hay ngược đều giống nhau\n\nChuỗi đối xứng như `\"level\"`, `\"racecar\"`. Trong Python, **lát cắt** `s[::-1]` cho chuỗi đảo ngược:\n\n```python\ns = \"level\"\nprint(s[::-1])          # level\nprint(s == s[::-1])     # True\n```\n\nVới câu như *\"Never odd or even\"*, ta cần **chuẩn hóa** trước: bỏ dấu cách và đưa về chữ thường.\n\n```python\nt = cau.replace(\" \", \"\").lower()\n```\n\n## Cách làm bằng hai con trỏ\n\nKhông dùng lát cắt, ta so sánh ký tự đầu với ký tự cuối, rồi tiến dần vào giữa:\n\n```python\ni, j = 0, len(t) - 1\nwhile i < j and t[i] == t[j]:\n    i += 1\n    j -= 1\ndoi_xung = i >= j\n```\n\nKỹ thuật **hai con trỏ** này rất hay dùng trong các bài thuật toán về mảng và chuỗi.",
+          "task": "Nhập một câu. Bỏ qua **dấu cách** và **chữ hoa/thường**, in `YES` nếu câu là chuỗi đối xứng, ngược lại in `NO`.\n\n**Ví dụ**\n\n```\nĐầu vào:\nNever odd or even\n\nĐầu ra:\nYES\n```",
+          "starter": "cau = input()\n# Chuẩn hóa rồi kiểm tra đối xứng",
+          "solution": "cau = input()\nt = cau.replace(\" \", \"\").lower()\nprint(\"YES\" if t == t[::-1] else \"NO\")",
+          "hints": [
+            "Chuẩn hóa: cau.replace(\" \", \"\").lower()",
+            "So sánh chuỗi với chính nó đảo ngược: t[::-1]"
+          ],
+          "tests": [
+            {
+              "input": "Never odd or even\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "abc\n",
+              "expected": "NO",
+              "hidden": false
+            },
+            {
+              "input": "A\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "Race car\n",
+              "expected": "YES",
+              "hidden": false
+            },
+            {
+              "input": "hello olleh x\n",
+              "expected": "NO",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-5-3",
+          "title": "Danh sách: lớn nhất, nhỏ nhất, trung bình",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## List — chứa nhiều giá trị trong một biến\n\n```python\ndiem = [7, 9, 5, 8]\nprint(diem[0])        # 7 — chỉ số bắt đầu từ 0\nprint(len(diem))      # 4\ndiem.append(10)       # thêm vào cuối\n```\n\nĐọc một dãy số trên một dòng thành danh sách:\n\n```python\na = list(map(int, input().split()))\n```\n\nDuyệt danh sách bằng `for x in a:`. Python có sẵn `max(a)`, `min(a)`, `sum(a)`, nhưng hãy hiểu cách chúng hoạt động:\n\n```python\nlon = a[0]\nfor x in a:\n    if x > lon:\n        lon = x\n```\n\nTrung bình cộng = tổng / số phần tử. Với số phần tử là `n`, thuật toán duyệt một lượt có độ phức tạp $O(n)$ — mỗi phần tử chỉ được xem đúng một lần.\n\nMở Lăng kính → Mảng để xem trực quan cách truy cập, chèn và xóa phần tử.",
+          "task": "Dòng 1 là số nguyên `n` (`n ≥ 1`), dòng 2 gồm `n` số nguyên. In ra ba dòng: giá trị **lớn nhất**, **nhỏ nhất** và **trung bình cộng** (làm tròn 2 chữ số thập phân).\n\n**Ví dụ**\n\n```\nĐầu vào:\n5\n3 8 -2 7 4\n\nĐầu ra:\n8\n-2\n4.00\n```",
+          "starter": "n = int(input())\na = list(map(int, input().split()))\n# Tìm lớn nhất, nhỏ nhất, trung bình",
+          "solution": "n = int(input())\na = list(map(int, input().split()))\nprint(max(a))\nprint(min(a))\nprint(f\"{sum(a) / n:.2f}\")",
+          "hints": [
+            "Có thể dùng max(a), min(a), sum(a).",
+            "Trung bình: f\"{sum(a) / n:.2f}\""
+          ],
+          "tests": [
+            {
+              "input": "5\n3 8 -2 7 4\n",
+              "expected": "8\n-2\n4.00",
+              "hidden": false
+            },
+            {
+              "input": "1\n10\n",
+              "expected": "10\n10\n10.00",
+              "hidden": false
+            },
+            {
+              "input": "4\n1 2 3 4\n",
+              "expected": "4\n1\n2.50",
+              "hidden": true
+            }
+          ],
+          "prism": "arrays"
+        },
+        {
+          "id": "python-5-4",
+          "title": "Tìm kiếm tuyến tính",
+          "difficulty": "medium",
+          "xp": 20,
+          "theory": "## Tìm phần tử trong danh sách\n\n**Tìm kiếm tuyến tính** duyệt từng phần tử từ đầu đến cuối cho tới khi gặp giá trị cần tìm.\n\n```python\nvi_tri = -1\nfor i in range(len(a)):\n    if a[i] == x:\n        vi_tri = i\n        break\nprint(vi_tri)\n```\n\n- Quy ước trả về `-1` khi không tìm thấy (vì chỉ số hợp lệ luôn ≥ 0).\n- `break` giúp dừng ngay ở **lần xuất hiện đầu tiên**.\n- `enumerate(a)` cho cả chỉ số và giá trị: `for i, v in enumerate(a):`.\n\nTrường hợp xấu nhất phải duyệt hết $n$ phần tử → độ phức tạp $O(n)$. Nếu danh sách **đã sắp xếp**, ta có **tìm kiếm nhị phân** nhanh hơn nhiều: mỗi bước loại bỏ một nửa, chỉ cần $O(\\log n)$ bước. Với một triệu phần tử, đó là khoảng 20 bước thay vì một triệu!\n\nHãy thử so sánh hai cách trong mục Lăng kính → Tìm kiếm.",
+          "task": "Dòng 1 là một dãy số nguyên, dòng 2 là số `x`. In **chỉ số đầu tiên** (đếm từ 0) mà `x` xuất hiện trong dãy, hoặc `-1` nếu không có.\n\n**Ví dụ**\n\n```\nĐầu vào:\n4 7 1 7 9\n7\n\nĐầu ra:\n1\n```",
+          "starter": "a = list(map(int, input().split()))\nx = int(input())\n# Duyệt dãy để tìm x",
+          "solution": "a = list(map(int, input().split()))\nx = int(input())\nvi_tri = -1\nfor i in range(len(a)):\n    if a[i] == x:\n        vi_tri = i\n        break\nprint(vi_tri)",
+          "hints": [
+            "Khởi tạo vi_tri = -1.",
+            "Duyệt i từ 0 đến len(a) - 1, gặp a[i] == x thì lưu i và break."
+          ],
+          "tests": [
+            {
+              "input": "4 7 1 7 9\n7\n",
+              "expected": "1",
+              "hidden": false
+            },
+            {
+              "input": "1 2 3\n5\n",
+              "expected": "-1",
+              "hidden": false
+            },
+            {
+              "input": "5\n5\n",
+              "expected": "0",
+              "hidden": false
+            },
+            {
+              "input": "3 3 3\n3\n",
+              "expected": "0",
+              "hidden": true
+            }
+          ],
+          "prism": "searching"
+        },
+        {
+          "id": "python-5-5",
+          "title": "Hàm: liệt kê số nguyên tố",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Tự định nghĩa hàm với def\n\nHàm là một **khối lệnh có tên**, nhận đầu vào (tham số) và trả về kết quả bằng `return`.\n\n```python\ndef binh_phuong(x):\n    return x * x\n\nprint(binh_phuong(5))   # 25\n```\n\nLợi ích của hàm:\n\n- **Tái sử dụng**: viết một lần, gọi nhiều lần.\n- **Dễ đọc**: `if la_nguyen_to(n):` rõ nghĩa hơn cả một vòng lặp dài.\n- **Dễ kiểm thử**: kiểm tra từng hàm nhỏ riêng biệt.\n\nHàm có thể trả về giá trị logic:\n\n```python\ndef la_so_chan(n):\n    return n % 2 == 0\n```\n\n`return` kết thúc hàm **ngay lập tức** — rất tiện để trả về sớm khi đã biết kết quả (ví dụ vừa tìm thấy một ước số).\n\nBiến tạo ra bên trong hàm là **biến cục bộ**, không ảnh hưởng tới biến cùng tên bên ngoài.",
+          "task": "Viết hàm `la_nguyen_to(n)` trả về `True` nếu `n` là số nguyên tố. Nhập số nguyên `N` (`N ≥ 0`), in các số nguyên tố **không vượt quá** `N` trên một dòng, cách nhau bởi dấu cách. Nếu không có số nào, in `KHONG CO`.\n\n**Ví dụ**\n\n```\nĐầu vào:\n20\n\nĐầu ra:\n2 3 5 7 11 13 17 19\n```",
+          "starter": "def la_nguyen_to(n):\n    # Trả về True nếu n là số nguyên tố\n    pass\n\n\nN = int(input())\n# Dùng hàm la_nguyen_to để liệt kê",
+          "solution": "def la_nguyen_to(n):\n    if n < 2:\n        return False\n    i = 2\n    while i * i <= n:\n        if n % i == 0:\n            return False\n        i += 1\n    return True\n\n\nN = int(input())\nds = [x for x in range(2, N + 1) if la_nguyen_to(x)]\nif ds:\n    print(*ds)\nelse:\n    print(\"KHONG CO\")",
+          "hints": [
+            "Trong hàm: n < 2 thì return False; gặp ước thì return False; hết vòng lặp thì return True.",
+            "Gom các số nguyên tố vào danh sách; danh sách rỗng thì in KHONG CO.",
+            "In danh sách cách nhau dấu cách: print(*ds)"
+          ],
+          "tests": [
+            {
+              "input": "20\n",
+              "expected": "2 3 5 7 11 13 17 19",
+              "hidden": false
+            },
+            {
+              "input": "1\n",
+              "expected": "KHONG CO",
+              "hidden": false
+            },
+            {
+              "input": "2\n",
+              "expected": "2",
+              "hidden": false
+            },
+            {
+              "input": "30\n",
+              "expected": "2 3 5 7 11 13 17 19 23 29",
+              "hidden": true
+            }
+          ]
+        },
+        {
+          "id": "python-5-6",
+          "title": "Sắp xếp nổi bọt (Bubble Sort)",
+          "difficulty": "hard",
+          "xp": 30,
+          "theory": "## Thuật toán sắp xếp đầu tiên\n\n**Sắp xếp nổi bọt** duyệt dãy nhiều lượt; mỗi lượt so sánh từng cặp **kề nhau** và đổi chỗ nếu sai thứ tự. Sau mỗi lượt, phần tử lớn nhất còn lại \"nổi\" về cuối dãy giống bong bóng nổi lên mặt nước.\n\n```python\nn = len(a)\nfor i in range(n - 1):\n    for j in range(n - 1 - i):\n        if a[j] > a[j + 1]:\n            a[j], a[j + 1] = a[j + 1], a[j]\n```\n\nVí dụ với `[5, 1, 4]`:\n\n| Bước | Dãy |\n|---|---|\n| so sánh 5, 1 → đổi | `[1, 5, 4]` |\n| so sánh 5, 4 → đổi | `[1, 4, 5]` |\n| lượt 2: so sánh 1, 4 | `[1, 4, 5]` |\n\nĐộ phức tạp $O(n^2)$ — chậm với dữ liệu lớn, nhưng rất trực quan để hiểu ý tưởng sắp xếp. **Số lần hoán đổi** chính bằng số cặp phần tử bị ngược thứ tự (gọi là số *nghịch thế*).\n\nHãy mở Lăng kính → Sắp xếp để xem từng phép so sánh và hoán đổi diễn ra như thế nào.",
+          "task": "Nhập một dãy số nguyên trên một dòng. Sắp xếp **tăng dần** bằng thuật toán nổi bọt (**không** dùng `sort()` hay `sorted()`). In ra hai dòng:\n\n1. Dãy sau khi sắp xếp, cách nhau bởi dấu cách.\n2. Tổng **số lần hoán đổi** đã thực hiện.\n\n**Ví dụ**\n\n```\nĐầu vào:\n5 1 4 2 8\n\nĐầu ra:\n1 2 4 5 8\n4\n```",
+          "starter": "a = list(map(int, input().split()))\nso_lan_doi = 0\n# Cài đặt sắp xếp nổi bọt, đếm số lần hoán đổi",
+          "solution": "a = list(map(int, input().split()))\nso_lan_doi = 0\nn = len(a)\nfor i in range(n - 1):\n    for j in range(n - 1 - i):\n        if a[j] > a[j + 1]:\n            a[j], a[j + 1] = a[j + 1], a[j]\n            so_lan_doi += 1\nprint(*a)\nprint(so_lan_doi)",
+          "hints": [
+            "Hai vòng lặp lồng nhau: lượt i, và j duyệt các cặp kề nhau chưa cố định.",
+            "Mỗi khi a[j] > a[j + 1] thì đổi chỗ và tăng biến đếm.",
+            "Chỉ đổi khi lớn hơn hẳn (>), không đổi khi bằng nhau."
+          ],
+          "tests": [
+            {
+              "input": "5 1 4 2 8\n",
+              "expected": "1 2 4 5 8\n4",
+              "hidden": false
+            },
+            {
+              "input": "1 2 3\n",
+              "expected": "1 2 3\n0",
+              "hidden": false
+            },
+            {
+              "input": "3 2 1\n",
+              "expected": "1 2 3\n3",
+              "hidden": false
+            },
+            {
+              "input": "7\n",
+              "expected": "7\n0",
+              "hidden": false
+            },
+            {
+              "input": "4 4 1 4\n",
+              "expected": "1 4 4 4\n2",
+              "hidden": true
+            }
+          ],
+          "prism": "sorting"
+        }
+      ]
+    }
+  ]
+}

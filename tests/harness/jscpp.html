@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>JSCPP harness</title>
+  <script src="../../vendor/jscpp/JSCPP.es5.min.js"></script>
+</head>
+<body>
+  <p>JSCPP harness — exposes window.runCpp(code, input) for content validation.</p>
+  <script>
+    window.runCpp = function (code, input, maxTimeout) {
+      var out = '';
+      var started = Date.now();
+      try {
+        var exitCode = JSCPP.run(code, input || '', {
+          stdio: { write: function (s) { out += s; } },
+          maxTimeout: maxTimeout || 5000
+        });
+        return { exitCode: exitCode, stdout: out, error: null, ms: Date.now() - started };
+      } catch (err) {
+        return { exitCode: null, stdout: out, error: String(err && err.message ? err.message : err), ms: Date.now() - started };
+      }
+    };
+    window.harnessReady = typeof JSCPP !== 'undefined';
+  </script>
+</body>
+</html>
