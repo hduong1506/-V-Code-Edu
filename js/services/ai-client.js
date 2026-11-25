@@ -38,7 +38,16 @@ async function authHeaders() {
 }
 
 let providersCache = null;
+export const NO_BACKEND_MESSAGE = 'Trang này đang chạy trên hosting tĩnh (ví dụ GitHub Pages) nên chưa có máy chủ AI. '
+  + 'Hãy triển khai thư mục backend/ (Render, Railway…) rồi nhập địa chỉ ở Tài khoản → Giao diện & AI → Máy chủ V-Code, '
+  + 'hoặc chọn "AI trên trình duyệt" (cần trình duyệt hỗ trợ WebGPU).';
+
+function requireBackend() {
+  if (!getApiBase()) throw new AIError('no_backend', NO_BACKEND_MESSAGE);
+}
+
 export async function fetchProviders({ force = false } = {}) {
+  requireBackend();
   if (!force && providersCache && Date.now() - providersCache.at < 30000) return providersCache.data;
   const res = await fetch(`${getApiBase()}/api/ai/providers`, { cache: 'no-store' });
   if (!res.ok) throw new AIError('backend', `Máy chủ AI phản hồi lỗi ${res.status}`);
@@ -48,6 +57,7 @@ export async function fetchProviders({ force = false } = {}) {
 }
 
 export async function fetchUsage() {
+  if (!getApiBase()) return null;
   const res = await fetch(`${getApiBase()}/api/ai/usage`, { headers: await authHeaders(), cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
@@ -58,6 +68,7 @@ export async function fetchUsage() {
  * Yields { type: 'meta'|'delta'|'done'|'error', data }.
  */
 export async function* streamChat({ messages, mode = 'tutor', provider = 'auto', context, signal }) {
+  requireBackend();
   if (!appState.get().online && !/^(localhost|127\.|192\.168\.|10\.)/.test(new URL(getApiBase()).hostname)) {
     throw new AIError('offline', 'Bạn đang ngoại tuyến nên không dùng được AI đám mây. Hãy chọn "AI trên trình duyệt" hoặc máy chủ AI cục bộ trong cài đặt.');
   }
@@ -76,6 +87,9 @@ export async function* streamChat({ messages, mode = 'tutor', provider = 'auto',
   if (!res.ok) {
     let detail = null;
     try { detail = (await res.json())?.detail; } catch { /* not json */ }
+    if (res.status === 405 || (res.status === 404 && !detail)) {
+      throw new AIError('no_backend', `Địa chỉ ${getApiBase()} không phải máy chủ AI của V-Code (lỗi ${res.status}). ${NO_BACKEND_MESSAGE}`);
+    }
     const code = detail?.code || (res.status === 429 ? 'rate_limited' : res.status === 401 ? 'unauthorized' : 'http_error');
     const message = detail?.message || (typeof detail === 'string' ? detail : `Máy chủ AI trả về lỗi ${res.status}.`);
     throw new AIError(code, message);

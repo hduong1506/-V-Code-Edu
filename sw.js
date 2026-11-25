@@ -6,7 +6,7 @@
    - API calls (/api/*), Firestore/Auth network channels, non-GET: never cached (network only).
    - Navigations: network-first, falling back to the cached app shell when offline. */
 
-const VERSION = 'v3.1.0';
+const VERSION = 'v3.1.1';
 const SHELL_CACHE = `vcode-shell-${VERSION}`;
 const ASSET_CACHE = `vcode-assets-${VERSION}`;
 const RUNTIME_CACHE = 'vcode-runtime-v1'; // large, version-pinned third-party files survive app updates

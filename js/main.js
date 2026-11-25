@@ -381,4 +381,4 @@ function boot() {
 boot();
 
 // Expose a tiny debug handle for e2e tests (no secrets).
-window.__vcode = { appState, navigate, version: '3.1.0' };
+window.__vcode = { appState, navigate, version: '3.1.1' };

@@ -26,6 +26,19 @@ export const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three
 const API_OVERRIDE_KEY = 'vc-api-base';
 
 /**
+ * Địa chỉ máy chủ AI (backend FastAPI) khi giao diện được đưa lên hosting tĩnh (GitHub Pages, Netlify…).
+ * Ví dụ: 'https://vcode-edu-api.onrender.com'. Để trống = chưa có máy chủ AI.
+ */
+export const DEFAULT_API_BASE = '';
+
+/** Static hosts that serve only files — they can never answer /api/* (POST → 405). */
+const STATIC_HOSTS = /(\.github\.io|\.netlify\.app|\.pages\.dev|\.vercel\.app|\.web\.app|\.firebaseapp\.com|\.gitlab\.io)$/i;
+
+export function isStaticHost() {
+  return typeof location !== 'undefined' && STATIC_HOSTS.test(location.hostname);
+}
+
+/**
  * Backend base URL resolution:
  *  1. user override saved in Settings (e.g. a school LAN server http://192.168.1.10:8000)
  *  2. window.VCODE_API_BASE (set by hosting page if needed)
@@ -38,6 +51,8 @@ export function getApiBase() {
     if (saved) return saved.replace(/\/+$/, '');
   } catch { /* storage unavailable */ }
   if (typeof window !== 'undefined' && window.VCODE_API_BASE) return String(window.VCODE_API_BASE).replace(/\/+$/, '');
+  if (DEFAULT_API_BASE) return DEFAULT_API_BASE.replace(/\/+$/, '');
+  if (isStaticHost()) return ''; // no backend on static hosting
   if (location.port === '8000' || location.pathname.startsWith('/app')) return location.origin;
   if (location.protocol === 'https:' && !/^(localhost|127\.)/.test(location.hostname)) return location.origin;
   return 'http://localhost:8000';

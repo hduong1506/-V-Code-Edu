@@ -5,6 +5,10 @@ import { getApiBase } from '../config.js';
 let probeTimer = null;
 
 async function probeBackend() {
+  if (!getApiBase()) {
+    appState.set({ backend: { reachable: false, checkedAt: Date.now(), providers: [], missing: true } });
+    return false;
+  }
   if (!navigator.onLine && !/^(localhost|127\.|192\.168\.|10\.)/.test(new URL(getApiBase()).hostname)) {
     appState.set({ backend: { ...appState.get().backend, reachable: false, checkedAt: Date.now() } });
     return false;

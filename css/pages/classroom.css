@@ -447,6 +447,14 @@ a.cr-class-card:hover .cr-banner-svg { transform: scale(1.04); }
 .cr-class-card__banner .cr-banner { position: absolute; inset: 0; }
 .cr-class-card__code { position: absolute; left: 14px; bottom: 12px; padding: 3px 8px; border-radius: 7px; background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.22); color: #fff; font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; backdrop-filter: blur(6px); }
 .cr-class-card__legacy { position: absolute; right: 12px; top: 12px; padding: 2px 8px; border-radius: 6px; background: var(--cr-amber); color: #1a1000; font-size: 11px; font-weight: 700; }
+.cr-class-card-wrap { position: relative; display: flex; }
+.cr-class-card-wrap > .cr-class-card { flex: 1; min-width: 0; }
+.cr-class-card-wrap .cr-class-card__legacy { right: 56px; }
+.cr-class-card__del { position: absolute; top: 10px; right: 10px; z-index: 2; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; border: 1px solid rgba(255, 255, 255, 0.24); background: rgba(10, 18, 40, 0.42); color: #fff; backdrop-filter: blur(6px); cursor: pointer; opacity: 0.85; transition: background var(--dur), opacity var(--dur), transform var(--dur); }
+.cr-class-card__del svg { width: 16px; height: 16px; }
+.cr-class-card__del:hover, .cr-class-card__del:focus-visible { background: var(--cr-red); border-color: var(--cr-red); opacity: 1; }
+.cr-class-card__del:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.cr-class-card__del:disabled { opacity: 0.5; cursor: progress; }
 .cr-class-card__body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .cr-class-card__title { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
 .cr-class-card__sub { color: var(--cr-ink-3); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

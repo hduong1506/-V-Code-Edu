@@ -1,9 +1,10 @@
 // V-Code Edu — classroom dashboard (#/classroom): all classes of the signed-in teacher / student.
 import { h, mount } from '../../core/dom.js';
 import { icon } from '../../components/icons.js';
+import { confirmDialog, toast } from '../../core/ui.js';
 import * as C from '../../services/classroom.js';
 import { banner, classMark } from './art.js';
-import { createShell, getMyClasses, openCreateClass, openJoinDialog, joinForm } from './shell.js';
+import { createShell, getMyClasses, openCreateClass, openJoinDialog, joinForm, invalidateClasses } from './shell.js';
 import {
   errMsg, rosterOf, kpi, panel, emptyBlock, progressBar, studentStatus, deadlineText,
   effScore, isGraded, avg, scoreText, round1, DAY, langLabel,
@@ -92,7 +93,23 @@ export async function homeView(container, ctx, user, isTeacher) {
   }
 
   // initial cards without stats, then enrich
-  const renderCards = (sum) => mount(grid, classes.map((c) => classCard(c, sum?.get(c.code || c.id), isTeacher, user)));
+  const onDelete = async (c, btn) => {
+    const code = c.code || c.id;
+    if (!(await confirmDialog({ title: `Xóa lớp ${c.name}?`, message: `Bạn có chắc chắn muốn xóa lớp “${c.name}” (mã ${code})? Toàn bộ bài tập, bài nộp, điểm và thảo luận của lớp sẽ bị xóa vĩnh viễn. Thao tác này không thể hoàn tác.`, confirmLabel: 'Xóa vĩnh viễn', danger: true }))) return;
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    try {
+      await C.deleteClass(code);
+      invalidateClasses();
+      toast(`Đã xóa “${c.name}”.`, { type: 'success' });
+      if (!ctx.signal.aborted) homeView(container, ctx, user, isTeacher);
+    } catch (err) {
+      toast(errMsg(err), { type: 'error' });
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  };
+  const renderCards = (sum) => mount(grid, classes.map((c) => classCard(c, sum?.get(c.code || c.id), isTeacher, user, onDelete)));
   renderCards(null);
   const sum = await loadSummaries(classes, isTeacher);
   if (ctx.signal.aborted) return;
@@ -154,7 +171,7 @@ export async function homeView(container, ctx, user, isTeacher) {
 
 function scoreBandOf(sub) { const v = effScore(sub); return v >= 8 ? 'high' : v >= 6.5 ? 'good' : v >= 5 ? 'mid' : 'low'; }
 
-function classCard(c, sum, isTeacher, user) {
+function classCard(c, sum, isTeacher, user, onDelete) {
   const code = c.code || c.id;
   const roster = rosterOf(c);
   const now = Date.now();
@@ -181,7 +198,7 @@ function classCard(c, sum, isTeacher, user) {
     stats = h('div', { class: 'cr-class-card__stats is-loading' }, h('div', { class: 'skeleton', style: 'height:30px' }));
   }
   const legacy = Array.isArray(c.assignments) || Array.isArray(c.submissions);
-  return h('a', { class: 'cr-class-card', href: `#/classroom/${code}` },
+  const card = h('a', { class: 'cr-class-card', href: `#/classroom/${code}` },
     h('div', { class: 'cr-class-card__banner' }, banner(code),
       h('span', { class: 'cr-class-card__code' }, code),
       legacy ? h('span', { class: 'cr-class-card__legacy' }, 'Dữ liệu cũ') : null),
@@ -193,4 +210,7 @@ function classCard(c, sum, isTeacher, user) {
         !isTeacher ? h('span', { class: 'truncate' }, icon('user'), c.teacher_name || c.teacher_email) : null,
         isTeacher && c.teacher_email !== user.key ? h('span', null, icon('shield'), 'Quản trị') : null),
       stats));
+  if (!isTeacher) return card;
+  const del = h('button', { class: 'cr-class-card__del', type: 'button', title: 'Xóa lớp', 'aria-label': `Xóa lớp ${c.name} (${code})`, onClick: (e) => { e.preventDefault(); e.stopPropagation(); onDelete(c, del); } }, icon('trash'));
+  return h('div', { class: 'cr-class-card-wrap' }, card, del);
 }

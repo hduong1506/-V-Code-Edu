@@ -278,6 +278,7 @@ export function initVBot() {
       let state = 'wait';
       if (backend.reachable && hasProvider(backend)) { text = 'Sẵn sàng trả lời'; state = 'ok'; }
       else if (localReady) { text = 'AI trên trình duyệt (ngoại tuyến)'; state = 'ok'; }
+      else if (backend.missing) { text = 'Chưa cấu hình máy chủ AI cho trang này'; state = 'off'; }
       else if (!online) { text = 'Ngoại tuyến — cần Internet hoặc AI trên trình duyệt'; state = 'off'; }
       else if (backend.checkedAt && !backend.reachable) { text = 'Chưa kết nối được máy chủ AI'; state = 'off'; }
       else if (backend.reachable) { text = 'Máy chủ chưa cấu hình khóa AI'; state = 'off'; }

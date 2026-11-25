@@ -181,6 +181,44 @@ def test_teacher_student_full_flow(browser):
     ctx.close()
 
 
+# ---------------------------------------------------------------- delete from dashboard
+def test_teacher_deletes_class_from_dashboard(browser):
+    db = {**profile(TEACHER["email"], TEACHER["displayName"], "teacher")}
+    for code, name in [("VCDEL1", "Lớp tạo nhầm"), ("VCKEEP", "Lớp giữ lại")]:
+        db[f"classrooms/{code}"] = {"code": code, "name": name, "grade_subject": "", "description": "", "teacher_email": email_key(TEACHER["email"]), "teacher_name": TEACHER["displayName"], "student_emails": [], "students": [], "schema": 2}
+    db["classrooms/VCDEL1/assignments/a1"] = {"title": "Bài thử", "language": "python", "created_at": 1}
+    ctx, page = open_page(browser, TEACHER, db)
+    go(page, "/classroom", ".cr-class-card__del")
+    expect(page.locator(".cr-class-card")).to_have_count(2)
+    btn = page.locator(".cr-class-card-wrap", has_text="Lớp tạo nhầm").locator(".cr-class-card__del")
+    # cancel keeps the class
+    btn.click()
+    expect(modal(page)).to_contain_text("Bạn có chắc chắn muốn xóa lớp")
+    page.keyboard.press("Escape")
+    assert "classrooms/VCDEL1" in dump_db(page)
+    assert page.url.endswith("#/classroom")
+    # confirm deletes the class and its sub-collections
+    btn.click()
+    modal(page).locator("button:has-text('Xóa vĩnh viễn')").click()
+    expect(page.locator(".cr-class-card")).to_have_count(1, timeout=10000)
+    expect(page.locator(".cr-class-card")).to_contain_text("Lớp giữ lại")
+    state = dump_db(page)
+    assert not any(k.startswith("classrooms/VCDEL1") for k in state), [k for k in state if "VCDEL1" in k]
+    assert "classrooms/VCKEEP" in state
+    page.screenshot(path=str(SHOTS / "classroom_dashboard_delete.png"))
+    assert not page.errors, page.errors
+    ctx.close()
+
+
+def test_student_dashboard_has_no_delete(browser):
+    db = {**profile(STUDENT["email"], STUDENT["displayName"], "student")}
+    db["classrooms/VCSTU1"] = {"code": "VCSTU1", "name": "Lớp của em", "grade_subject": "", "description": "", "teacher_email": "gv@x", "teacher_name": "GV", "student_emails": [STUDENT["email"]], "students": [], "schema": 2}
+    ctx, page = open_page(browser, STUDENT, db)
+    go(page, "/classroom", ".cr-class-card")
+    expect(page.locator(".cr-class-card__del")).to_have_count(0)
+    ctx.close()
+
+
 # ---------------------------------------------------------------- responsive
 def test_classroom_mobile_no_overflow(browser):
     db = {**profile(TEACHER["email"], TEACHER["displayName"], "teacher")}
