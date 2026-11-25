@@ -1,0 +1,28 @@
+# Render Blueprint — một Web Service chạy backend FastAPI và phục vụ luôn giao diện.
+# Render → New → Blueprint → chọn repo này. Khóa API nhập trên Render, không ghi vào file này.
+services:
+  - type: web
+    name: vcode-edu
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash
+      - key: SERVE_FRONTEND
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: OLLAMA_ENABLED
+        value: "0"
+      - key: FIREBASE_PROJECT_ID
+        value: v-code-edu
+      - key: LOG_LEVEL
+        value: INFO

@@ -120,7 +120,7 @@ class Settings:
     ai_total_timeout: float = 120.0
 
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.5-flash"
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
 
     openai_api_key: str = ""

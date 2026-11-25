@@ -68,5 +68,5 @@ def test_dotenv_parser_and_settings():
     d = settings_from_env({})
     assert d.firebase_project_id == "v-code-edu"
     assert d.anthropic_model == "claude-opus-5-5"
-    assert d.gemini_model == "gemini-2.5-flash"
+    assert d.gemini_model == "gemini-3.5-flash"
     assert "https://v-code-edu.web.app" in d.allowed_origins

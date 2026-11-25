@@ -38,7 +38,7 @@ Chỉ cần giao diện (không AI đám mây): mở thư mục bằng VS Code *
 
 | Biến | Ý nghĩa |
 |---|---|
-| `GEMINI_API_KEY` / `GEMINI_MODEL` | Google Gemini (mặc định `gemini-2.5-flash`) |
+| `GEMINI_API_KEY` / `GEMINI_MODEL` | Google Gemini (mặc định `gemini-3.5-flash`) |
 | `OPENAI_API_KEY` / `OPENAI_MODEL` / `OPENAI_BASE_URL` | OpenAI hoặc máy chủ tương thích |
 | `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL` | Claude (mặc định `claude-opus-5-5`; rẻ hơn: `claude-sonnet-5-5`, `claude-haiku-5-5`) |
 | `OLLAMA_ENABLED` / `OLLAMA_BASE_URL` / `OLLAMA_MODEL` | AI cục bộ cho phòng máy không có Internet |
