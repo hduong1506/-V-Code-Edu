@@ -45,7 +45,7 @@ class ProviderRegistry:
             pool=10.0,
         ))
         factories = {
-            "gemini": lambda: GeminiProvider(settings.gemini_api_key, settings.gemini_model, settings.gemini_base_url, http),
+            "gemini": lambda: GeminiProvider(settings.gemini_api_key, settings.gemini_model, settings.gemini_base_url, http, settings.gemini_fallback_models),
             "openai": lambda: OpenAIProvider(settings.openai_api_key, settings.openai_model, settings.openai_base_url, http, settings.openai_token_param),
             "anthropic": lambda: AnthropicProvider(settings.anthropic_api_key, settings.anthropic_model, settings.anthropic_base_url, http),
             "ollama": lambda: OllamaProvider(settings.ollama_base_url, settings.ollama_model, http, enabled=settings.ollama_enabled),

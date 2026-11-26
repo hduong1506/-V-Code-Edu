@@ -121,6 +121,7 @@ class Settings:
 
     gemini_api_key: str = ""
     gemini_model: str = "gemini-3.5-flash"
+    gemini_fallback_models: tuple[str, ...] = ("gemini-3.5-flash-lite", "gemini-3.1-flash-lite")
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
 
     openai_api_key: str = ""
@@ -170,6 +171,7 @@ def settings_from_env(env: Mapping[str, str] | None = None) -> Settings:
         ai_total_timeout=_float(e.get("AI_TOTAL_TIMEOUT"), defaults.ai_total_timeout),
         gemini_api_key=(e.get("GEMINI_API_KEY") or "").strip(),
         gemini_model=(e.get("GEMINI_MODEL") or defaults.gemini_model).strip(),
+        gemini_fallback_models=_list(e.get("GEMINI_FALLBACK_MODELS"), defaults.gemini_fallback_models),
         gemini_base_url=(e.get("GEMINI_BASE_URL") or defaults.gemini_base_url).strip().rstrip("/"),
         openai_api_key=(e.get("OPENAI_API_KEY") or "").strip(),
         openai_model=(e.get("OPENAI_MODEL") or defaults.openai_model).strip(),

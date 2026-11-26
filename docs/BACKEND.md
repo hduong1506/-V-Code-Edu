@@ -77,6 +77,7 @@ Kiểm thử luôn dùng CSDL SQLite tạm và nhà cung cấp AI giả lập �
 | `AI_CONNECT_TIMEOUT` / `AI_READ_TIMEOUT` / `AI_TOTAL_TIMEOUT` | `10` / `60` / `120` | Thời gian chờ (giây) |
 | `GEMINI_API_KEY` | _(trống)_ | Khóa Google AI Studio |
 | `GEMINI_MODEL` | `gemini-3.5-flash` | Mô hình Gemini |
+| `GEMINI_FALLBACK_MODELS` | `gemini-3.5-flash-lite,gemini-3.1-flash-lite` | Mô hình dự phòng khi mô hình chính quá tải (503), hết hạn mức (429) hoặc bị ngừng (404) |
 | `GEMINI_BASE_URL` | `https://generativelanguage.googleapis.com/v1beta` | |
 | `OPENAI_API_KEY` | _(trống)_ | Khóa OpenAI (hoặc máy chủ tương thích) |
 | `OPENAI_MODEL` | `gpt-4o-mini` | |

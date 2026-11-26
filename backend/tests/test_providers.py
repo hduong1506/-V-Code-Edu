@@ -60,6 +60,44 @@ def test_gemini_wire_format():
     assert seen["body"]["generationConfig"] == {"temperature": 0.3, "maxOutputTokens": 100}
 
 
+def _gemini_router(status_by_model):
+    calls = []
+
+    def handler(request: httpx.Request):
+        model = request.url.path.rsplit("/", 1)[-1].split(":")[0]
+        calls.append(model)
+        status = status_by_model.get(model, 200)
+        if status != 200:
+            return httpx.Response(status, json={"error": {"code": status, "message": f"{model} lỗi {status}"}})
+        return httpx.Response(200, content=sse_body([
+            (None, {"candidates": [{"content": {"parts": [{"text": f"từ {model}"}]}, "finishReason": "STOP"}]}),
+        ]), headers={"content-type": "text/event-stream"})
+
+    return handler, calls
+
+
+def test_gemini_falls_back_when_model_overloaded():
+    handler, calls = _gemini_router({"main": 503, "lite": 429})
+    p = GeminiProvider("K", "main", "https://g.test/v1beta", holder(handler), ("lite", "lite2"))
+    chunks = asyncio.run(collect(p))
+    assert "".join(c.text for c in chunks) == "từ lite2"
+    assert calls == ["main", "lite", "lite2"]
+
+
+def test_gemini_does_not_fall_back_on_auth_error_and_reports_last_error():
+    handler, calls = _gemini_router({"main": 403})
+    p = GeminiProvider("K", "main", "https://g.test/v1beta", holder(handler), ("lite",))
+    with pytest.raises(ProviderError) as e:
+        asyncio.run(collect(p))
+    assert e.value.status == 403 and calls == ["main"]
+
+    handler, calls = _gemini_router({"main": 503, "lite": 503})
+    p = GeminiProvider("K", "main", "https://g.test/v1beta", holder(handler), ("lite",))
+    with pytest.raises(ProviderError) as e:
+        asyncio.run(collect(p))
+    assert e.value.status == 503 and calls == ["main", "lite"]
+
+
 def test_openai_wire_format():
     seen = {}
 

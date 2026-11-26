@@ -18,6 +18,12 @@ def test_health_reports_providers(build_client):
     ]
 
 
+def test_health_accepts_head_for_uptime_monitors(build_client):
+    r = build_client().head("/api/health")
+    assert r.status_code == 200
+    assert r.content == b""
+
+
 def test_providers_listing_and_modes(build_client):
     client = build_client([FakeProvider("openai", available=False), FakeProvider("anthropic"), FakeProvider("ollama", kind="local")])
     body = client.get("/api/ai/providers").json()
@@ -69,4 +75,6 @@ def test_dotenv_parser_and_settings():
     assert d.firebase_project_id == "v-code-edu"
     assert d.anthropic_model == "claude-opus-5-5"
     assert d.gemini_model == "gemini-3.5-flash"
+    assert d.gemini_fallback_models == ("gemini-3.5-flash-lite", "gemini-3.1-flash-lite")
+    assert settings_from_env({"GEMINI_FALLBACK_MODELS": "a, b"}).gemini_fallback_models == ("a", "b")
     assert "https://v-code-edu.web.app" in d.allowed_origins

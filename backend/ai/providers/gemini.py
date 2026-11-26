@@ -7,6 +7,8 @@ from typing import AsyncIterator
 from backend.ai.providers.base import Chunk, HttpClientHolder, Provider, ProviderError, ProviderRequest, ensure_ok, iter_sse
 
 _FINISH_MAP = {"STOP": "stop", "MAX_TOKENS": "length", "SAFETY": "content_filter", "RECITATION": "content_filter"}
+# Overloaded / quota / retired model → try the next model before anything has been streamed.
+_RETRYABLE_STATUS = {404, 429, 500, 503}
 
 
 class GeminiProvider(Provider):
@@ -14,11 +16,12 @@ class GeminiProvider(Provider):
     label = "Google Gemini"
     kind = "cloud"
 
-    def __init__(self, api_key: str, model: str, base_url: str, http: HttpClientHolder):
+    def __init__(self, api_key: str, model: str, base_url: str, http: HttpClientHolder, fallback_models: tuple[str, ...] = ()):
         super().__init__(model)
         self.api_key = api_key
         self.base_url = base_url.rstrip("/")
         self.http = http
+        self.fallback_models = tuple(m for m in fallback_models if m and m != model)
 
     def is_configured(self) -> bool:
         return bool(self.api_key)
@@ -35,7 +38,20 @@ class GeminiProvider(Provider):
         }
 
     async def stream(self, request: ProviderRequest) -> AsyncIterator[Chunk]:
-        url = f"{self.base_url}/models/{self.model}:streamGenerateContent"
+        models = (self.model, *self.fallback_models)
+        for i, model in enumerate(models):
+            started = False
+            try:
+                async for chunk in self._stream_model(model, request):
+                    started = True
+                    yield chunk
+                return
+            except ProviderError as err:
+                if started or i == len(models) - 1 or err.status not in _RETRYABLE_STATUS:
+                    raise
+
+    async def _stream_model(self, model: str, request: ProviderRequest) -> AsyncIterator[Chunk]:
+        url = f"{self.base_url}/models/{model}:streamGenerateContent"
         headers = {"x-goog-api-key": self.api_key, "Content-Type": "application/json"}
         async with self.http.client.stream("POST", url, params={"alt": "sse"}, headers=headers, json=self._payload(request)) as resp:
             await ensure_ok(resp, self.label)

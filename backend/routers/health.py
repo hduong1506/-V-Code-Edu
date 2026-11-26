@@ -5,6 +5,8 @@ from fastapi import APIRouter, Request
 router = APIRouter(prefix="/api", tags=["Hệ thống"])
 
 
+# HEAD: uptime monitors (UptimeRobot…) probe with HEAD and treat 405 as "down".
+@router.api_route("/health", methods=["HEAD"], include_in_schema=False)
 @router.get("/health")
 async def health(request: Request) -> dict:
     registry = request.app.state.registry
